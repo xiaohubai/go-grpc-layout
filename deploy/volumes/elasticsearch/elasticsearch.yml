@@ -1,0 +1,12 @@
+cluster.name: "docker-cluster"
+discovery.type: "single-node"
+bootstrap.memory_lock: true
+network.host: 0.0.0.0
+http.port: 9200
+transport.tcp.port: 9300
+http.cors.enabled: true
+http.cors.allow-origin: "*"
+xpack.security.audit.enabled: true
+xpack.security.enabled: true
+xpack.license.self_generated.type: basic
+xpack.security.transport.ssl.enabled: true

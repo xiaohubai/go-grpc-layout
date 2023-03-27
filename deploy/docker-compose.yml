@@ -1,0 +1,33 @@
+version: '3'
+## 遇到容器不停重启，首先怀疑是挂载目录读写执行权限问题
+services:
+  #### mysql ####
+  mysql:
+    image: bitnami/mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - /usr/local/volumes/mysql:/bitnami/mysql
+    environment:
+      - TZ=Asia/Shanghai
+      - MYSQL_ROOT_USER=root
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=go-layout
+      - MYSQL_CHARACTER_SET=utf8mb4
+      - MYSQL_COLLATE=utf8mb4_general_ci
+
+  #### redis ####
+  redis:
+    image: redis:7.0.0
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass "123456"
+    volumes:
+      - /usr/local/volumes/redis/redis.conf:/etc/redis.conf
+      - /usr/local/volumes/redis/data:/data
+    environment:
+      - TZ=Asia/Shanghai
