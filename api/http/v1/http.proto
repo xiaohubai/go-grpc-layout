@@ -1,0 +1,42 @@
+syntax = "proto3";
+
+package api.http.v1;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/xiaohubai/go-grpc-layout/api/http/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.http.v1";
+
+
+message LoginRequest {
+	string userName = 1 [(validate.rules).string = {min_len: 3, max_len: 11}]; //用户名
+	string password = 2 [(validate.rules).string.min_len = 6]; //密码
+	string captcha = 3 [(validate.rules).string.len = 6]; //验证码
+	string captchaID = 4 [(validate.rules).string.min_len = 6];//校验ID
+}
+
+message LoginResponse {
+	int32 code = 1;
+	string msg = 2;
+	string traceID = 3;
+	Data data = 4;
+  }
+
+  message Data {
+	int32 ID = 1;
+	string UID = 2;
+	string userName = 3;
+	string nickName = 4;
+	string birth = 5;
+	string avatar = 6;
+	string roleID = 7;
+	string roleName = 8;
+	string phone = 9;
+	string wechat = 10;
+	string email = 11;
+	string state = 12;
+	string motto = 13;
+	string token = 18;
+	string refreshToken = 19;
+  }

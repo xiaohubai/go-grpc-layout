@@ -7,6 +7,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
+	"github.com/go-kratos/kratos/v2/middleware/validate"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	pb "github.com/xiaohubai/go-grpc-layout/api/admin/v1"
@@ -20,9 +21,10 @@ import (
 func NewHTTPServer(c *conf.Server, HTTP *service.Service, logger log.Logger) *http.Server {
 	var opts = []http.ServerOption{
 		http.Middleware(
-			recovery.Recovery(),
-			tracing.Server(),
 			logging.Server(logger),
+			tracing.Server(),
+			recovery.Recovery(),
+			validate.Validator(),
 			metrics.Server(
 				metrics.WithSeconds(prometheus.NewHistogram(prom.MetricSeconds)),
 				metrics.WithRequests(prometheus.NewCounter(prom.MetricRequests)),

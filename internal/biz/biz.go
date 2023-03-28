@@ -8,20 +8,33 @@ import (
 )
 
 // ProviderSet is biz providers.
-var ProviderSet = wire.NewSet(NewUsecase)
+var ProviderSet = wire.NewSet(NewHttpUsecase, NewGrpcUsecase)
 
-type Usecase struct {
+type HttpUsecase struct {
 	repo Repo
 	log  *log.Helper
 }
 
-func NewUsecase(repo Repo, logger log.Logger) *Usecase {
-	return &Usecase{
+type GrpcUsecase struct {
+	repo Repo
+	log  *log.Helper
+}
+
+func NewHttpUsecase(repo Repo, logger log.Logger) *HttpUsecase {
+	return &HttpUsecase{
 		repo: repo,
-		log:  log.NewHelper(log.With(logger, "biz", "NewUsecase")),
+		log:  log.NewHelper(log.With(logger, "biz", "NewHttpUsecase")),
 	}
 }
 
+func NewGrpcUsecase(repo Repo, logger log.Logger) *GrpcUsecase {
+	return &GrpcUsecase{
+		repo: repo,
+		log:  log.NewHelper(log.With(logger, "biz", "NewGrpcUsecase")),
+	}
+}
+
+// data层共享
 type Repo interface {
 	//Save Update FindByID ListAll
 	GetUserInfo(context.Context, *User) ([]*User, error)

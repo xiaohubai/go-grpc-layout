@@ -8,17 +8,29 @@ import (
 )
 
 // ProviderSet is service providers.
-var ProviderSet = wire.NewSet(NewService)
+var ProviderSet = wire.NewSet(NewHttpService, NewGrpcService)
 
-type Service struct {
+type HttpService struct {
 	pb.UnimplementedAdminServer
 	log *log.Helper
-	uc  *biz.Usecase
+	uc  *biz.HttpUsecase
 }
 
-func NewService(uc *biz.Usecase, lg log.Logger) *Service {
-	return &Service{
+type GrpcService struct {
+	pb.UnimplementedAdminServer
+	log *log.Helper
+	uc  *biz.GrpcUsecase
+}
+
+func NewHttpService(uc *biz.HttpUsecase, lg log.Logger) *HttpService {
+	return &HttpService{
 		uc:  uc,
-		log: log.NewHelper(log.With(lg, "service", "NewService")),
+		log: log.NewHelper(log.With(lg, "service", "NewHttpService")),
+	}
+}
+func NewGrpcService(uc *biz.GrpcUsecase, lg log.Logger) *GrpcService {
+	return &GrpcService{
+		uc:  uc,
+		log: log.NewHelper(log.With(lg, "service", "NewGrpcService")),
 	}
 }

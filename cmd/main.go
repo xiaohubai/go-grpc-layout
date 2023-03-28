@@ -40,10 +40,11 @@ func main() {
 
 	lg := logger.New(&serviceInfo)
 
+	prometheus.MustRegister(prom.MetricSeconds, prom.MetricRequests)
+
 	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, &serviceInfo); err != nil {
 		panic(err)
 	}
-	prometheus.MustRegister(prom.MetricSeconds, prom.MetricRequests)
 
 	app, cleanup, err := wireApp(cc.Server, cc.Data, cr, lg, &serviceInfo)
 	if err != nil {

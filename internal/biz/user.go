@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/spf13/cast"
-	pb "github.com/xiaohubai/go-grpc-layout/api/admin/v1"
+	pb "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"go.opentelemetry.io/otel/attribute"
 )
@@ -16,23 +16,18 @@ type User struct {
 }
 
 // Login 用户登录
-func (uc *Usecase) Login(ctx context.Context, req *pb.LoginRequest) (*pb.LoginResponse, error) {
-	_, span := tracing.NewSpan(ctx, "")
+func (uc *HttpUsecase) Login(ctx context.Context, u *User) (*pb.Data, error) {
+	ctx, span := tracing.NewSpan(ctx, "biz-Login")
+	defer span.End()
 
-	_, err := uc.repo.GetUserInfo(ctx, &User{})
+	userList, err := uc.repo.GetUserInfo(ctx, u)
 	if err != nil {
 		return nil, err
 	}
-
-	result := &pb.LoginResponse{
-		Code: 200,
-		Msg:  "success",
-		Data: &pb.LoginResponse_Data{
-			DictMap: map[string]string{
-				"ss": "sss",
-			},
-		},
+	span.SetAttributes(attribute.Key("user").String(cast.ToString(userList)))
+	result := &pb.Data{
+		UserName: "xxx",
+		NickName: "sss",
 	}
-	span.SetAttributes(attribute.Key("resp").String(cast.ToString(result)))
 	return result, nil
 }

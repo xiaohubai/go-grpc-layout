@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package api.grpc.v1;
+
+import "validate/validate.proto";
+
+option go_package = "github.com/xiaohubai/go-grpc-layout/api/grpc/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.grpc.v1";
+
+service Grpc {
+	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
+}
+
+message UserInfoRequest {
+	string userName = 1 [(validate.rules).string = {min_len: 3, max_len: 11}]; //用户名
+}
+
+message UserInfoResponse {
+	int32 code = 1;
+}
