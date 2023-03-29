@@ -30,10 +30,12 @@ func wireApp(confServer *conf.Server, confData *conf.Data, registry *conf.Regist
 		return nil, nil, err
 	}
 	repo := data.NewDataRepo(dataData, logger)
-	usecase := biz.NewUsecase(repo, logger)
-	serviceService := service.NewService(usecase, logger)
-	httpServer := server.NewHTTPServer(confServer, serviceService, logger)
-	grpcServer := server.NewGRPCServer(confServer, serviceService, logger)
+	httpUsecase := biz.NewHttpUsecase(repo, logger)
+	httpService := service.NewHttpService(httpUsecase, logger)
+	httpServer := server.NewHTTPServer(confServer, httpService, logger)
+	grpcUsecase := biz.NewGrpcUsecase(repo, logger)
+	grpcService := service.NewGrpcService(grpcUsecase, logger)
+	grpcServer := server.NewGRPCServer(confServer, grpcService, logger)
 	registrar := server.NewConsulRegistry(registry)
 	app := newApp(logger, httpServer, grpcServer, registrar, serviceInfo)
 	return app, func() {

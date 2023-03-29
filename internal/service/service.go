@@ -3,21 +3,21 @@ package service
 import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
-	pb "github.com/xiaohubai/go-grpc-layout/api/admin/v1"
+	pb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 )
 
 // ProviderSet is service providers.
 var ProviderSet = wire.NewSet(NewHttpService, NewGrpcService)
 
+
 type HttpService struct {
-	pb.UnimplementedAdminServer
 	log *log.Helper
 	uc  *biz.HttpUsecase
 }
 
 type GrpcService struct {
-	pb.UnimplementedAdminServer
+	pb.UnimplementedGrpcServer
 	log *log.Helper
 	uc  *biz.GrpcUsecase
 }

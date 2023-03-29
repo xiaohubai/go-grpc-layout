@@ -62,7 +62,7 @@ compose:
 all:
 	make api;
 	make config;
-	make compose
+	make compose;
 
 
 # show help

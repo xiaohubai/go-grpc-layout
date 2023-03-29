@@ -1,36 +1,19 @@
 package server
 
 import (
-	"github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
+	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-kratos/kratos/v2/middleware/logging"
-	"github.com/go-kratos/kratos/v2/middleware/metrics"
-	"github.com/go-kratos/kratos/v2/middleware/recovery"
-	"github.com/go-kratos/kratos/v2/middleware/tracing"
-	"github.com/go-kratos/kratos/v2/middleware/validate"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	pb "github.com/xiaohubai/go-grpc-layout/api/admin/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/conf"
-
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
-	prom "github.com/xiaohubai/go-grpc-layout/pkg/prometheus"
+	m "github.com/xiaohubai/go-grpc-layout/pkg/middleware"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, HTTP *service.Service, logger log.Logger) *http.Server {
-	var opts = []http.ServerOption{
-		http.Middleware(
-			logging.Server(logger),
-			tracing.Server(),
-			recovery.Recovery(),
-			validate.Validator(),
-			metrics.Server(
-				metrics.WithSeconds(prometheus.NewHistogram(prom.MetricSeconds)),
-				metrics.WithRequests(prometheus.NewCounter(prom.MetricRequests)),
-			),
-		),
-	}
+func NewHTTPServer(c *conf.Server, s *service.HttpService, logger log.Logger) *http.Server {
+	var opts = []http.ServerOption{}
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))
 	}
@@ -40,8 +23,19 @@ func NewHTTPServer(c *conf.Server, HTTP *service.Service, logger log.Logger) *ht
 	if c.Http.Timeout != nil {
 		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
 	}
+
 	srv := http.NewServer(opts...)
-	srv.Handle("/metrics", promhttp.Handler())
-	pb.RegisterAdminHTTPServer(srv, HTTP)
+	srv.HandlePrefix("/", routers(s))
 	return srv
+}
+
+func routers(s *service.HttpService) *gin.Engine {
+	var router = gin.Default()
+
+	router.Use(m.Recovery(), otelgin.Middleware("router"))
+
+	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
+	router.POST("/v1/login", s.Login)
+
+	return router
 }

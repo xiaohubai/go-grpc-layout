@@ -43,6 +43,10 @@ kratos proto server api/admin/v1/admin.proto -t internal/service
 //定义code码 和异常错误返回结果.
 //权限 和认证
 
+proto:
+    http:定义入参 反参  返回码 ,参数校验
+    grpc 定义入参 反参  返回码 ,参数校验
+
 
 gin用于前端交互,正常数据库请求,和图片 视频请求.文件请求.
 

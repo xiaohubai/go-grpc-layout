@@ -17,13 +17,6 @@ message LoginRequest {
 }
 
 message LoginResponse {
-	int32 code = 1;
-	string msg = 2;
-	string traceID = 3;
-	Data data = 4;
-  }
-
-  message Data {
 	int32 ID = 1;
 	string UID = 2;
 	string userName = 3;

@@ -13,15 +13,15 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/conf"
 	prom "github.com/xiaohubai/go-grpc-layout/pkg/prometheus"
 
-	pb "github.com/xiaohubai/go-grpc-layout/api/admin/v1"
+	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, GRPC *service.GrpcService, logger log.Logger) *grpc.Server {
+func NewGRPCServer(c *conf.Server, g *service.GrpcService, lg log.Logger) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
-			logging.Server(logger),
+			logging.Server(lg),
 			tracing.Server(),
 			recovery.Recovery(),
 			validate.Validator(),
@@ -41,6 +41,6 @@ func NewGRPCServer(c *conf.Server, GRPC *service.GrpcService, logger log.Logger)
 		opts = append(opts, grpc.Timeout(c.Grpc.Timeout.AsDuration()))
 	}
 	srv := grpc.NewServer(opts...)
-	pb.RegisterAdminServer(srv, GRPC)
+	gpb.RegisterGrpcServer(srv, g)
 	return srv
 }

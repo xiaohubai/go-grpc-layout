@@ -18,7 +18,6 @@ func NewTracerProvider(endpoint string, serviceInfo *configs.ServiceInfo) error 
 	if err != nil {
 		return err
 	}
-
 	tp := traceSdk.NewTracerProvider(
 		traceSdk.WithSampler(traceSdk.ParentBased(traceSdk.TraceIDRatioBased(1.0))),
 		traceSdk.WithBatcher(exp),

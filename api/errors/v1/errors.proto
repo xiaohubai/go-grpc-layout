@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package api.errors.v1;
+
+option go_package = "github.com/xiaohubai/go-grpc-layout/api/errors/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.errors.v1";
+
+
+
+enum Error {
+ 	Success = 0;					//成功
+	Fail=4001; 						//系统内部错误
+	RequestFail = 4002; 				//请求错误
+	LoginFail = 4003; 				//登录失败
+
+  }

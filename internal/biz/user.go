@@ -10,13 +10,24 @@ import (
 )
 
 type User struct {
-	ID    string `json:"id"`
-	Key   string `json:"key"`
-	Value string `json:"value"`
+	ID       int32  `json:"id"`
+	UID      string `json:"uid"`
+	UserName string `json:"userName"`
+	Password string `json:"password"`
+	NickName string `json:"nickName"`
+	Birth    string `json:"birth"`
+	Avatar   string `json:"avatar"`
+	RoleID   string `json:"roleID"`
+	RoleName string `json:"roleName"`
+	Phone    string `json:"phone"`
+	Wechat   string `json:"wechat"`
+	Email    string `json:"email"`
+	State    string `json:"state"`
+	Motto    string `json:"motto"`
 }
 
 // Login 用户登录
-func (uc *HttpUsecase) Login(ctx context.Context, u *User) (*pb.Data, error) {
+func (uc *HttpUsecase) Login(ctx context.Context, u *User) (*pb.LoginResponse, error) {
 	ctx, span := tracing.NewSpan(ctx, "biz-Login")
 	defer span.End()
 
@@ -24,8 +35,8 @@ func (uc *HttpUsecase) Login(ctx context.Context, u *User) (*pb.Data, error) {
 	if err != nil {
 		return nil, err
 	}
-	span.SetAttributes(attribute.Key("user").String(cast.ToString(userList)))
-	result := &pb.Data{
+	span.SetAttributes(attribute.Key("userList").String(cast.ToString(userList)))
+	result := &pb.LoginResponse{
 		UserName: "xxx",
 		NickName: "sss",
 	}
