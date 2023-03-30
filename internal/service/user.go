@@ -19,11 +19,14 @@ func (s *HttpService) Login(c *gin.Context) {
 		response.Fail(c, v1.Error_RequestFail, err)
 		return
 	}
-
-	data, _ := s.uc.Login(c.Request.Context(), &biz.User{
+	data, err := s.uc.Login(c.Request.Context(), &biz.User{
 		UserName: req.UserName,
 		Password: req.Password,
 	})
+	if err != nil {
+		response.Fail(c, v1.Error_LoginFail, err)
+		return
+	}
 	response.Ok(c, data)
 }
 

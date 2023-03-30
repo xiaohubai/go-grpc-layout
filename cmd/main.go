@@ -10,7 +10,7 @@ import (
 
 	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
 	"github.com/xiaohubai/go-grpc-layout/pkg/logger"
-	prom "github.com/xiaohubai/go-grpc-layout/pkg/prometheus"
+	metrics "github.com/xiaohubai/go-grpc-layout/pkg/metrics"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 
 	_ "go.uber.org/automaxprocs"
@@ -40,7 +40,7 @@ func main() {
 
 	lg := logger.New(&serviceInfo)
 
-	prometheus.MustRegister(prom.MetricSeconds, prom.MetricRequests)
+	prometheus.MustRegister(metrics.MetricSeconds, metrics.MetricRequests)
 
 	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, &serviceInfo); err != nil {
 		panic(err)

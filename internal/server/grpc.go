@@ -11,7 +11,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/xiaohubai/go-grpc-layout/internal/conf"
-	prom "github.com/xiaohubai/go-grpc-layout/pkg/prometheus"
+	m "github.com/xiaohubai/go-grpc-layout/pkg/metrics"
 
 	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
@@ -26,8 +26,8 @@ func NewGRPCServer(c *conf.Server, g *service.GrpcService, lg log.Logger) *grpc.
 			recovery.Recovery(),
 			validate.Validator(),
 			metrics.Server(
-				metrics.WithSeconds(prometheus.NewHistogram(prom.MetricSeconds)),
-				metrics.WithRequests(prometheus.NewCounter(prom.MetricRequests)),
+				metrics.WithSeconds(prometheus.NewHistogram(m.MetricSeconds)),
+				metrics.WithRequests(prometheus.NewCounter(m.MetricRequests)),
 			),
 		),
 	}
