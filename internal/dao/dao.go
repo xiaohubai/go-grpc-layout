@@ -1,10 +1,11 @@
-package data
+package dao
 
 import (
 	"fmt"
 
+	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
-	"github.com/xiaohubai/go-grpc-layout/internal/conf"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/gorm/schema"
@@ -18,35 +19,35 @@ import (
 var ProviderSet = wire.NewSet(NewData, NewDataRepo)
 
 type dataRepo struct {
-	data *Data
-	log  *log.Helper
+	dao *Dao
+	log *log.Helper
 }
 
-func NewDataRepo(data *Data, lg log.Logger) biz.Repo {
+func NewDataRepo(dao *Dao, lg log.Logger) biz.Repo {
 	return &dataRepo{
-		data: data,
-		log:  log.NewHelper(log.With(lg, "data", "NewDataRepo")),
+		dao: dao,
+		log: log.NewHelper(lg),
 	}
 }
 
-// Data .
-type Data struct {
+// Dao .
+type Dao struct {
 	db  *gorm.DB
 	rdb *redis.Client
 }
 
 // NewData .
-func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
+func NewData(c *configs.Dao, logger log.Logger) (*Dao, func(), error) {
 	cleanup := func() {
 		log.NewHelper(logger).Info("closing the data resources")
 	}
 	mysqlConfig := mysql.Config{
-		DSN:                       c.Database.Source, // DSN data source name
-		DefaultStringSize:         191,               // string 类型字段的默认长度
-		DisableDatetimePrecision:  true,              // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
-		DontSupportRenameIndex:    true,              // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
-		DontSupportRenameColumn:   true,              // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false,             // 根据版本自动配置
+		DSN:                       c.Mysql.Source, // DSN data source name
+		DefaultStringSize:         191,            // string 类型字段的默认长度
+		DisableDatetimePrecision:  true,           // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
+		DontSupportRenameIndex:    true,           // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
+		DontSupportRenameColumn:   true,           // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
+		SkipInitializeWithVersion: false,          // 根据版本自动配置
 	}
 	db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{
 		DisableForeignKeyConstraintWhenMigrating: true, //禁用外键约束
@@ -72,5 +73,5 @@ func NewData(c *conf.Data, logger log.Logger) (*Data, func(), error) {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
 
-	return &Data{db: db, rdb: rdb}, cleanup, nil
+	return &Dao{db: db, rdb: rdb}, cleanup, nil
 }

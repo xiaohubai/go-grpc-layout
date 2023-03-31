@@ -10,15 +10,17 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/validate"
 
 	"github.com/go-kratos/kratos/v2/transport/grpc"
-	"github.com/xiaohubai/go-grpc-layout/internal/conf"
+
+	"github.com/xiaohubai/go-grpc-layout/configs"
 	m "github.com/xiaohubai/go-grpc-layout/pkg/metrics"
 
 	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
+
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 )
 
 // NewGRPCServer new a gRPC server.
-func NewGRPCServer(c *conf.Server, g *service.GrpcService, lg log.Logger) *grpc.Server {
+func NewGRPCServer(c *configs.Server, g *service.GrpcService, lg log.Logger) *grpc.Server {
 	var opts = []grpc.ServerOption{
 		grpc.Middleware(
 			logging.Server(lg),

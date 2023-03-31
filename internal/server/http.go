@@ -3,16 +3,17 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
+
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/xiaohubai/go-grpc-layout/internal/conf"
+	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 	m "github.com/xiaohubai/go-grpc-layout/pkg/middleware"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *conf.Server, s *service.HttpService, logger log.Logger) *http.Server {
+func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *http.Server {
 	var opts = []http.ServerOption{}
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))
@@ -25,15 +26,13 @@ func NewHTTPServer(c *conf.Server, s *service.HttpService, logger log.Logger) *h
 	}
 
 	srv := http.NewServer(opts...)
-	srv.HandlePrefix("/", routers(s))
+	srv.HandlePrefix("/", routers(s, lg))
 	return srv
 }
 
-func routers(s *service.HttpService) *gin.Engine {
+func routers(s *service.HttpService, lg log.Logger) *gin.Engine {
 	var router = gin.Default()
-
 	router.Use(m.Recovery(), otelgin.Middleware("router"))
-
 	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	router.POST("/v1/login", s.Login)
 

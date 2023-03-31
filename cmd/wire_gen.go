@@ -9,12 +9,12 @@ package main
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
-	"github.com/xiaohubai/go-grpc-layout/internal/conf"
-	"github.com/xiaohubai/go-grpc-layout/internal/data"
+	"github.com/xiaohubai/go-grpc-layout/internal/dao"
 	"github.com/xiaohubai/go-grpc-layout/internal/server"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
-	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
+	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
 )
 
 import (
@@ -24,20 +24,20 @@ import (
 // Injectors from wire.go:
 
 // wireApp init kratos application.
-func wireApp(confServer *conf.Server, confData *conf.Data, registry *conf.Registry, logger log.Logger, serviceInfo *configs.ServiceInfo) (*kratos.App, func(), error) {
-	dataData, cleanup, err := data.NewData(confData, logger)
+func wireApp(configsServer *configs.Server, configsDao *configs.Dao, registry *configs.Registry, logger log.Logger, serviceInfoServiceInfo *serviceInfo.ServiceInfo) (*kratos.App, func(), error) {
+	daoDao, cleanup, err := dao.NewData(configsDao, logger)
 	if err != nil {
 		return nil, nil, err
 	}
-	repo := data.NewDataRepo(dataData, logger)
+	repo := dao.NewDataRepo(daoDao, logger)
 	httpUsecase := biz.NewHttpUsecase(repo, logger)
 	httpService := service.NewHttpService(httpUsecase, logger)
-	httpServer := server.NewHTTPServer(confServer, httpService, logger)
+	httpServer := server.NewHTTPServer(configsServer, httpService, logger)
 	grpcUsecase := biz.NewGrpcUsecase(repo, logger)
 	grpcService := service.NewGrpcService(grpcUsecase, logger)
-	grpcServer := server.NewGRPCServer(confServer, grpcService, logger)
+	grpcServer := server.NewGRPCServer(configsServer, grpcService, logger)
 	registrar := server.NewConsulRegistry(registry)
-	app := newApp(logger, httpServer, grpcServer, registrar, serviceInfo)
+	app := newApp(logger, httpServer, grpcServer, registrar, serviceInfoServiceInfo)
 	return app, func() {
 		cleanup()
 	}, nil

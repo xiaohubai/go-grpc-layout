@@ -3,7 +3,6 @@ package tracing
 import (
 	"context"
 
-	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
 	"go.opentelemetry.io/otel/exporters/jaeger"
@@ -11,9 +10,11 @@ import (
 	traceSdk "go.opentelemetry.io/otel/sdk/trace"
 	semConv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	"go.opentelemetry.io/otel/trace"
+
+	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
 )
 
-func NewTracerProvider(endpoint string, serviceInfo *configs.ServiceInfo) error {
+func NewTracerProvider(endpoint string, serviceInfo *serviceInfo.ServiceInfo) error {
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint)))
 	if err != nil {
 		return err

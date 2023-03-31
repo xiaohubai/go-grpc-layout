@@ -2,6 +2,7 @@ global:
   app_name: go-grpc-layout
   env: dev
   version: v0.0.1
+  id: 172.12.0.2
 server:
   http:
     addr: 0.0.0.0:8000
@@ -9,8 +10,8 @@ server:
   grpc:
     addr: 0.0.0.0:9000
     timeout: 1s
-data:
-  database:
+dao:
+  mysql:
     driver: mysql
     source: root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local
   redis:
@@ -29,3 +30,12 @@ consul:
   address: 172.12.0.2:8500
   scheme: http
   health_check: false
+
+zap:
+  level: 'info'
+  format: 'json'
+  filename: 'log.log'
+  max_size: 1
+  max_backups: 3
+  max_age: 7
+  compress: false

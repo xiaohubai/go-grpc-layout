@@ -4,17 +4,17 @@ import (
 	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
 	"github.com/go-kratos/kratos/v2/registry"
 	consulAPI "github.com/hashicorp/consul/api"
-	"github.com/xiaohubai/go-grpc-layout/internal/conf"
+	"github.com/xiaohubai/go-grpc-layout/configs"
 )
 
-func NewConsulRegistry(conf *conf.Registry) registry.Registrar {
+func NewConsulRegistry(configs *configs.Registry) registry.Registrar {
 	c := consulAPI.DefaultConfig()
-	c.Address = conf.Consul.Address
-	c.Scheme = conf.Consul.Scheme
+	c.Address = configs.Consul.Address
+	c.Scheme = configs.Consul.Scheme
 	cli, err := consulAPI.NewClient(c)
 	if err != nil {
 		panic(err)
 	}
-	r := consul.New(cli, consul.WithHealthCheck(conf.Consul.HealthCheck))
+	r := consul.New(cli, consul.WithHealthCheck(configs.Consul.HealthCheck))
 	return r
 }

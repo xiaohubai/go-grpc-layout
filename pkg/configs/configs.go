@@ -2,13 +2,12 @@ package configs
 
 import (
 	"flag"
-	"os"
 
 	"github.com/go-kratos/kratos/contrib/config/consul/v2"
 	"github.com/go-kratos/kratos/v2/config"
 	"github.com/go-kratos/kratos/v2/config/file"
 	"github.com/hashicorp/consul/api"
-	"github.com/xiaohubai/go-grpc-layout/internal/conf"
+	conf "github.com/xiaohubai/go-grpc-layout/configs"
 )
 
 type commandFlags struct {
@@ -23,7 +22,7 @@ type commandFlags struct {
 func LoadConfig() (*conf.Configs, *conf.Registry) {
 	var f commandFlags
 	//flag.StringVar(&p,"args", "defaultValue","eg:xxx") p:绑定的对象, args:-选项, defaultValue:默认值,eg:说明
-	flag.StringVar(&f.configFile, "conf", "../configs/config.yaml", "config path, eg: -conf config.yaml")
+	flag.StringVar(&f.configFile, "conf", "../configs/configs.yaml", "config path, eg: -conf conf.yaml")
 	flag.StringVar(&f.configEnv, "env", "file", "runtime environment, eg: -env remote")
 	flag.StringVar(&f.ConfigHost, "chost", "172.21.0.2:8500", "config server host, eg: -chost 172.21.0.2:8500")
 	flag.StringVar(&f.ConfigType, "ctype", "consul", "config server host, eg: -ctype consul")
@@ -87,33 +86,4 @@ func newConfigProvider(configType, configHost, configEnv, configFile, configPath
 			newRemoteConfigSource(configType, configHost, configPath),
 		),
 	)
-}
-
-type ServiceInfo struct {
-	Name     string
-	Env      string
-	Version  string
-	Id       string
-	Metadata map[string]string
-}
-
-func NewServiceInfo(name, env, version, id string) ServiceInfo {
-	if id == "" {
-		id, _ = os.Hostname()
-	}
-	return ServiceInfo{
-		Name:     name,
-		Env:      env,
-		Version:  version,
-		Id:       id,
-		Metadata: map[string]string{},
-	}
-}
-
-func (s *ServiceInfo) GetInstanceId() string {
-	return s.Id + "." + s.Name
-}
-
-func (s *ServiceInfo) SetMataData(k, v string) {
-	s.Metadata[k] = v
 }

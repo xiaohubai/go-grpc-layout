@@ -5,9 +5,10 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
+	"github.com/go-kratos/kratos/v2/log"
 	v1 "github.com/xiaohubai/go-grpc-layout/api/errors/v1"
-	"github.com/xiaohubai/go-grpc-layout/pkg/response"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
+	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 
 	"go.opentelemetry.io/otel/attribute"
 )
@@ -22,9 +23,12 @@ func Recovery() gin.HandlerFunc {
 
 				buf := make([]byte, 64<<10)
 				buf = buf[:runtime.Stack(buf, false)]
+				bufs := string(buf)
+
+				log.Errorw("traceId", tracing.TraceID(c.Request.Context()), "msg", "recover", "painc", bufs)
 
 				span.SetAttributes(attribute.Key("err").String(fmt.Sprintf("%s", err)))
-				span.SetAttributes(attribute.Key("painc").String(string(buf)))
+				span.SetAttributes(attribute.Key("painc").String(bufs))
 				response.Fail(c, v1.Error_Fail, nil)
 				c.Abort()
 			}

@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
+	"github.com/xiaohubai/go-grpc-layout/internal/model"
 )
 
 // ProviderSet is biz providers.
@@ -20,22 +21,22 @@ type GrpcUsecase struct {
 	log  *log.Helper
 }
 
-func NewHttpUsecase(repo Repo, logger log.Logger) *HttpUsecase {
+func NewHttpUsecase(repo Repo, lg log.Logger) *HttpUsecase {
 	return &HttpUsecase{
 		repo: repo,
-		log:  log.NewHelper(log.With(logger, "biz", "NewHttpUsecase")),
+		log:  log.NewHelper(lg),
 	}
 }
 
-func NewGrpcUsecase(repo Repo, logger log.Logger) *GrpcUsecase {
+func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 	return &GrpcUsecase{
 		repo: repo,
-		log:  log.NewHelper(log.With(logger, "biz", "NewGrpcUsecase")),
+		log:  log.NewHelper(lg),
 	}
 }
 
 // data层共享
 type Repo interface {
 	//Save Update FindByID ListAll
-	GetUserInfo(context.Context, *User) ([]*User, error)
+	ListAllUser(context.Context, *model.User) ([]*model.User, error)
 }

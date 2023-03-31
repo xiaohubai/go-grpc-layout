@@ -5,7 +5,9 @@ go 1.20
 require (
 	github.com/envoyproxy/protoc-gen-validate v0.10.1
 	github.com/gin-gonic/gin v1.9.0
+	github.com/go-kratos/gin v0.1.0
 	github.com/go-kratos/kratos/contrib/config/consul/v2 v2.0.0-20230326145430-f03f5f89881f
+	github.com/go-kratos/kratos/contrib/log/zap/v2 v2.0.0-20230326145430-f03f5f89881f
 	github.com/go-kratos/kratos/contrib/metrics/prometheus/v2 v2.0.0-20230321073308-9a973d29c24b
 	github.com/go-kratos/kratos/contrib/registry/consul/v2 v2.0.0-20230323030821-f47a238478e1
 	github.com/go-kratos/kratos/v2 v2.6.1
@@ -20,8 +22,10 @@ require (
 	go.opentelemetry.io/otel/sdk v1.14.0
 	go.opentelemetry.io/otel/trace v1.14.0
 	go.uber.org/automaxprocs v1.5.2
+	go.uber.org/zap v1.24.0
 	google.golang.org/grpc v1.54.0
 	google.golang.org/protobuf v1.30.0
+	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gorm.io/driver/mysql v1.4.7
 	gorm.io/gorm v1.24.6
 )
@@ -73,6 +77,8 @@ require (
 	github.com/prometheus/procfs v0.8.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.9 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/arch v0.0.0-20210923205945-b76863e36670 // indirect
 	golang.org/x/crypto v0.5.0 // indirect
 	golang.org/x/net v0.8.0 // indirect
