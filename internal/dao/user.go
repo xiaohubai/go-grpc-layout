@@ -13,6 +13,9 @@ func (d *dataRepo) ListAllUser(ctx context.Context, u *model.User, p *model.Page
 
 func (d *dataRepo) FirstUser(ctx context.Context, u *model.User) (users *model.User, err error) {
 	q := d.dao.db.User.WithContext(ctx)
-	users, err = q.Where(d.dao.db.User.Username.Gt(u.Username)).First()
+	if u.Username != "" {
+		q = q.Where(d.dao.db.User.Username.Eq(u.Username))
+	}
+	users, err = q.First()
 	return
 }

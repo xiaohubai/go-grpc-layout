@@ -6,13 +6,11 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
-	"github.com/prometheus/client_golang/prometheus"
 
 	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
 	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
 
 	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
-	metric "github.com/xiaohubai/go-grpc-layout/pkg/metric"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 
 	_ "go.uber.org/automaxprocs"
@@ -40,14 +38,11 @@ func main() {
 	}
 	serviceInfo := serviceInfo.NewServiceInfo(cc.Global)
 
-	lg := zap.NewZapLogger(cc.Zap, &serviceInfo)
+	lg := zap.New(cc.Zap, &serviceInfo)
 
 	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, &serviceInfo); err != nil {
 		panic("load tracing failed")
 	}
-
-	prometheus.MustRegister(metric.MetricSeconds, metric.MetricRequests)
-
 
 	app, cleanup, err := wireApp(cc.Server, cc.Dao, cr, lg, &serviceInfo)
 	if err != nil {

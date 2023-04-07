@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/gin-gonic/gin"
-	v1 "github.com/xiaohubai/go-grpc-layout/api/errors/v1"
 	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 	hpb "github.com/xiaohubai/go-grpc-layout/api/http/v1"
+	"github.com/xiaohubai/go-grpc-layout/internal/errors"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/request"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
@@ -16,11 +16,11 @@ func (s *HttpService) Login(c *gin.Context) {
 	req := &hpb.LoginRequest{}
 	err := request.ShouldBindJSON(c, req)
 	if err != nil {
-		response.Fail(c, v1.Error_RequestFail, "请求参数错误", err)
+		response.Fail(c, errors.ParamsFailed, err)
 		return
 	}
 	if !store.Verify(req.CaptchaID, req.Captcha, true) {
-		response.Fail(c, v1.Error_RequestFail, "验证码错误")
+		response.Fail(c, errors.CaptchaFailed, nil)
 		return
 	}
 
@@ -29,7 +29,7 @@ func (s *HttpService) Login(c *gin.Context) {
 		Password: req.Password,
 	})
 	if err != nil {
-		response.Fail(c, v1.Error_LoginFail, "登录失败", err)
+		response.Fail(c, errors.LoginFailed, err)
 		return
 	}
 	response.Success(c, data)

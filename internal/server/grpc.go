@@ -1,7 +1,6 @@
 package server
 
 import (
-	"github.com/go-kratos/kratos/contrib/metrics/prometheus/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/middleware/logging"
 	"github.com/go-kratos/kratos/v2/middleware/metrics"
@@ -12,7 +11,6 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
-	m "github.com/xiaohubai/go-grpc-layout/pkg/metric"
 
 	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 
@@ -27,10 +25,7 @@ func NewGRPCServer(c *configs.Server, g *service.GrpcService, lg log.Logger) *gr
 			tracing.Server(),
 			recovery.Recovery(),
 			validate.Validator(),
-			metrics.Server(
-				metrics.WithSeconds(prometheus.NewHistogram(m.MetricSeconds)),
-				metrics.WithRequests(prometheus.NewCounter(m.MetricRequests)),
-			),
+			metrics.Server(),
 		),
 	}
 	if c.Grpc.Network != "" {

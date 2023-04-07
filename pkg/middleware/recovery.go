@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
-	v1 "github.com/xiaohubai/go-grpc-layout/api/errors/v1"
+	"github.com/xiaohubai/go-grpc-layout/internal/errors"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 
@@ -29,7 +29,7 @@ func Recovery() gin.HandlerFunc {
 
 				span.SetAttributes(attribute.Key("err").String(fmt.Sprintf("%s", err)))
 				span.SetAttributes(attribute.Key("painc").String(bufs))
-				response.Fail(c, v1.Error_Fail, nil)
+				response.Fail(c, errors.Failed, nil)
 				c.Abort()
 			}
 		}()

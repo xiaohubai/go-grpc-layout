@@ -12,7 +12,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func NewZapLogger(c *configs.Zap, serviceInfo *serviceInfo.ServiceInfo) log.Logger {
+func New(c *configs.Zap, serviceInfo *serviceInfo.ServiceInfo) log.Logger {
 	encoderConfig := zapcore.EncoderConfig{
 		LevelKey:       "level",
 		LineEnding:     zapcore.DefaultLineEnding,     //默认换行

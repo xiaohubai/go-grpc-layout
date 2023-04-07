@@ -30,7 +30,7 @@ func (uc *HttpUsecase) Login(ctx context.Context, u *model.User) (*pb.LoginRespo
 		return nil, errors.New("密码错误")
 	}
 
-	token, err := pJwt.Create(pJwt.Claims{
+	token, err := pJwt.Create(model.Claims{
 		UID:        userInfo.UID,
 		UserName:   userInfo.Username,
 		Phone:      userInfo.Phone,

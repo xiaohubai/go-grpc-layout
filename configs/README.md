@@ -1,1 +1,0 @@
-kratos proto client configs/configs.proto
