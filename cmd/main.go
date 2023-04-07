@@ -12,7 +12,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
 
 	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
-	metrics "github.com/xiaohubai/go-grpc-layout/pkg/metrics"
+	metric "github.com/xiaohubai/go-grpc-layout/pkg/metric"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 
 	_ "go.uber.org/automaxprocs"
@@ -40,13 +40,14 @@ func main() {
 	}
 	serviceInfo := serviceInfo.NewServiceInfo(cc.Global)
 
-	lg := zap.New(&serviceInfo)
+	lg := zap.NewZapLogger(cc.Zap, &serviceInfo)
 
 	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, &serviceInfo); err != nil {
-		panic(err)
+		panic("load tracing failed")
 	}
 
-	prometheus.MustRegister(metrics.MetricSeconds, metrics.MetricRequests)
+	prometheus.MustRegister(metric.MetricSeconds, metric.MetricRequests)
+
 
 	app, cleanup, err := wireApp(cc.Server, cc.Dao, cr, lg, &serviceInfo)
 	if err != nil {

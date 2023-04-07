@@ -58,9 +58,13 @@ internal目录下
 TODO
     权限 和认证
     //定义code码 和异常错误返回结果.
-    zap日志
+   // zap日志
 
 TODO
  接受信号,处理grpc和http
- gin 是否可以使用kratos中间件? 哪些是可以用?
-    日志 zap暂时无法解决 trace默认存在
+
+TODO
+1.服务实例是否携带配置
+    消耗大,
+2.读取远程配置 到全局实例
+

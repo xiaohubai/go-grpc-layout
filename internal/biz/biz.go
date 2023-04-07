@@ -37,6 +37,6 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 
 // data层共享
 type Repo interface {
-	//Save Update FindByID ListAll
-	ListAllUser(context.Context, *model.User) ([]*model.User, error)
+	ListAllUser(context.Context, *model.User, *model.PageInfo) ([]*model.User, error)
+	FirstUser(context.Context, *model.User) (*model.User, error)
 }

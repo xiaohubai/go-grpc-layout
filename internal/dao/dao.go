@@ -5,6 +5,8 @@ import (
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
+	"github.com/xiaohubai/go-grpc-layout/internal/dao/gen"
+	"github.com/xiaohubai/go-grpc-layout/internal/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -32,7 +34,7 @@ func NewDataRepo(dao *Dao, lg log.Logger) biz.Repo {
 
 // Dao .
 type Dao struct {
-	db  *gorm.DB
+	db  *gen.Query
 	rdb *redis.Client
 }
 
@@ -63,6 +65,8 @@ func NewData(c *configs.Dao, logger log.Logger) (*Dao, func(), error) {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 
+	initDB(db)
+
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     c.Redis.Addr,
 		Password: c.Redis.Password,
@@ -73,5 +77,11 @@ func NewData(c *configs.Dao, logger log.Logger) (*Dao, func(), error) {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
 
-	return &Dao{db: db, rdb: rdb}, cleanup, nil
+	return &Dao{db: gen.Use(db), rdb: rdb}, cleanup, nil
+}
+
+func initDB(db *gorm.DB) {
+	if err := db.AutoMigrate(&model.User{}); err != nil {
+		panic(err)
+	}
 }

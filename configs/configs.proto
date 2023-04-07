@@ -9,9 +9,10 @@ message Configs {
   Global global = 1;
   Server server = 2;
   Dao dao = 3;
-  Auth auth = 4;
+  Jwt jwt = 4;
   Trace trace = 5;
   Zap zap = 6;
+  Captcha captcha =7;
 }
 
 message Global {
@@ -63,9 +64,11 @@ message Registry {
   Consul consul = 1;
 }
 
-message Auth {
-  string service_key = 1;
-  string api_key = 2;
+message Jwt {
+  string signing_key = 1;
+  int32 expires_time = 2;
+  int32 buffer_time = 3;
+  string issuer = 4;
 }
 
 message Trace { string endpoint = 1; }
@@ -78,4 +81,12 @@ message Zap {
   int32 max_backups = 5;
   int32 max_age = 6;
   bool compress = 7;
+}
+
+message Captcha {
+  int32 height = 1;
+  int32 width = 2;
+  int32 length = 3;
+  float max_skew = 4;
+  int32 dot_count = 5;
 }

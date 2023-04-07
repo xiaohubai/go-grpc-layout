@@ -16,12 +16,16 @@ func (s *HttpService) Login(c *gin.Context) {
 	req := &hpb.LoginRequest{}
 	err := request.ShouldBindJSON(c, req)
 	if err != nil {
-		response.Fail(c, v1.Error_RequestFail, "请求失败", err)
+		response.Fail(c, v1.Error_RequestFail, "请求参数错误", err)
+		return
+	}
+	if !store.Verify(req.CaptchaID, req.Captcha, true) {
+		response.Fail(c, v1.Error_RequestFail, "验证码错误")
 		return
 	}
 
 	data, err := s.uc.Login(c.Request.Context(), &model.User{
-		UserName: req.UserName,
+		Username: req.UserName,
 		Password: req.Password,
 	})
 	if err != nil {

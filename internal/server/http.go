@@ -3,7 +3,9 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin"
+
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -26,15 +28,28 @@ func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *ht
 	}
 
 	srv := http.NewServer(opts...)
-	srv.HandlePrefix("/", routers(s, lg))
+	srv.HandlePrefix("/", routers(s))
 	return srv
 }
 
-func routers(s *service.HttpService, lg log.Logger) *gin.Engine {
-	var router = gin.Default()
-	router.Use(m.Recovery(), otelgin.Middleware("router"))
-	router.GET("/metrics", gin.WrapH(promhttp.Handler()))
-	router.POST("/v1/login", s.Login)
-
+func routers(s *service.HttpService) *gin.Engine {
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
+	router.Use(m.Recovery(), m.Tracing("go-grpc-layout"), m.Metrics("go-grpc-layout"))
+	r := router.Group("")
+	{
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
+	}
+	r1 := r.Group("")
+	{
+		r1.POST("/v1/login", s.Login)    //登录
+		r1.GET("/v1/captcha", s.Captcha) //获取验证码
+	}
+	/* r2 := r.Group("")
+	{
+		r2.POST("/v1/login", s.Login)
+	}
+	*/
 	return router
 }

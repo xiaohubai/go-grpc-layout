@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.3.0
 // - protoc             v3.19.4
-// source: api/grpc/v1/grpc.proto
+// source: grpc/v1/grpc.proto
 
 package v1
 
@@ -26,6 +26,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GrpcClient interface {
+	// 获取用户信息
 	GetUserInfo(ctx context.Context, in *UserInfoRequest, opts ...grpc.CallOption) (*UserInfoResponse, error)
 }
 
@@ -50,6 +51,7 @@ func (c *grpcClient) GetUserInfo(ctx context.Context, in *UserInfoRequest, opts 
 // All implementations must embed UnimplementedGrpcServer
 // for forward compatibility
 type GrpcServer interface {
+	// 获取用户信息
 	GetUserInfo(context.Context, *UserInfoRequest) (*UserInfoResponse, error)
 	mustEmbedUnimplementedGrpcServer()
 }
@@ -105,5 +107,5 @@ var Grpc_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/grpc/v1/grpc.proto",
+	Metadata: "grpc/v1/grpc.proto",
 }

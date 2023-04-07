@@ -13,5 +13,6 @@ enum Error {
 	Fail=4001; 						//系统内部错误
 	RequestFail = 4002; 				//请求错误
 	LoginFail = 4003; 				//登录失败
-
+	TokenFailed =4004; 				//token认证失败
+	TokenExpired=4005; 				//token过期
   }

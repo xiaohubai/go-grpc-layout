@@ -2,11 +2,17 @@ package biz
 
 import (
 	"context"
+	"time"
 
+	"github.com/golang-jwt/jwt"
+	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 	pb "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
+	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
+	pJwt "github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
+	"github.com/xiaohubai/go-grpc-layout/pkg/utils"
 	"go.opentelemetry.io/otel/attribute"
 )
 
@@ -15,14 +21,40 @@ func (uc *HttpUsecase) Login(ctx context.Context, u *model.User) (*pb.LoginRespo
 	ctx, span := tracing.NewSpan(ctx, "biz-Login")
 	defer span.End()
 
-	userList, err := uc.repo.ListAllUser(ctx, u)
+	userInfo, err := uc.repo.FirstUser(ctx, &model.User{Username: u.Username})
 	if err != nil {
 		return nil, err
 	}
-	span.SetAttributes(attribute.Key("userList").String(cast.ToString(userList)))
+
+	if userInfo.Password != utils.Md5([]byte(u.Password+userInfo.Salt)) {
+		return nil, errors.New("密码错误")
+	}
+
+	token, err := pJwt.Create(pJwt.Claims{
+		UID:        userInfo.UID,
+		UserName:   userInfo.Username,
+		Phone:      userInfo.Phone,
+		RoleID:     userInfo.RoleID,
+		RoleName:   userInfo.RoleName,
+		State:      int(userInfo.State),
+		BufferTime: int64(configs.Cfg.Jwt.BufferTime),
+		StandardClaims: jwt.StandardClaims{
+			NotBefore: time.Now().Unix() - 1000,                               // 签名生效时间
+			ExpiresAt: time.Now().Unix() + int64(configs.Cfg.Jwt.ExpiresTime), // 过期时间
+			Issuer:    configs.Cfg.Jwt.Issuer,                                 // 签名的发行者
+		},
+	})
+	if err != nil {
+		return nil, errors.New("生成token失败")
+	}
+
+	span.SetAttributes(attribute.Key("userList").String(cast.ToString(userInfo)))
 	result := &pb.LoginResponse{
-		UserName: "xxx",
-		NickName: "sss",
+		UserName:     userInfo.Username,
+		NickName:     userInfo.Nickname,
+		Birth:        userInfo.Birth.Local().Format("2006-01-02"),
+		Token:        token,
+		RefreshToken: token,
 	}
 	return result, nil
 }

@@ -12,7 +12,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
-	m "github.com/xiaohubai/go-grpc-layout/pkg/metrics"
+	m "github.com/xiaohubai/go-grpc-layout/pkg/metric"
 
 	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 

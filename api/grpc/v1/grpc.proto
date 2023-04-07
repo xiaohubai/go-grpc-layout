@@ -2,20 +2,35 @@ syntax = "proto3";
 
 package api.grpc.v1;
 
-import "validate/validate.proto";
-
 option go_package = "github.com/xiaohubai/go-grpc-layout/api/grpc/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.grpc.v1";
 
+import "openapi/v3/annotations.proto";
+import "validate/validate.proto";
+
+option (openapi.v3.document) = {
+	info: {
+	  title: "Grpc";
+	  description: "所有grpc服务";
+	  version: "1.0";
+	}
+  };
+
+// Grpc服务
 service Grpc {
+	//获取用户信息
 	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
 }
 
+//获取用户信息请求结构体
 message UserInfoRequest {
-	string userName = 1 [(validate.rules).string = {min_len: 3, max_len: 11}]; //用户名
+	//用户名
+	string userName = 1 [(validate.rules).string = {min_len: 3, max_len: 11}];
 }
 
+//获取用户信息返回结构体
 message UserInfoResponse {
+	//返回码
 	int32 code = 1;
 }
