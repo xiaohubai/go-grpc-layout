@@ -3,6 +3,7 @@ package consts
 import (
 	"time"
 
+	"github.com/spf13/viper"
 	"github.com/xiaohubai/go-grpc-layout/configs"
 )
 
@@ -42,5 +43,6 @@ const (
 )
 
 var (
-	Conf *configs.Configs
+	Cfg     *configs.Configs
+	Viper *viper.Viper
 )

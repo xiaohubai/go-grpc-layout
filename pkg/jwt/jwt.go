@@ -11,13 +11,13 @@ import (
 // Create 生成token
 func Create(claims model.Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(consts.Conf.Jwt.SigningKey))
+	return token.SignedString([]byte(consts.Cfg.Jwt.SigningKey))
 }
 
 // Parse 解析token
 func Parse(tokenString string) (*model.Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &model.Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(consts.Conf.Jwt.SigningKey), nil
+		return []byte(consts.Cfg.Jwt.SigningKey), nil
 	})
 
 	if err != nil {

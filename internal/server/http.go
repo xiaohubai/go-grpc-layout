@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/spf13/viper"
 
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -23,8 +24,8 @@ func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *ht
 	if c.Http.Addr != "" {
 		opts = append(opts, http.Address(c.Http.Addr))
 	}
-	if c.Http.Timeout != nil {
-		opts = append(opts, http.Timeout(c.Http.Timeout.AsDuration()))
+	if c.Http.Timeout != "" {
+		opts = append(opts, http.Timeout(viper.GetDuration(c.Http.Timeout)))
 	}
 
 	srv := http.NewServer(opts...)

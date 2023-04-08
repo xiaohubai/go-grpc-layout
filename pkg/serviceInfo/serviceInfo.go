@@ -14,7 +14,7 @@ type ServiceInfo struct {
 	Metadata map[string]string
 }
 
-func NewServiceInfo(g *configs.Global) ServiceInfo {
+func New(g *configs.Global) ServiceInfo {
 	id, _ := os.Hostname()
 	return ServiceInfo{
 		Name:     g.AppName,

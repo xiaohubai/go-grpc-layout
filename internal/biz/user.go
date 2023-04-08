@@ -37,11 +37,11 @@ func (uc *HttpUsecase) Login(ctx context.Context, u *model.User) (*pb.LoginRespo
 		RoleID:     userInfo.RoleID,
 		RoleName:   userInfo.RoleName,
 		State:      int(userInfo.State),
-		BufferTime: int64(consts.Conf.Jwt.BufferTime),
+		BufferTime: int64(consts.Cfg.Jwt.BufferTime),
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,                               // 签名生效时间
-			ExpiresAt: time.Now().Unix() + int64(consts.Conf.Jwt.ExpiresTime), // 过期时间
-			Issuer:    consts.Conf.Jwt.Issuer,                                 // 签名的发行者
+			NotBefore: time.Now().Unix() - 1000,                              // 签名生效时间
+			ExpiresAt: time.Now().Unix() + int64(consts.Cfg.Jwt.ExpiresTime), // 过期时间
+			Issuer:    consts.Cfg.Jwt.Issuer,                                 // 签名的发行者
 		},
 	})
 	if err != nil {

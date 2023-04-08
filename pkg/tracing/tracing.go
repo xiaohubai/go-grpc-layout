@@ -11,10 +11,10 @@ import (
 	semConv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
+	"github.com/xiaohubai/go-grpc-layout/configs"
 )
 
-func NewTracerProvider(endpoint string, serviceInfo *serviceInfo.ServiceInfo) error {
+func NewTracerProvider(endpoint string, g *configs.Global) error {
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint)))
 	if err != nil {
 		return err
@@ -23,10 +23,10 @@ func NewTracerProvider(endpoint string, serviceInfo *serviceInfo.ServiceInfo) er
 		traceSdk.WithSampler(traceSdk.ParentBased(traceSdk.TraceIDRatioBased(1.0))),
 		traceSdk.WithBatcher(exp),
 		traceSdk.WithResource(resource.NewSchemaless(
-			semConv.ServiceNameKey.String(serviceInfo.Name),
-			semConv.ServiceVersionKey.String(serviceInfo.Version),
-			semConv.ServiceInstanceIDKey.String(serviceInfo.Id),
-			attribute.String("env", serviceInfo.Env),
+			semConv.ServiceNameKey.String(g.AppName),
+			semConv.ServiceVersionKey.String(g.Version),
+			semConv.ServiceInstanceIDKey.String(g.Id),
+			attribute.String("env", g.Env),
 		)),
 	)
 

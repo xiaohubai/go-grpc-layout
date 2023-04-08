@@ -1,5 +1,5 @@
 global:
-  app_name: go-grpc-layout
+  appName: go-grpc-layout
   env: dev
   version: v0.0.1
   id: 172.12.0.2
@@ -10,7 +10,7 @@ server:
   grpc:
     addr: 0.0.0.0:9000
     timeout: 1s
-dao:
+data:
   mysql:
     driver: mysql
     source: root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local
@@ -18,36 +18,38 @@ dao:
     db: 0
     addr: 172.12.0.2:6379
     password: '123456'
-    dial_timeout: 1s
-    read_timeout: 0.4s
-    write_timeout: 0.6s
+    dialTimeout: 1s
+    readTimeout: 0.4s
+    writeTimeout: 0.6s
 jwt:
-  signing_key: some_jwt_sign_key
-  expires_time: 604800
-  buffer_time: 86400
+  signingKey: some_jwt_sign_key
+  expiresTime: 604800
+  bufferTime: 86400
   issuer: xiaohubai@outlook.com
 trace:
   endpoint: http://172.12.0.2:14268/api/traces
-consul:
-  address: 172.12.0.2:8500
-  scheme: http
-  health_check: false
-  configs:
-    dict:
-      path: /go-grpc-layout/dev/dict.yaml
+registry:
+  consul:
+    host: 172.12.0.2:8500
+    scheme: http
+    healthCheck: false
+
+conf:
+  host: 172.12.0.2:8500
+  dictPath: /go-grpc-layout/dev/dict.yaml
 
 zap:
   level: 'info'
   format: 'json'
   filename: '../logs/log.log'
-  max_size: 1
-  max_backups: 3
-  max_age: 7
+  maxSize: 1
+  maxBackups: 3
+  maxAge: 7
   compress: false
 
 captcha:
   height: 80
   width: 240
   length: 6
-  max_skew: 0.7
-  dot_count: 80
+  maxSkew: 0.7
+  dotCount: 80

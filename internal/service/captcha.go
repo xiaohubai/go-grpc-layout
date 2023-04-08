@@ -15,9 +15,9 @@ var store = base64Captcha.DefaultMemStore
 
 // Captcha 生成验证码
 func (s *HttpService) Captcha(c *gin.Context) {
-	fmt.Println(consts.Conf.Captcha.Length)
-	driver := base64Captcha.NewDriverDigit(int(consts.Conf.Captcha.Height), int(consts.Conf.Captcha.Width),
-		int(consts.Conf.Captcha.Length), float64(consts.Conf.Captcha.MaxSkew), int(consts.Conf.Captcha.DotCount))
+	fmt.Println(consts.Cfg.Captcha.Length)
+	driver := base64Captcha.NewDriverDigit(int(consts.Cfg.Captcha.Height), int(consts.Cfg.Captcha.Width),
+		int(consts.Cfg.Captcha.Length), float64(consts.Cfg.Captcha.MaxSkew), int(consts.Cfg.Captcha.DotCount))
 	cp := base64Captcha.NewCaptcha(driver, store)
 	if id, b64s, err := cp.Generate(); err != nil {
 		response.Fail(c, errors.ParamsFailed, nil)
@@ -25,7 +25,7 @@ func (s *HttpService) Captcha(c *gin.Context) {
 		response.Success(c, model.CaptchaResp{
 			CaptchaID:     id,
 			PicPath:       b64s,
-			CaptchaLength: int(consts.Conf.Captcha.Length),
+			CaptchaLength: int(consts.Cfg.Captcha.Length),
 		})
 	}
 }

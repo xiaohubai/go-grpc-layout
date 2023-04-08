@@ -7,9 +7,9 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/configs"
 )
 
-func NewConsulRegistry(configs *configs.Registry) registry.Registrar {
+func NewRegistry(configs *configs.Registry) registry.Registrar {
 	c := consulAPI.DefaultConfig()
-	c.Address = configs.Consul.Address
+	c.Address = configs.Consul.Host
 	c.Scheme = configs.Consul.Scheme
 	cli, err := consulAPI.NewClient(c)
 	if err != nil {

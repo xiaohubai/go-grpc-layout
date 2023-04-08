@@ -3,20 +3,21 @@ package kratos.api;
 
 option go_package = "github.com/xiaohubai/go-grpc-layout/internal/configs;configs";
 
-import "google/protobuf/duration.proto";
 
 message Configs {
   Global global = 1;
   Server server = 2;
-  Dao dao = 3;
+  Data Data = 3;
   Jwt jwt = 4;
   Trace trace = 5;
   Zap zap = 6;
   Captcha captcha =7;
+  Registry Registry=8;
+  Conf conf =9;
 }
 
 message Global {
-  string app_name = 1;
+  string appName = 1;
   string env = 2;
   string version = 3;
   string id = 4;
@@ -26,18 +27,18 @@ message Server {
   message HTTP {
     string network = 1;
     string addr = 2;
-    google.protobuf.Duration timeout = 3;
+    string timeout = 3;
   }
   message GRPC {
     string network = 1;
     string addr = 2;
-    google.protobuf.Duration timeout = 3;
+    string timeout = 3;
   }
   HTTP http = 1;
   GRPC grpc = 2;
 }
 
-message Dao {
+message Data {
   message Mysql {
     string driver = 1;
     string source = 2;
@@ -47,9 +48,9 @@ message Dao {
     string addr = 2;
     string password = 3;
     int32 db = 4;
-    google.protobuf.Duration dial_timeout = 5;
-    google.protobuf.Duration read_timeout = 6;
-    google.protobuf.Duration write_timeout = 7;
+    string dialTimeout = 5;
+    string readTimeout = 6;
+    string writeTimeout = 7;
   }
   Mysql mysql = 1;
   Redis redis = 2;
@@ -57,17 +58,22 @@ message Dao {
 
 message Registry {
   message Consul {
-    string address = 1;
+    string host = 1;
     string scheme = 2;
-    bool health_check = 3;
+    bool healthCheck = 3;
   }
   Consul consul = 1;
 }
 
+message Conf {
+    string host = 1;
+    string dictPath = 2;
+}
+
 message Jwt {
-  string signing_key = 1;
-  int32 expires_time = 2;
-  int32 buffer_time = 3;
+  string signingKey = 1;
+  int32 expiresTime = 2;
+  int32 bufferTime = 3;
   string issuer = 4;
 }
 
@@ -77,9 +83,9 @@ message Zap {
   string level = 1;
   string format = 2;
   string filename = 3;
-  int32 max_size = 4;
-  int32 max_backups = 5;
-  int32 max_age = 6;
+  int32 maxSize = 4;
+  int32 maxBackups = 5;
+  int32 maxAge = 6;
   bool compress = 7;
 }
 
@@ -87,6 +93,6 @@ message Captcha {
   int32 height = 1;
   int32 width = 2;
   int32 length = 3;
-  float max_skew = 4;
-  int32 dot_count = 5;
+  float maxSkew = 4;
+  int32 dotCount = 5;
 }

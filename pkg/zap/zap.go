@@ -4,7 +4,6 @@ import (
 	kzap "github.com/go-kratos/kratos/contrib/log/zap/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/xiaohubai/go-grpc-layout/configs"
-	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
 
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"go.uber.org/zap"
@@ -12,7 +11,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func New(c *configs.Zap, serviceInfo *serviceInfo.ServiceInfo) log.Logger {
+func New(c *configs.Zap, g *configs.Global) (log.Logger, error) {
 	encoderConfig := zapcore.EncoderConfig{
 		LevelKey:       "level",
 		LineEnding:     zapcore.DefaultLineEnding,     //默认换行
@@ -32,7 +31,7 @@ func New(c *configs.Zap, serviceInfo *serviceInfo.ServiceInfo) log.Logger {
 
 	var level zapcore.Level
 	if err := level.UnmarshalText([]byte(c.Level)); err != nil {
-		panic("load log failed")
+		return nil, err
 	}
 
 	core := zapcore.NewCore(zapcore.NewJSONEncoder(encoderConfig), zapcore.AddSync(fileWriter), level)
@@ -42,11 +41,11 @@ func New(c *configs.Zap, serviceInfo *serviceInfo.ServiceInfo) log.Logger {
 	return log.With(
 		logger,
 		"ts", log.DefaultTimestamp,
-		"env", serviceInfo.Env,
-		"service_id", serviceInfo.Id,
-		"service_name", serviceInfo.Name,
-		"service_version", serviceInfo.Version,
+		"env", g.Env,
+		"service_id", g.Id,
+		"service_name", g.AppName,
+		"service_version", g.Version,
 		"trace_id", tracing.TraceID(),
 		"caller", log.DefaultCaller,
-	)
+	), nil
 }

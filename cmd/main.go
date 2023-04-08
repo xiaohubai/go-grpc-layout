@@ -7,21 +7,21 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
 
-	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
+	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
 
-	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
+	conf "github.com/xiaohubai/go-grpc-layout/pkg/configs"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 
 	_ "go.uber.org/automaxprocs"
 )
 
-func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, rr registry.Registrar, s *serviceInfo.ServiceInfo) *kratos.App {
+func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, rr registry.Registrar, g *configs.Global) *kratos.App {
 	return kratos.New(
-		kratos.ID(s.Id),
-		kratos.Name(s.Name),
-		kratos.Version(s.Version),
-		kratos.Metadata(s.Metadata),
+		kratos.ID(g.Id),
+		kratos.Name(g.AppName),
+		kratos.Version(g.Version),
+		kratos.Metadata(map[string]string{}),
 		kratos.Logger(logger),
 		kratos.Registrar(rr),
 		kratos.Server(
@@ -32,24 +32,22 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, rr registry.Reg
 }
 
 func main() {
-	cc, cr := configs.LoadConfig()
-	if cc == nil || cr == nil {
+	cc, err := conf.Load()
+	if err != nil {
 		panic("load config failed")
 	}
-	serviceInfo := serviceInfo.NewServiceInfo(cc.Global)
-
-	lg := zap.New(cc.Zap, &serviceInfo)
-
-	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, &serviceInfo); err != nil {
+	logger, err := zap.New(cc.Zap, cc.Global)
+	if err != nil {
+		panic("load logger failed")
+	}
+	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, cc.Global); err != nil {
 		panic("load tracing failed")
 	}
-
-	app, cleanup, err := wireApp(cc.Server, cc.Dao, cr, lg, &serviceInfo)
+	app, cleanup, err := wireApp(cc.Server, cc.Data, cc.Registry, cc.Global, logger)
 	if err != nil {
 		panic(err)
 	}
 	defer cleanup()
-
 	if err := app.Run(); err != nil {
 		panic(err)
 	}

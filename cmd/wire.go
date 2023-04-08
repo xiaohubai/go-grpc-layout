@@ -8,9 +8,8 @@ package main
 import (
 	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
-	"github.com/xiaohubai/go-grpc-layout/pkg/serviceInfo"
 
-	"github.com/xiaohubai/go-grpc-layout/internal/dao"
+	"github.com/xiaohubai/go-grpc-layout/internal/data"
 	"github.com/xiaohubai/go-grpc-layout/internal/server"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 
@@ -20,6 +19,6 @@ import (
 )
 
 // wireApp init kratos application.
-func wireApp(*configs.Server, *configs.Dao, *configs.Registry, log.Logger, *serviceInfo.ServiceInfo) (*kratos.App, func(), error) {
-	panic(wire.Build(server.ProviderSet, dao.ProviderSet, biz.ProviderSet, service.ProviderSet, newApp))
+func wireApp(*configs.Server, *configs.Data, *configs.Registry, *configs.Global, log.Logger) (*kratos.App, func(), error) {
+	panic(wire.Build(server.ProviderSet, data.ProviderSet, biz.ProviderSet, service.ProviderSet, newApp))
 }

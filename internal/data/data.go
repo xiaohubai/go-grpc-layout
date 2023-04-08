@@ -1,11 +1,11 @@
-package dao
+package data
 
 import (
 	"fmt"
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
-	"github.com/xiaohubai/go-grpc-layout/internal/dao/gen"
+	"github.com/xiaohubai/go-grpc-layout/internal/data/gen"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
 
 	"gorm.io/driver/mysql"
@@ -21,25 +21,25 @@ import (
 var ProviderSet = wire.NewSet(NewData, NewDataRepo)
 
 type dataRepo struct {
-	dao *Dao
-	log *log.Helper
+	data *Data
+	log  *log.Helper
 }
 
-func NewDataRepo(dao *Dao, lg log.Logger) biz.Repo {
+func NewDataRepo(d *Data, lg log.Logger) biz.Repo {
 	return &dataRepo{
-		dao: dao,
-		log: log.NewHelper(lg),
+		data: d,
+		log:  log.NewHelper(lg),
 	}
 }
 
-// Dao .
-type Dao struct {
+// Data .
+type Data struct {
 	db  *gen.Query
 	rdb *redis.Client
 }
 
 // NewData .
-func NewData(c *configs.Dao, logger log.Logger) (*Dao, func(), error) {
+func NewData(c *configs.Data, logger log.Logger) (*Data, func(), error) {
 	cleanup := func() {
 		log.NewHelper(logger).Info("closing the data resources")
 	}
@@ -77,7 +77,7 @@ func NewData(c *configs.Dao, logger log.Logger) (*Dao, func(), error) {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
 
-	return &Dao{db: gen.Use(db), rdb: rdb}, cleanup, nil
+	return &Data{db: gen.Use(db), rdb: rdb}, cleanup, nil
 }
 
 func initDB(db *gorm.DB) {
