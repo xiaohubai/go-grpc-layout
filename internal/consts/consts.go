@@ -1,9 +1,12 @@
 package consts
 
-import "time"
+import (
+	"time"
+
+	"github.com/xiaohubai/go-grpc-layout/configs"
+)
 
 const (
-
 	D  = 24 * time.Hour
 	H  = time.Hour
 	M  = time.Minute
@@ -36,4 +39,8 @@ const (
 	October   = 10
 	November  = 11
 	December  = 12
+)
+
+var (
+	Conf *configs.Configs
 )

@@ -46,10 +46,10 @@ func routers(s *service.HttpService) *gin.Engine {
 		r1.POST("/v1/login", s.Login)    //登录
 		r1.GET("/v1/captcha", s.Captcha) //获取验证码
 	}
-	/* r2 := r.Group("")
+	r2 := r.Group("")
 	{
-		r2.POST("/v1/login", s.Login)
+		r2.POST("/v1/get/menuList", s.GetMenuList)
 	}
-	*/
+
 	return router
 }

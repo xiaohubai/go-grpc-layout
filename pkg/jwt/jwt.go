@@ -4,20 +4,20 @@ import (
 	"errors"
 
 	"github.com/golang-jwt/jwt"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
-	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
 )
 
 // Create 生成token
 func Create(claims model.Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(configs.Cfg.Jwt.SigningKey))
+	return token.SignedString([]byte(consts.Conf.Jwt.SigningKey))
 }
 
 // Parse 解析token
 func Parse(tokenString string) (*model.Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &model.Claims{}, func(token *jwt.Token) (interface{}, error) {
-		return []byte(configs.Cfg.Jwt.SigningKey), nil
+		return []byte(consts.Conf.Jwt.SigningKey), nil
 	})
 
 	if err != nil {

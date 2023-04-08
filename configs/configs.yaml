@@ -32,6 +32,9 @@ consul:
   address: 172.12.0.2:8500
   scheme: http
   health_check: false
+  configs:
+    dict:
+      path: /go-grpc-layout/dev/dict.yaml
 
 zap:
   level: 'info'

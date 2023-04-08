@@ -8,8 +8,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
 	pb "github.com/xiaohubai/go-grpc-layout/api/http/v1"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
-	"github.com/xiaohubai/go-grpc-layout/pkg/configs"
 	pJwt "github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils"
@@ -37,11 +37,11 @@ func (uc *HttpUsecase) Login(ctx context.Context, u *model.User) (*pb.LoginRespo
 		RoleID:     userInfo.RoleID,
 		RoleName:   userInfo.RoleName,
 		State:      int(userInfo.State),
-		BufferTime: int64(configs.Cfg.Jwt.BufferTime),
+		BufferTime: int64(consts.Conf.Jwt.BufferTime),
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: time.Now().Unix() - 1000,                               // 签名生效时间
-			ExpiresAt: time.Now().Unix() + int64(configs.Cfg.Jwt.ExpiresTime), // 过期时间
-			Issuer:    configs.Cfg.Jwt.Issuer,                                 // 签名的发行者
+			ExpiresAt: time.Now().Unix() + int64(consts.Conf.Jwt.ExpiresTime), // 过期时间
+			Issuer:    consts.Conf.Jwt.Issuer,                                 // 签名的发行者
 		},
 	})
 	if err != nil {
