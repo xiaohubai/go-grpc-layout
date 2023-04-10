@@ -47,9 +47,9 @@ func routers(s *service.HttpService) *gin.Engine {
 		r1.POST("/v1/login", s.Login)    //登录
 		r1.GET("/v1/captcha", s.Captcha) //获取验证码
 	}
-	r2 := r.Group("")
+	r2 := r.Group("").Use(m.Jwt(), m.Casbin())
 	{
-		r2.POST("/v1/get/menuList", s.GetMenuList)
+		r2.GET("/v1/get/dictList", s.GetDictList) //获取字典序
 	}
 
 	return router

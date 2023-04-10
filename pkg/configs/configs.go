@@ -3,6 +3,7 @@ package configs
 import (
 	"errors"
 	"flag"
+	"strings"
 	"time"
 
 	"github.com/fsnotify/fsnotify"
@@ -35,17 +36,14 @@ func Load() (*configs.Configs, error) {
 
 	var cc configs.Configs
 	if f.env == "local" {
-		_, err := newFileConfig(f.filePath, &cc)
-		if err != nil {
+		if err := newFileConfig(f.filePath, &cc); err != nil {
 			return nil, err
 		}
 	} else {
-		_, err := newRemoteConfigSource(f.remoteType, f.remoteHost, f.remotePath, &cc)
-		if err != nil {
+		if err := newRemoteConfigSource(f.remoteType, f.remoteHost, f.remotePath, &cc); err != nil {
 			return nil, err
 		}
 	}
-
 	consts.Cfg = &cc
 	return &cc, nil
 }
@@ -71,21 +69,25 @@ func newFileConfig(filePath string, conf any) error {
 }
 
 // newRemoteConfigSource 创建一个远程配置源
-func newRemoteConfigSource(remoteType, remoteHost, remotePath string, conf any) (*viper.Viper, error) {
+func newRemoteConfigSource(remoteType, remoteHost, remotePath string, conf any) error {
 	switch remoteType {
 	case "consul":
 		return NewConsulConfigSource(remoteHost, remotePath, conf)
 	}
-	return nil, errors.New("empty remote type source")
+	return errors.New("empty remote type source")
 }
 
 // NewConsulConfigSource 创建一个远程配置源 - Consul
-func NewConsulConfigSource(remoteHost, remotePath string, conf any) (*viper.Viper, error) {
+func NewConsulConfigSource(remoteHost, remotePath string, conf any) error {
 	v := viper.New()
+	confType := strings.TrimSpace(remotePath[strings.LastIndex(remotePath, ".")+1:])
 	v.AddRemoteProvider("consul", remoteHost, remotePath)
-	v.SetConfigType("yaml")
+	v.SetConfigType(confType)
 	if err := v.ReadRemoteConfig(); err != nil {
-		return nil, err
+		return err
+	}
+	if err := v.Unmarshal(conf); err != nil {
+		return err
 	}
 	go func() {
 		for {
@@ -98,5 +100,5 @@ func NewConsulConfigSource(remoteHost, remotePath string, conf any) (*viper.Vipe
 			v.Unmarshal(conf)
 		}
 	}()
-	return v, nil
+	return nil
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/gen"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
 
@@ -76,6 +77,8 @@ func NewData(c *configs.Data, logger log.Logger) (*Data, func(), error) {
 	if err != nil {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
+
+	consts.DB = db
 
 	return &Data{db: gen.Use(db), rdb: rdb}, cleanup, nil
 }

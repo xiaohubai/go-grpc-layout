@@ -17,26 +17,26 @@ import (
 
 func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
-		db:     db,
-		Casbin: newCasbin(db, opts...),
-		User:   newUser(db, opts...),
+		db:         db,
+		CasbinRule: newCasbinRule(db, opts...),
+		User:       newUser(db, opts...),
 	}
 }
 
 type Query struct {
 	db *gorm.DB
 
-	Casbin casbin
-	User   user
+	CasbinRule casbinRule
+	User       user
 }
 
 func (q *Query) Available() bool { return q.db != nil }
 
 func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
-		db:     db,
-		Casbin: q.Casbin.clone(db),
-		User:   q.User.clone(db),
+		db:         db,
+		CasbinRule: q.CasbinRule.clone(db),
+		User:       q.User.clone(db),
 	}
 }
 
@@ -50,21 +50,21 @@ func (q *Query) WriteDB() *Query {
 
 func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
-		db:     db,
-		Casbin: q.Casbin.replaceDB(db),
-		User:   q.User.replaceDB(db),
+		db:         db,
+		CasbinRule: q.CasbinRule.replaceDB(db),
+		User:       q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
-	Casbin *casbinDo
-	User   *userDo
+	CasbinRule *casbinRuleDo
+	User       *userDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
-		Casbin: q.Casbin.WithContext(ctx),
-		User:   q.User.WithContext(ctx),
+		CasbinRule: q.CasbinRule.WithContext(ctx),
+		User:       q.User.WithContext(ctx),
 	}
 }
 

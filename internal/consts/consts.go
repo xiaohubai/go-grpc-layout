@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/viper"
 	"github.com/xiaohubai/go-grpc-layout/configs"
+	"gorm.io/gorm"
 )
 
 const (
@@ -43,6 +44,7 @@ const (
 )
 
 var (
-	Cfg     *configs.Configs
+	DB    *gorm.DB
+	Cfg   *configs.Configs
 	Viper *viper.Viper
 )

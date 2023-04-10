@@ -51,7 +51,7 @@ compose:
 .PHONY: gensql
 # generate openapi
 gensql:
-	gentool -dsn "root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local" --modelPkgName="./internal/model" -outPath="./internal/dao/gen"
+	gentool -dsn "root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local" --modelPkgName="./internal/model" -outPath="./internal/data/gen"
 
 .PHONY: all
 # generate all
