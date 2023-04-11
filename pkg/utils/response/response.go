@@ -10,13 +10,13 @@ import (
 )
 
 type Body struct {
-	Code    int         `json:"code"`
-	Msg     string      `json:"msg"`
-	Data    interface{} `json:"data"`
-	TraceID string      `json:"traceID"`
+	Code    int    `json:"code"`
+	Msg     string `json:"msg"`
+	Data    any    `json:"data"`
+	TraceID string `json:"traceID"`
 }
 
-func Result(c *gin.Context, code int, data interface{}, err interface{}) {
+func Result(c *gin.Context, code int, data any, err any) {
 	if data == nil {
 		data = make(map[string]string, 0)
 	}
@@ -33,10 +33,10 @@ func Result(c *gin.Context, code int, data interface{}, err interface{}) {
 	c.JSON(http.StatusOK, resp)
 }
 
-func Success(c *gin.Context, data interface{}) {
+func Success(c *gin.Context, data any) {
 	Result(c, errors.Success, data, nil)
 }
 
-func Fail(c *gin.Context, code int, err interface{}) {
+func Fail(c *gin.Context, code int, err any) {
 	Result(c, code, nil, err)
 }

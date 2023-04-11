@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func ShouldBindJSON(c *gin.Context, req interface{}) error {
+func ShouldBindJSON(c *gin.Context, req any) error {
 	err := c.ShouldBindJSON(req)
 	if err != nil {
 		return err

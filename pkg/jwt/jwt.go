@@ -26,7 +26,7 @@ func Create(claims Claims) (string, error) {
 
 // Parse 解析token
 func Parse(tokenString string) (*Claims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (any, error) {
 		return []byte(consts.Cfg.Jwt.SigningKey), nil
 	})
 
