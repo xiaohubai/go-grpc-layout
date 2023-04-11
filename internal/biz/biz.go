@@ -5,6 +5,7 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
+	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
 )
 
@@ -37,6 +38,7 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 
 // data层共享
 type Repo interface {
-	ListAllUser(context.Context, *model.User, *model.PageInfo) ([]*model.User, error)
+	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
+	ListAllMenu(context.Context, *v1.PageRequest) ([]*model.Menu, int64, error)
 }

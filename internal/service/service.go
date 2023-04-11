@@ -3,7 +3,7 @@ package service
 import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
-	pb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
+	v1 "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 )
 
@@ -16,7 +16,7 @@ type HttpService struct {
 }
 
 type GrpcService struct {
-	pb.UnimplementedGrpcServer
+	v1.UnimplementedGrpcServer
 	log *log.Helper
 	uc  *biz.GrpcUsecase
 }

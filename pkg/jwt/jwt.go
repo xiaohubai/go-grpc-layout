@@ -5,18 +5,28 @@ import (
 
 	"github.com/golang-jwt/jwt"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
-	"github.com/xiaohubai/go-grpc-layout/internal/model"
 )
 
+type Claims struct {
+	UID        string `json:"uid"`
+	UserName   string `json:"userName"`
+	Phone      string `json:"phone"`
+	RoleID     string `json:"roleId"`
+	RoleName   string `json:"roleName"`
+	State      int32  `json:"state"`
+	BufferTime int32  `json:"bufferTime"`
+	jwt.StandardClaims
+}
+
 // Create 生成token
-func Create(claims model.Claims) (string, error) {
+func Create(claims Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString([]byte(consts.Cfg.Jwt.SigningKey))
 }
 
 // Parse 解析token
-func Parse(tokenString string) (*model.Claims, error) {
-	token, err := jwt.ParseWithClaims(tokenString, &model.Claims{}, func(token *jwt.Token) (interface{}, error) {
+func Parse(tokenString string) (*Claims, error) {
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
 		return []byte(consts.Cfg.Jwt.SigningKey), nil
 	})
 
@@ -34,7 +44,7 @@ func Parse(tokenString string) (*model.Claims, error) {
 		}
 	}
 
-	if claims, ok := token.Claims.(*model.Claims); ok && token.Valid {
+	if claims, ok := token.Claims.(*Claims); ok && token.Valid {
 		return claims, nil
 	} else {
 		return nil, err

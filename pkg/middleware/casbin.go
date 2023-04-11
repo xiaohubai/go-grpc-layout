@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/casbin/casbin/v2"
@@ -10,18 +9,18 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/errors"
 	"github.com/xiaohubai/go-grpc-layout/internal/model"
+	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 )
 
 func Casbin() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		claims, _ := c.Get("claims")
-		userInfo := claims.(*model.Claims)
+		userInfo := claims.(*jwt.Claims)
 		obj := c.Request.URL.Path
 		act := c.Request.Method
 		sub := userInfo.RoleID
 		e := SyncedEnforcer()
-		fmt.Println(obj, act, sub)
 		if ok, err := e.Enforce(sub, obj, act); !ok {
 			response.Fail(c, errors.CasbinFailed, err)
 			c.Abort()

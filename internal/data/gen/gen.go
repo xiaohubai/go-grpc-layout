@@ -19,6 +19,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:         db,
 		CasbinRule: newCasbinRule(db, opts...),
+		Menu:       newMenu(db, opts...),
 		User:       newUser(db, opts...),
 	}
 }
@@ -27,6 +28,7 @@ type Query struct {
 	db *gorm.DB
 
 	CasbinRule casbinRule
+	Menu       menu
 	User       user
 }
 
@@ -36,6 +38,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:         db,
 		CasbinRule: q.CasbinRule.clone(db),
+		Menu:       q.Menu.clone(db),
 		User:       q.User.clone(db),
 	}
 }
@@ -52,18 +55,21 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:         db,
 		CasbinRule: q.CasbinRule.replaceDB(db),
+		Menu:       q.Menu.replaceDB(db),
 		User:       q.User.replaceDB(db),
 	}
 }
 
 type queryCtx struct {
 	CasbinRule *casbinRuleDo
+	Menu       *menuDo
 	User       *userDo
 }
 
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		CasbinRule: q.CasbinRule.WithContext(ctx),
+		Menu:       q.Menu.WithContext(ctx),
 		User:       q.User.WithContext(ctx),
 	}
 }

@@ -45,3 +45,29 @@ CREATE TABLE `casbin_rule` (
     PRIMARY KEY (`id`),
     UNIQUE KEY `idx_casbin_rule` (`ptype`, `v0`, `v1`, `v2`, `v3`, `v4`, `v5`)
 ) ENGINE = InnoDB AUTO_INCREMENT = 0 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '权限表';
+
+CREATE TABLE `menu` (
+    `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+    `path` varchar(100) NOT NULL DEFAULT '' COMMENT '路由',
+    `name` varchar(100) NOT NULL DEFAULT '' COMMENT '名称',
+    `redirect` varchar(100) NOT NULL DEFAULT '' COMMENT '重定向',
+    `component` varchar(100) NOT NULL DEFAULT '' COMMENT '文件地址',
+    `parentId` int(10) NOT NULL DEFAULT 0 COMMENT '父id',
+    `roleIDs` varchar(18) NOT NULL DEFAULT '' COMMENT '角色组',
+    `title` varchar(100) NOT NULL DEFAULT '' COMMENT '标题',
+    `icon` varchar(100) NOT NULL DEFAULT '' COMMENT '图标',
+    `hidden` BOOLEAN NOT NULL DEFAULT 0 COMMENT '是否隐藏',
+    `keepAlive` BOOLEAN NOT NULL DEFAULT 1 COMMENT 'keepAlive',
+    `sort` int(10) NOT NULL DEFAULT 0 COMMENT '排序',
+    `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
+    `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
+    `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
+    `create_user` varchar(20) NOT NULL DEFAULT '' COMMENT '创建人',
+    `update_user` varchar(20) NOT NULL DEFAULT '' COMMENT '修改人',
+    PRIMARY KEY (`id`),
+    KEY `idx_menu` (
+        `name`,
+        `parentId`,
+        `roleIDs`
+    )
+) ENGINE = InnoDB AUTO_INCREMENT = 0 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '路由表';

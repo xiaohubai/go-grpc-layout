@@ -52,9 +52,9 @@ type casbinRule struct {
 	ALL        field.Asterisk
 	ID         field.Int64
 	Ptype      field.String
-	V0         field.String // 角色
-	V1         field.String // 接口地址
-	V2         field.String // method
+	V0         field.String
+	V1         field.String
+	V2         field.String
 	V3         field.String
 	V4         field.String
 	V5         field.String

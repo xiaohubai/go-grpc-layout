@@ -13,7 +13,7 @@ import (
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
 
-	gpb "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
+	v1 "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 )
@@ -40,6 +40,6 @@ func NewGRPCServer(c *configs.Server, g *service.GrpcService, lg log.Logger) *gr
 
 	}
 	srv := grpc.NewServer(opts...)
-	gpb.RegisterGrpcServer(srv, g)
+	v1.RegisterGrpcServer(srv, g)
 	return srv
 }

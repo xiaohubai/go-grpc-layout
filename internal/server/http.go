@@ -49,7 +49,9 @@ func routers(s *service.HttpService) *gin.Engine {
 	}
 	r2 := r.Group("").Use(m.Jwt(), m.Casbin())
 	{
-		r2.GET("/v1/get/dictList", s.GetDictList) //获取字典序
+		r2.GET("/v1/get/dictList", s.GetDictList)         //获取字典序
+		r2.POST("/v1/get/allMenuList", s.GetAllMenuList)  //获取全部路由菜单
+		r2.GET("/v1/get/roleMenuList", s.GetRoleMenuList) //获取角色路由菜单
 	}
 
 	return router

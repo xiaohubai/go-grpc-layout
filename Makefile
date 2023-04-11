@@ -48,9 +48,9 @@ compose:
 	docker-compose -f ./deploy/docker-compose.yml down
 	docker-compose -f ./deploy/docker-compose.yml up -d --force-recreate
 
-.PHONY: gensql
+.PHONY: sql
 # generate openapi
-gensql:
+sql:
 	gentool -dsn "root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local" --modelPkgName="./internal/model" -outPath="./internal/data/gen"
 
 .PHONY: all
@@ -58,7 +58,7 @@ gensql:
 all:
 	make api;
 	make compose;
-	make gensql;
+	make sql;
 
 
 # show help

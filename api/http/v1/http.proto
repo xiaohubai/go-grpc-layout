@@ -8,6 +8,11 @@ option go_package = "github.com/xiaohubai/go-grpc-layout/api/http/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.http.v1";
 
+message PageRequest {
+	int32 page = 1;
+	int32 pageSize = 2;
+  }
+
 
 message LoginRequest {
 	string userName = 1 [(validate.rules).string = {min_len: 3, max_len: 11}]; //用户名
@@ -32,4 +37,32 @@ message LoginResponse {
 	string motto = 13;
 	string token = 18;
 	string refreshToken = 19;
+  }
+
+
+  message CaptchaResponse {
+	string captchaID = 1;
+	string picPath = 2;
+	int32 captchaLength = 3;
+
+  }
+
+
+  message MenuResponse {
+	string path = 1;
+	string name = 2;
+	string component = 3;
+	string redirect=4;
+	message Meta {
+		int64 ID = 1;
+		int32 parentID = 2;
+		string roleIDs = 3;
+		string title = 4;
+		string icon = 5;
+		bool hidden = 6;
+		bool keepAlive = 7;
+		int32 sort = 8;
+	}
+	Meta meta = 5;
+	repeated MenuResponse children=6;
   }
