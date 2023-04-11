@@ -49,9 +49,15 @@ compose:
 	docker-compose -f ./deploy/docker-compose.yml up -d --force-recreate
 
 .PHONY: sql
-# generate openapi
+# generate sql
 sql:
 	gentool -dsn "root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local" --modelPkgName="./internal/data/model" -outPath="./internal/data/gen"
+
+.PHONY: configs
+# generate configs
+configs:
+	kratos proto client configs/configs.proto
+
 
 .PHONY: all
 # generate all
