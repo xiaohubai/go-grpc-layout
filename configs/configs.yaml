@@ -56,3 +56,6 @@ captcha:
 
 casbin:
   path: '../configs/rbac_model.conf'
+
+limiter:
+  rate: 2

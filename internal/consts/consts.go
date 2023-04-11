@@ -3,6 +3,7 @@ package consts
 import (
 	"time"
 
+	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
 	"github.com/xiaohubai/go-grpc-layout/configs"
 	"gorm.io/gorm"
@@ -45,6 +46,7 @@ const (
 
 var (
 	DB    *gorm.DB
+	RDB   *redis.Client
 	Cfg   *configs.Configs
 	Viper *viper.Viper
 )

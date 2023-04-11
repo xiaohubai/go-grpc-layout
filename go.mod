@@ -12,6 +12,7 @@ require (
 	github.com/go-kratos/kratos/contrib/registry/consul/v2 v2.0.0-20230323030821-f47a238478e1
 	github.com/go-kratos/kratos/v2 v2.6.1
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/go-redis/redis_rate/v9 v9.1.2
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/gnostic v0.6.9
 	github.com/google/uuid v1.3.0

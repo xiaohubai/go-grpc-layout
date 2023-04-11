@@ -7,7 +7,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/gen"
-	"github.com/xiaohubai/go-grpc-layout/internal/model"
+	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -79,7 +79,7 @@ func NewData(c *configs.Data, logger log.Logger) (*Data, func(), error) {
 	}
 
 	consts.DB = db
-
+	consts.RDB = rdb
 	return &Data{db: gen.Use(db), rdb: rdb}, cleanup, nil
 }
 

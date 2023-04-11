@@ -15,6 +15,7 @@ message Configs {
   Registry Registry=8;
   Conf conf =9;
   Casbin casbin =10;
+  Limiter limiter =11;
 }
 
 message Global {
@@ -100,4 +101,8 @@ message Captcha {
 
 message Casbin {
   string path = 1;
+}
+
+message Limiter {
+  int32 rate = 1;
 }

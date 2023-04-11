@@ -16,7 +16,7 @@ import (
 
 	"gorm.io/plugin/dbresolver"
 
-	"github.com/xiaohubai/go-grpc-layout/internal/model"
+	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
 func newMenu(db *gorm.DB, opts ...gen.DOOption) menu {

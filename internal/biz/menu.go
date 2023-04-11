@@ -4,7 +4,7 @@ import (
 	"context"
 
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
-	"github.com/xiaohubai/go-grpc-layout/internal/model"
+	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
 // Login 用户登录

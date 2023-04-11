@@ -7,8 +7,8 @@ import (
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/gin-gonic/gin"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
+	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	"github.com/xiaohubai/go-grpc-layout/internal/errors"
-	"github.com/xiaohubai/go-grpc-layout/internal/model"
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 )
