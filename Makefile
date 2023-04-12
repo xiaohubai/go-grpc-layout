@@ -77,10 +77,14 @@ run:
 .PHONY: all
 # generate all
 all:
+	make init;
 	make api;
 	make compose;
 	make sql;
 	make configs;
+	make build;
+	make dockerBuilder;
+	make run;
 
 
 # show help

@@ -5,12 +5,15 @@ COPY . /src
 
 RUN export GOPROXY=https://goproxy.io && make build
 
-FROM alpine:3.15
+
+FROM debian:stable-slim
 LABEL MAINTAINER="xiaohubai@outlook.com"
 
-RUN apk --no-cache add tzdata
-
-ENV TZ=Asia/Shanghai
+RUN apt-get update && apt-get install -y --no-install-recommends \
+		ca-certificates  \
+        netbase \
+        && rm -rf /var/lib/apt/lists/ \
+        && apt-get autoremove -y && apt-get autoclean -y
 
 WORKDIR /app
 
