@@ -25,11 +25,9 @@ type Histogram interface {
 	Observe(float64)
 }
 
-
-
 var (
 	namespace = "metric"
-	labels    = []string{"status", "handler", "method", "service"}
+	labels    = []string{"service", "status", "path", "method"}
 
 	// QPS
 	ReqCount = NewCounter(

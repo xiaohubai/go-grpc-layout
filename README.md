@@ -1,42 +1,6 @@
-# [安装go环境](https://xiaohubai.github.io/docs/env)
-[]()
-# 安装kratos
-``` sh
-go install github.com/go-kratos/kratos/cmd/kratos/v2@latest
-kratos upgrade
-make init
-```
-
-## 主要功能
-- gin web框架 （github.com/gin-gonic/gin）
-- jwt认证（github.com/golang-jwt/jwt）
-- casbin鉴权（github.com/casbin/casbin/v2）
-- gorm数据库组件及gentool代码生成（gorm.io/gorm,gorm.io/gen）
-- viper实时解析检测配置文件（github.com/spf13/viper）
-- swagger 接口文档生成 （github.com/swaggo/swag）
-- redis组件 （github.com/go-redis/redis）
-- zap日志定制化 （go.uber.org/zap）
-- 参数校验（github.com/envoyproxy/protoc-gen-validate/validate）
-- jaeger全链路监控opentelemetry（go.opentelemetry.io/otel）
-- prometheus埋点 （github.com/prometheus/client_golang）
-- 分布式接口限流 （github.com/go-redis/redis_rate/v9）
-- consul服务注册/发现，远程配置文件与监听 (github.com/hashicorp/consul)
-
-
-
-## 组件访问接口
-``` go
-- api接口       172.12.0.2:8888
-- jaeger        172.12.0.2:16686
-- consul:       172.12.0.2:8500
-- prometheus    172.12.0.2:9090
-- grafana       172.12.0.2:3000 （admin admin）
-- kibana        172.12.0.2:5601
-```
-
 # 目录结构
-gin用于前端交互,正常数据库请求,和图片 视频请求.文件请求.
-grpc 作为服务端给 别人提供服务.作为客户端,向别的微服务请求.
+- gin 作为前端最直接交互处理数据,图片,视频,文件请求.
+- grpc 作为服务端为别人提供服务;作为客户端,向别人的微服务请求.
 
 ## 单仓
 ``` go
@@ -90,6 +54,28 @@ grpc 作为服务端给 别人提供服务.作为客户端,向别的微服务请
 └── third_party         // api依赖的第三方proto
 ```
 
-- 权限 和认证
-- 读取远程配置 到全局实例,监听并更新
-- 接受信号,处理grpc和http
+## 主要功能
+- gin web框架（github.com/gin-gonic/gin）
+- jwt认证（github.com/golang-jwt/jwt）
+- casbin鉴权（github.com/casbin/casbin/v2）
+- gorm数据库组件及gentool代码生成（gorm.io/gorm,gorm.io/gen）
+- viper实时解析检测配置文件（github.com/spf13/viper）
+- swagger 接口文档生成 （github.com/swaggo/swag）
+- redis组件 （github.com/go-redis/redis）
+- zap日志定制化 （go.uber.org/zap）
+- 参数校验（github.com/envoyproxy/protoc-gen-validate/validate）
+- jaeger全链路监控opentelemetry（go.opentelemetry.io/otel）
+- prometheus埋点 （github.com/prometheus/client_golang）
+- 分布式接口限流 （github.com/go-redis/redis_rate/v9）
+- consul服务注册/发现，远程配置文件 (github.com/hashicorp/consul)
+
+
+## 组件访问接口
+``` go
+- api           172.12.0.2:8000
+- jaeger        172.12.0.2:16686
+- consul:       172.12.0.2:8500
+- prometheus    172.12.0.2:9090
+- grafana       172.12.0.2:3000 （admin admin）
+- kibana        172.12.0.2:5601
+```

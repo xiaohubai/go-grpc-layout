@@ -11,6 +11,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 	m "github.com/xiaohubai/go-grpc-layout/pkg/middleware"
 )
@@ -36,7 +37,7 @@ func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *ht
 func routers(s *service.HttpService) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-	router.Use(m.Recovery(), m.Tracing("go-grpc-layout"), m.Metrics("go-grpc-layout"))
+	router.Use(m.Recovery(), m.Tracing(consts.Cfg.Global.AppName), m.Metrics(consts.Cfg.Global.AppName))
 	r := router.Group("")
 	{
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

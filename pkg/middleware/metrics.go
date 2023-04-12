@@ -15,10 +15,10 @@ func Metrics(serviceName string) gin.HandlerFunc {
 		c.Next()
 
 		status := fmt.Sprintf("%d", c.Writer.Status())
-		handler := c.Request.URL.Path
+		path := c.Request.URL.Path
 		method := c.Request.Method
 
-		labels := []string{status, handler, method, serviceName}
+		labels := []string{serviceName, status, path, method}
 
 		// no response content will return -1
 		respSize := c.Writer.Size()

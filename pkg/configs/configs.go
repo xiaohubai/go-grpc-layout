@@ -27,7 +27,7 @@ func Load() (*configs.Configs, error) {
 	var f cmdFlags
 	//flag.StringVar(&p,"args", "defaultValue","eg:xxx") p:绑定的对象, args:-选项, defaultValue:默认值,eg:说明
 	flag.StringVar(&f.env, "env", "local", "runtime environment, eg: -env remote")
-	flag.StringVar(&f.filePath, "conf", "../configs/configs.yaml", "config path, eg: -conf conf.yaml")
+	flag.StringVar(&f.filePath, "conf", "configs/configs.yaml", "config path, eg: -conf configs.yaml")
 
 	flag.StringVar(&f.remoteHost, "chost", "172.21.0.2:8500", "config server host, eg: -chost 172.21.0.2:8500")
 	flag.StringVar(&f.remoteType, "ctype", "consul", "config server host, eg: -ctype consul")

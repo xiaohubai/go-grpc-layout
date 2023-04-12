@@ -1,24 +1,25 @@
-FROM golang:1.16 AS builder
+FROM golang:1.20 AS builder
 
-COPY . /src
 WORKDIR /src
+COPY . /src
 
-RUN GOPROXY=https://goproxy.cn make build
+RUN export GOPROXY=https://goproxy.io \
+    && go mod tidy \
+    && mkdir -p bin \
+    && make build
 
-FROM debian:stable-slim
-
-RUN apt-get update && apt-get install -y --no-install-recommends \
-		ca-certificates  \
-        netbase \
-        && rm -rf /var/lib/apt/lists/ \
-        && apt-get autoremove -y && apt-get autoclean -y
-
-COPY --from=builder /src/bin /app
+FROM alpine:3.15
+LABEL MAINTAINER="xiaohubai@outlook.com"
+RUN apk --no-cache add tzdata  && \
+    ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    echo "Asia/Shanghai" > /etc/timezone
 
 WORKDIR /app
 
+COPY --from=builder /src/bin/server /app
+COPY --from=0 /src/configs/configs.yaml /app
+
 EXPOSE 8000
 EXPOSE 9000
-VOLUME /data/conf
 
-CMD ["./server", "-conf", "/data/conf"]
+CMD ["./server","-conf","configs.yaml"]

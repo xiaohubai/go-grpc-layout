@@ -38,15 +38,25 @@ api:
 	       --openapi_out=fq_schema_naming=true,default_response=false:. \
 	       $(API_PROTO_FILES)
 
-.PHONY: build
-# build
-build:
-	mkdir -p bin/ && go build -ldflags "-X main.Version=$(VERSION)" -o ./bin/ ./...
-
 .PHONY: compose
 compose:
 	docker-compose -f ./deploy/docker-compose.yml down
 	docker-compose -f ./deploy/docker-compose.yml up -d --force-recreate
+
+.PHONY: dockerBuild
+# generate dockerBuild
+dockerBuild:
+	docker build . -t "xiaohubai/go-grpc-layout:0.0.1"
+
+.PHONY: dockerPush
+# generate dockerPush
+dockerPush:
+	docker push xiaohubai/go-grpc-layout:0.0.1
+
+.PHONY: build
+# generate build
+build:
+	 mkdir bin && go build -o bin/server cmd/main.go cmd/wire_gen.go
 
 .PHONY: sql
 # generate sql
@@ -59,12 +69,18 @@ configs:
 	kratos proto client configs/configs.proto
 
 
+.PHONY: run
+# generate run
+run:
+	go run cmd/main.go cmd/wire_gen.go
+
 .PHONY: all
 # generate all
 all:
 	make api;
 	make compose;
 	make sql;
+	make configs;
 
 
 # show help

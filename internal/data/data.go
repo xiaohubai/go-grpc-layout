@@ -41,9 +41,6 @@ type Data struct {
 
 // NewData .
 func NewData(c *configs.Data, logger log.Logger) (*Data, func(), error) {
-	cleanup := func() {
-		log.NewHelper(logger).Info("closing the data resources")
-	}
 	mysqlConfig := mysql.Config{
 		DSN:                       c.Mysql.Source, // DSN data source name
 		DefaultStringSize:         191,            // string 类型字段的默认长度
@@ -67,6 +64,12 @@ func NewData(c *configs.Data, logger log.Logger) (*Data, func(), error) {
 	sqlDB.SetMaxOpenConns(100)
 
 	initDB(db)
+
+	cleanup := func() {
+		if err := sqlDB.Close(); err != nil {
+			panic(err)
+		}
+	}
 
 	rdb := redis.NewClient(&redis.Options{
 		Addr:     c.Redis.Addr,

@@ -80,3 +80,30 @@ services:
       - /usr/local/volumes/prometheus/data:/opt/bitnami/prometheus/data
     environment:
       - TZ=Asia/Shanghai
+
+  #### grafana ####
+  ##注意数据集data要保证其他用户可读写，直接设置777
+  ## grafana重设密码
+  ## docker exec --user 472 -it grafana /bin/bash
+  ## cd /usr/share/grafana/bin
+  ## ./grafana-cli admin reset-admin-password admin
+  grafana:
+    image: bitnami/grafana:9.2.1
+    container_name: grafana
+    restart: always
+    ports:
+      - "3000:3000"
+    volumes:
+      - /usr/local/volumes/grafana/data:/opt/bitnami/grafana/data
+      - /usr/local/volumes/grafana/grafana.ini:/opt/bitnami/grafana/conf/grafana.ini
+    environment:
+      - TZ=Asia/Shanghai
+    depends_on:
+      - prometheus
+
+  node-exporter:
+        image: bitnami/node-exporter:1.5.0
+        container_name: node-exporter
+        restart: always
+        ports:
+            - "9100:9100"
