@@ -26,8 +26,8 @@ scrape_configs:
     # scheme defaults to 'http'.
 
     static_configs:
-      - targets: ["172.12.0.2:8000","172.12.0.2:9000"]
+      - targets: ["172.21.0.2:8000","172.21.0.2:9000"]
 
   - job_name: "node_exporter"
     static_configs:
-      - targets: ["172.12.0.2:9100"]
+      - targets: ["172.21.0.2:9100"]

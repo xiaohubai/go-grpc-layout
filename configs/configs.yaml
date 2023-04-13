@@ -2,7 +2,7 @@ global:
   appName: go-grpc-layout
   env: dev
   version: v0.0.1
-  id: 172.12.0.2
+  id: 172.21.0.2
 server:
   http:
     addr: 0.0.0.0:8000
@@ -13,10 +13,10 @@ server:
 data:
   mysql:
     driver: mysql
-    source: root:123456@tcp(172.12.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local
+    source: root:123456@tcp(172.21.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     db: 0
-    addr: 172.12.0.2:6379
+    addr: 172.21.0.2:6379
     password: '123456'
     dialTimeout: 1s
     readTimeout: 0.4s
@@ -27,15 +27,15 @@ jwt:
   bufferTime: 86400
   issuer: xiaohubai@outlook.com
 trace:
-  endpoint: http://172.12.0.2:14268/api/traces
+  endpoint: http://172.21.0.2:14268/api/traces
 registry:
   consul:
-    host: 172.12.0.2:8500
+    host: 172.21.0.2:8500
     scheme: http
     healthCheck: false
 
 conf:
-  host: 172.12.0.2:8500
+  host: 172.21.0.2:8500
   dictPath: dev/dict.json
 
 zap:
