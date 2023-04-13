@@ -77,5 +77,4 @@
 - consul:       172.12.0.2:8500
 - prometheus    172.12.0.2:9090
 - grafana       172.12.0.2:3000 （admin admin）
-- kibana        172.12.0.2:5601
 ```
