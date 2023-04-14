@@ -41,7 +41,7 @@ conf:
 zap:
   level: 'info'
   format: 'json'
-  filename: './logs/log.log'
+  filename: './logs'
   maxSize: 1
   maxBackups: 3
   maxAge: 7

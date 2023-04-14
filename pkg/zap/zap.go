@@ -1,6 +1,9 @@
 package zap
 
 import (
+	"fmt"
+	"time"
+
 	kzap "github.com/go-kratos/kratos/contrib/log/zap/v2"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/xiaohubai/go-grpc-layout/configs"
@@ -14,20 +17,21 @@ import (
 func New(c *configs.Zap, g *configs.Global) (log.Logger, error) {
 	encoderConfig := zapcore.EncoderConfig{
 		LevelKey:       "level",
-		LineEnding:     zapcore.DefaultLineEnding,     //默认换行
-		EncodeLevel:    zapcore.LowercaseLevelEncoder, //小写
-		EncodeTime:     zapcore.ISO8601TimeEncoder,    //输出时间
+		TimeKey:        "ts",
+		LineEnding:     zapcore.DefaultLineEnding,                              //默认换行
+		EncodeLevel:    zapcore.LowercaseLevelEncoder,                          //小写
+		EncodeTime:     zapcore.TimeEncoderOfLayout("2006-01-02 15:04:05.000"), //输出时间
 		EncodeDuration: zapcore.SecondsDurationEncoder,
 		EncodeCaller:   zapcore.ShortCallerEncoder, //记录调用路径
 	}
 
 	fileWriter := &lumberjack.Logger{
-		Filename:   c.Filename,
-		MaxSize:    int(c.MaxSize),
-		MaxBackups: int(c.MaxBackups),
-		MaxAge:     int(c.MaxAge),
+		Filename:   fmt.Sprintf("%s/%s.log", c.Filename, time.Now().Format(time.DateOnly)), //文件名
+		MaxSize:    int(c.MaxSize),                                                         //M
+		MaxBackups: int(c.MaxBackups),                                                      //副本
+		MaxAge:     int(c.MaxAge),                                                          //天
+		Compress:   c.Compress,                                                             //压缩
 	}
-	zapcore.AddSync(fileWriter)
 
 	var level zapcore.Level
 	if err := level.UnmarshalText([]byte(c.Level)); err != nil {
@@ -40,7 +44,6 @@ func New(c *configs.Zap, g *configs.Global) (log.Logger, error) {
 
 	return log.With(
 		logger,
-		"ts", log.DefaultTimestamp,
 		"env", g.Env,
 		"service_id", g.Id,
 		"service_name", g.AppName,
