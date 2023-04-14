@@ -31,7 +31,7 @@ func Load() (*configs.Configs, error) {
 
 	flag.StringVar(&f.remoteHost, "chost", "172.21.0.2:8500", "config server host, eg: -chost 172.21.0.2:8500")
 	flag.StringVar(&f.remoteType, "ctype", "consul", "config server host, eg: -ctype consul")
-	flag.StringVar(&f.remotePath, "cpath", "go-grpc-layout/dev/config.yaml", "config server path, eg: -cpath go-grpc-layout/dev/config.yaml")
+	flag.StringVar(&f.remotePath, "cpath", "dev/config.yaml", "config server path, eg: -cpath dev/config.yaml")
 	flag.Parse()
 
 	var cc configs.Configs

@@ -41,7 +41,7 @@ conf:
 zap:
   level: 'info'
   format: 'json'
-  filename: '../logs/log.log'
+  filename: './logs/log.log'
   maxSize: 1
   maxBackups: 3
   maxAge: 7
@@ -55,7 +55,7 @@ captcha:
   dotCount: 80
 
 casbin:
-  path: '../configs/rbac_model.conf'
+  path: './configs/rbac_model.conf'
 
 limiter:
-  rate: 2
+  rate: 100

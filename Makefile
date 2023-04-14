@@ -74,6 +74,11 @@ configs:
 run:
 	go run cmd/main.go cmd/wire_gen.go
 
+.PHONY: runRemote
+# generate runRemote
+runRemote:
+	go run cmd/main.go cmd/wire_gen.go -env remote
+
 .PHONY: all
 # generate all
 all:
@@ -85,6 +90,7 @@ all:
 	make build;
 	make dockerBuilder;
 	make run;
+	make runRemote;
 
 
 # show help
