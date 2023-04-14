@@ -26,9 +26,6 @@
 ├── scripts             // 脚本
 └── third_party         // api依赖的第三方proto
 ```
-
-
-
 ## 大仓
 ``` go
 ├── api                 // 定义proto
