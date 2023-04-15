@@ -10,7 +10,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 
 COPY bin/server /app
-COPY configs /app/configs
+COPY configs/rbac_model.conf /app/configs
 
 EXPOSE 8000
 EXPOSE 9000

@@ -88,7 +88,7 @@ all:
 	make sql;
 	make configs;
 	make build;
-	make dockerBuilder;
+	make dockerBuild;
 	make run;
 	make runRemote;
 

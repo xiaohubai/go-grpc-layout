@@ -1,7 +1,7 @@
 global:
   appName: go-grpc-layout
   env: dev
-  version: v0.0.1
+  version: 0.0.1
   id: 172.21.0.2
 server:
   http:
