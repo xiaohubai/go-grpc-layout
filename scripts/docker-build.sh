@@ -18,7 +18,7 @@ GIT_TAG=$(git describe --tags --abbrev=0)
 New_TAG=$(echo ${GIT_TAG#*v} | awk -F "." '{ printf("%s.%s.%s",$1,$2,$3+1)}')
 New_GIT_TAG="v"$New_TAG
 echo $GIT_TAG $New_TAG $New_GIT_TAG
-git tag $New_GIT_TAG
+git tag -a $New_GIT_TAG-m "$New_GIT_TAG"
 git push origin --tags
 
 APP_NAME=$(cat $CONFIG | grep "appName" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
