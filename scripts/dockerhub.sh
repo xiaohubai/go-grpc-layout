@@ -1,12 +1,25 @@
+if [ -n "$(git status -s)" ];then
+    echo "[\e[31m中断\e[0m] 本地已更改未提交"
+    exit
+fi
+
+
+git fetch --tags
+
+CONFIG="../configs/configs.yaml"
+
 GIT_BRACH=$(git symbolic-ref --short -q HEAD)
+GIT_TAG=$(git describe --tags --always)
+SUB_GIT_TAG=${GIT_TAG#*v}
+GIT_COMMIT=$(git rev-parse --short HEAD)
 
-//config.yaml.appname:读取config.yaml.version-brach/tag-commit
+APP_VERSION=$(cat $CONFIG | grep "version" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
+APP_NAME=$(cat $CONFIG | grep "appName" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
 
-if git 还有更改没有提交{
-    中断
-}
-    if 读取config.yaml.version <git tags{
-        中断
-    }
+sed -i 's/version: '$APP_VERSION'/version: '$SUB_GIT_TAG'/' $CONFIG
 
-go-grpc-layout:0.0.1-master-9sda9a9 
+#docker build . -t "xiaohubai/""$APP_NAME"":"${SUB_GIT_TAG}"-"$GIT_BRACH"-"$GIT_COMMIT
+
+echo "xiaohubai/$APP_NAME:$SUB_GIT_TAG-$GIT_BRACH-$GIT_COMMIT"
+
+
