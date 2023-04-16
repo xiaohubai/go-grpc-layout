@@ -46,17 +46,12 @@ compose:
 .PHONY: dockerBuild
 # generate dockerBuild
 dockerBuild:
-	docker build . -t "xiaohubai/go-grpc-layout:0.0.1"
-
-.PHONY: dockerPush
-# generate dockerPush
-dockerPush:
-	docker push xiaohubai/go-grpc-layout:0.0.1
+	sh ./scripts/docker-build.sh
 
 .PHONY: build
 # generate build
 build:
-	 mkdir bin && go build -o bin/server cmd/main.go cmd/wire_gen.go
+	go build -o server cmd/main.go cmd/wire_gen.go
 
 .PHONY: sql
 # generate sql

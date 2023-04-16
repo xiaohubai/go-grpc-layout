@@ -1,3 +1,10 @@
+FROM golang:1.20 AS builder
+
+WORKDIR /src
+COPY . /src
+
+RUN export GOPROXY=https://goproxy.io && make build
+
 FROM debian:stable-slim
 LABEL MAINTAINER="xiaohubai@outlook.com"
 
@@ -9,8 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY bin/server /app
-COPY configs/rbac_model.conf /app/configs
+COPY --from=builder /src/server /app
+COPY --from=builder /src/rbac_model.conf /app
 
 EXPOSE 8000
 EXPOSE 9000
