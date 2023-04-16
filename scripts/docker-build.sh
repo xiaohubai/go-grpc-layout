@@ -10,20 +10,19 @@ if [ -n "$(git cherry -v)" ];then
     exit
 fi
 
-git fetch --tags
 Dir=$(pwd)
 CONFIG="$Dir/configs/configs.yaml"
 GIT_BRACH=$(git symbolic-ref --short -q HEAD)
 GIT_COMMIT=$(git rev-parse --short HEAD)
 GIT_TAG=$(git describe --tags --abbrev=0)
-
 New_TAG=$(echo ${GIT_TAG#*v} | awk -F "." '{ printf("%s.%s.%s",$1,$2,$3+1)}')
 New_GIT_TAG="v"$New_TAG
+echo $GIT_TAG $New_TAG $New_GIT_TAG
 git tag $New_GIT_TAG
 git push origin --tags
 
 APP_NAME=$(cat $CONFIG | grep "appName" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
 
 Image="xiaohubai/$APP_NAME:$New_TAG-$GIT_BRACH-$GIT_COMMIT"
-docker build . -t $Image
-docker push $Image
+#docker build . -t $Image
+#docker push $Image
