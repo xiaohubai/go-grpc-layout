@@ -51,7 +51,7 @@ dockerBuild:
 .PHONY: build
 # generate build
 build:
-	 mkdir bin && go build -o bin/server cmd/main.go cmd/wire_gen.go
+	go build -o server cmd/main.go cmd/wire_gen.go
 
 .PHONY: sql
 # generate sql

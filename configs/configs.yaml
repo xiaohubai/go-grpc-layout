@@ -55,7 +55,7 @@ captcha:
   dotCount: 80
 
 casbin:
-  path: './configs/rbac_model.conf'
+  path: './rbac_model.conf'
 
 limiter:
   rate: 100
