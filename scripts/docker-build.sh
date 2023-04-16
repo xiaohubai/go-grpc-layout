@@ -14,14 +14,20 @@ git fetch --tags
 Dir=$(pwd)
 CONFIG="$Dir/configs/configs.yaml"
 GIT_BRACH=$(git symbolic-ref --short -q HEAD)
-GIT_TAG=$(git describe --tags --abbrev=0)
-SUB_GIT_TAG=$(echo ${GIT_TAG#*v} | awk -F "." '{ printf("%s.%s.%s",$1,$2,$3+1)}')
 GIT_COMMIT=$(git rev-parse --short HEAD)
+GIT_TAG=$(git describe --tags --abbrev=0)
+
+New_TAG=$(echo ${GIT_TAG#*v} | awk -F "." '{ printf("%s.%s.%s",$1,$2,$3+1)}')
+New_GIT_TAG="v"$New_TAG
+echo $GIT_TAG $New_TAG $New_GIT_TAG
+git tag $New_GIT_TAG
+git push origin $New_GIT_TAG
 
 APP_NAME=$(cat $CONFIG | grep "appName" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
 #APP_VERSION=$(cat $CONFIG | grep "version" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
-#sed -i 's/version: '$APP_VERSION'/version: '$SUB_GIT_TAG'/' $CONFIG
+#sed -i 's/version: '$APP_VERSION'/version: '$New_TAG'/' $CONFIG
 
-IMAGE="xiaohubai/$APP_NAME:$SUB_GIT_TAG-$GIT_BRACH-$GIT_COMMIT"
-docker build . -t $IMAGE
-docker push $IMAGE
+IMAGE="xiaohubai/$APP_NAME:$New_TAG-$GIT_BRACH-$GIT_COMMIT"
+echo $IMAGE
+#docker build . -t $IMAGE
+#docker push $IMAGE
