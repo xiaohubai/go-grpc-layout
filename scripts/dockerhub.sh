@@ -3,7 +3,10 @@ if [ -n "$(git status -s)" ];then
     exit
 fi
 
-
+if [ -n "$(git cherry -v)" ];then
+    echo "[\e[31m中断\e[0m] 本地新提交未push"
+    exit
+fi
 
 git fetch --tags
 
