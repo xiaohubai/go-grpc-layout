@@ -15,7 +15,9 @@ git fetch --tags
 CONFIG="../configs/configs.yaml"
 
 GIT_BRACH=$(git symbolic-ref --short -q HEAD)
-GIT_TAG=$(git describe --tags --always)
+GIT_TAG=$(shell if [ "`git describe --tags --abbrev=0 2>/dev/null`" != "" ];then git describe --tags --abbrev=0; else git log --pretty=format:'%h' -n 1; fi)
+
+#GIT_TAG=$(git describe --tags --always)
 SUB_GIT_TAG=${GIT_TAG#*v}
 GIT_COMMIT=$(git rev-parse --short HEAD)
 
