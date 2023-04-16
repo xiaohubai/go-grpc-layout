@@ -11,18 +11,17 @@ if [ -n "$(git cherry -v)" ];then
 fi
 
 git fetch --tags
-CONFIG="../configs/configs.yaml"
-
+Dir=$(pwd)
+CONFIG="$Dir/configs/configs.yaml"
 GIT_BRACH=$(git symbolic-ref --short -q HEAD)
 GIT_TAG=$(git describe --tags --abbrev=0)
-SUB_GIT_TAG=${GIT_TAG#*v}
+SUB_GIT_TAG=$(echo ${GIT_TAG#*v} | awk -F "." '{ printf("%s.%s.%s",$1,$2,$3+1)}')
 GIT_COMMIT=$(git rev-parse --short HEAD)
 
 APP_NAME=$(cat $CONFIG | grep "appName" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
-DOCKER_USERNAME=$(docker system info | grep "Username")
 #APP_VERSION=$(cat $CONFIG | grep "version" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
 #sed -i 's/version: '$APP_VERSION'/version: '$SUB_GIT_TAG'/' $CONFIG
 
-img="xiaohubai/$APP_NAME:$SUB_GIT_TAG-$GIT_BRACH-$GIT_COMMIT"
-docker build . -t $img
-docker push $img
+IMAGE="xiaohubai/$APP_NAME:$SUB_GIT_TAG-$GIT_BRACH-$GIT_COMMIT"
+docker build . -t $IMAGE
+docker push $IMAGE
