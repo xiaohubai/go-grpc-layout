@@ -4,6 +4,7 @@ if [ -n "$(git status -s)" ];then
 fi
 
 
+
 git fetch --tags
 
 CONFIG="../configs/configs.yaml"
