@@ -26,8 +26,8 @@ type PageRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Page     int32 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize int32 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
+	Page     int32 `protobuf:"varint,1,opt,name=page,proto3" json:"page"`
+	PageSize int32 `protobuf:"varint,2,opt,name=pageSize,proto3" json:"pageSize"`
 }
 
 func (x *PageRequest) Reset() {
@@ -81,10 +81,10 @@ type LoginRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	UserName  string `protobuf:"bytes,1,opt,name=userName,proto3" json:"userName,omitempty"`   //用户名
-	Password  string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`   //密码
-	Captcha   string `protobuf:"bytes,3,opt,name=captcha,proto3" json:"captcha,omitempty"`     //验证码
-	CaptchaID string `protobuf:"bytes,4,opt,name=captchaID,proto3" json:"captchaID,omitempty"` //校验ID
+	UserName  string `protobuf:"bytes,1,opt,name=userName,proto3" json:"userName"`   //用户名
+	Password  string `protobuf:"bytes,2,opt,name=password,proto3" json:"password"`   //密码
+	Captcha   string `protobuf:"bytes,3,opt,name=captcha,proto3" json:"captcha"`     //验证码
+	CaptchaID string `protobuf:"bytes,4,opt,name=captchaID,proto3" json:"captchaID"` //校验ID
 }
 
 func (x *LoginRequest) Reset() {
@@ -152,21 +152,21 @@ type LoginResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ID           int32  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	UID          string `protobuf:"bytes,2,opt,name=UID,proto3" json:"UID,omitempty"`
-	UserName     string `protobuf:"bytes,3,opt,name=userName,proto3" json:"userName,omitempty"`
-	NickName     string `protobuf:"bytes,4,opt,name=nickName,proto3" json:"nickName,omitempty"`
-	Birth        string `protobuf:"bytes,5,opt,name=birth,proto3" json:"birth,omitempty"`
-	Avatar       string `protobuf:"bytes,6,opt,name=avatar,proto3" json:"avatar,omitempty"`
-	RoleID       string `protobuf:"bytes,7,opt,name=roleID,proto3" json:"roleID,omitempty"`
-	RoleName     string `protobuf:"bytes,8,opt,name=roleName,proto3" json:"roleName,omitempty"`
-	Phone        string `protobuf:"bytes,9,opt,name=phone,proto3" json:"phone,omitempty"`
-	Wechat       string `protobuf:"bytes,10,opt,name=wechat,proto3" json:"wechat,omitempty"`
-	Email        string `protobuf:"bytes,11,opt,name=email,proto3" json:"email,omitempty"`
-	State        string `protobuf:"bytes,12,opt,name=state,proto3" json:"state,omitempty"`
-	Motto        string `protobuf:"bytes,13,opt,name=motto,proto3" json:"motto,omitempty"`
-	Token        string `protobuf:"bytes,18,opt,name=token,proto3" json:"token,omitempty"`
-	RefreshToken string `protobuf:"bytes,19,opt,name=refreshToken,proto3" json:"refreshToken,omitempty"`
+	ID           int32  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID"`
+	UID          string `protobuf:"bytes,2,opt,name=UID,proto3" json:"UID"`
+	UserName     string `protobuf:"bytes,3,opt,name=userName,proto3" json:"userName"`
+	NickName     string `protobuf:"bytes,4,opt,name=nickName,proto3" json:"nickName"`
+	Birth        string `protobuf:"bytes,5,opt,name=birth,proto3" json:"birth"`
+	Avatar       string `protobuf:"bytes,6,opt,name=avatar,proto3" json:"avatar"`
+	RoleID       string `protobuf:"bytes,7,opt,name=roleID,proto3" json:"roleID"`
+	RoleName     string `protobuf:"bytes,8,opt,name=roleName,proto3" json:"roleName"`
+	Phone        string `protobuf:"bytes,9,opt,name=phone,proto3" json:"phone"`
+	Wechat       string `protobuf:"bytes,10,opt,name=wechat,proto3" json:"wechat"`
+	Email        string `protobuf:"bytes,11,opt,name=email,proto3" json:"email"`
+	State        string `protobuf:"bytes,12,opt,name=state,proto3" json:"state"`
+	Motto        string `protobuf:"bytes,13,opt,name=motto,proto3" json:"motto"`
+	Token        string `protobuf:"bytes,18,opt,name=token,proto3" json:"token"`
+	RefreshToken string `protobuf:"bytes,19,opt,name=refreshToken,proto3" json:"refreshToken"`
 }
 
 func (x *LoginResponse) Reset() {
@@ -311,9 +311,9 @@ type CaptchaResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	CaptchaID     string `protobuf:"bytes,1,opt,name=captchaID,proto3" json:"captchaID,omitempty"`
-	PicPath       string `protobuf:"bytes,2,opt,name=picPath,proto3" json:"picPath,omitempty"`
-	CaptchaLength int32  `protobuf:"varint,3,opt,name=captchaLength,proto3" json:"captchaLength,omitempty"`
+	CaptchaID     string `protobuf:"bytes,1,opt,name=captchaID,proto3" json:"captchaID"`
+	PicPath       string `protobuf:"bytes,2,opt,name=picPath,proto3" json:"picPath"`
+	CaptchaLength int32  `protobuf:"varint,3,opt,name=captchaLength,proto3" json:"captchaLength"`
 }
 
 func (x *CaptchaResponse) Reset() {
@@ -374,12 +374,12 @@ type MenuResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Path      string             `protobuf:"bytes,1,opt,name=path,proto3" json:"path,omitempty"`
-	Name      string             `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	Component string             `protobuf:"bytes,3,opt,name=component,proto3" json:"component,omitempty"`
-	Redirect  string             `protobuf:"bytes,4,opt,name=redirect,proto3" json:"redirect,omitempty"`
-	Meta      *MenuResponse_Meta `protobuf:"bytes,5,opt,name=meta,proto3" json:"meta,omitempty"`
-	Children  []*MenuResponse    `protobuf:"bytes,6,rep,name=children,proto3" json:"children,omitempty"`
+	Path      string             `protobuf:"bytes,1,opt,name=path,proto3" json:"path"`
+	Name      string             `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
+	Component string             `protobuf:"bytes,3,opt,name=component,proto3" json:"component"`
+	Redirect  string             `protobuf:"bytes,4,opt,name=redirect,proto3" json:"redirect"`
+	Meta      *MenuResponse_Meta `protobuf:"bytes,5,opt,name=meta,proto3" json:"meta"`
+	Children  []*MenuResponse    `protobuf:"bytes,6,rep,name=children,proto3" json:"children"`
 }
 
 func (x *MenuResponse) Reset() {
@@ -461,11 +461,11 @@ type GetCasbinRequest struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	RoleIDs  string `protobuf:"bytes,1,opt,name=roleIDs,proto3" json:"roleIDs,omitempty"`
-	Path     string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
-	Method   string `protobuf:"bytes,3,opt,name=method,proto3" json:"method,omitempty"`
-	Page     int32  `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
-	PageSize int32  `protobuf:"varint,5,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
+	RoleIDs  string `protobuf:"bytes,1,opt,name=roleIDs,proto3" json:"roleIDs"`
+	Path     string `protobuf:"bytes,2,opt,name=path,proto3" json:"path"`
+	Method   string `protobuf:"bytes,3,opt,name=method,proto3" json:"method"`
+	Page     int32  `protobuf:"varint,4,opt,name=page,proto3" json:"page"`
+	PageSize int32  `protobuf:"varint,5,opt,name=pageSize,proto3" json:"pageSize"`
 }
 
 func (x *GetCasbinRequest) Reset() {
@@ -540,11 +540,11 @@ type GetCasbinResponse struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ID      int32  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	RoleIDs string `protobuf:"bytes,12,opt,name=roleIDs,proto3" json:"roleIDs,omitempty"`
-	Path    string `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`
-	Method  string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty"`
-	Desc    string `protobuf:"bytes,5,opt,name=desc,proto3" json:"desc,omitempty"`
+	ID      int32  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID"`
+	RoleIDs string `protobuf:"bytes,2,opt,name=roleIDs,proto3" json:"roleIDs"`
+	Path    string `protobuf:"bytes,3,opt,name=path,proto3" json:"path"`
+	Method  string `protobuf:"bytes,4,opt,name=method,proto3" json:"method"`
+	Desc    string `protobuf:"bytes,5,opt,name=desc,proto3" json:"desc"`
 }
 
 func (x *GetCasbinResponse) Reset() {
@@ -619,14 +619,14 @@ type MenuResponse_Meta struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	ID        int64  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
-	ParentID  int32  `protobuf:"varint,2,opt,name=parentID,proto3" json:"parentID,omitempty"`
-	RoleIDs   string `protobuf:"bytes,3,opt,name=roleIDs,proto3" json:"roleIDs,omitempty"`
-	Title     string `protobuf:"bytes,4,opt,name=title,proto3" json:"title,omitempty"`
-	Icon      string `protobuf:"bytes,5,opt,name=icon,proto3" json:"icon,omitempty"`
-	Hidden    bool   `protobuf:"varint,6,opt,name=hidden,proto3" json:"hidden,omitempty"`
-	KeepAlive bool   `protobuf:"varint,7,opt,name=keepAlive,proto3" json:"keepAlive,omitempty"`
-	Sort      int32  `protobuf:"varint,8,opt,name=sort,proto3" json:"sort,omitempty"`
+	ID        int64  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID"`
+	ParentID  int32  `protobuf:"varint,2,opt,name=parentID,proto3" json:"parentID"`
+	RoleIDs   string `protobuf:"bytes,3,opt,name=roleIDs,proto3" json:"roleIDs"`
+	Title     string `protobuf:"bytes,4,opt,name=title,proto3" json:"title"`
+	Icon      string `protobuf:"bytes,5,opt,name=icon,proto3" json:"icon"`
+	Hidden    bool   `protobuf:"varint,6,opt,name=hidden,proto3" json:"hidden"`
+	KeepAlive bool   `protobuf:"varint,7,opt,name=keepAlive,proto3" json:"keepAlive"`
+	Sort      int32  `protobuf:"varint,8,opt,name=sort,proto3" json:"sort"`
 }
 
 func (x *MenuResponse_Meta) Reset() {
@@ -806,7 +806,7 @@ var file_http_v1_http_proto_rawDesc = []byte{
 	0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x7d, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x43, 0x61, 0x73,
 	0x62, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49,
 	0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x49, 0x44, 0x12, 0x18, 0x0a, 0x07, 0x72,
-	0x6f, 0x6c, 0x65, 0x49, 0x44, 0x73, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x72, 0x6f,
+	0x6f, 0x6c, 0x65, 0x49, 0x44, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x72, 0x6f,
 	0x6c, 0x65, 0x49, 0x44, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x74, 0x68, 0x18, 0x03, 0x20,
 	0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x65, 0x74,
 	0x68, 0x6f, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6d, 0x65, 0x74, 0x68, 0x6f,

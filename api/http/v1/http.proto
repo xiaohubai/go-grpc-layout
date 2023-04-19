@@ -78,7 +78,7 @@ message LoginResponse {
 
 	message GetCasbinResponse {
 	int32 ID = 1;
-	string roleIDs = 12;
+	string roleIDs = 2;
 	string path = 3;
 	string method = 4;
 	string desc = 5;

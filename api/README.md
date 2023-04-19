@@ -1,1 +1,0 @@
-protoc --proto_path=. --openapi_out=naming=json=paths=source_relative:../ ./*.proto

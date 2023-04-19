@@ -3,9 +3,8 @@
 
 openapi: 3.0.3
 info:
-    title: Grpc
-    description: 所有grpc服务
-    version: "1.0"
+    title: ""
+    version: 0.0.1
 paths: {}
 components:
     schemas: {}
