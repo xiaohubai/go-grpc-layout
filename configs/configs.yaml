@@ -17,7 +17,7 @@ data:
   redis:
     db: 0
     addr: 172.21.0.2:6379
-    password: '123456'
+    password: "123456"
     dialTimeout: 1s
     readTimeout: 0.4s
     writeTimeout: 0.6s
@@ -39,9 +39,9 @@ conf:
   dictPath: dev/dict.json
 
 zap:
-  level: 'info'
-  format: 'json'
-  filename: './logs'
+  level: "info"
+  format: "json"
+  filename: "./logs"
   maxSize: 1
   maxBackups: 3
   maxAge: 7
@@ -55,7 +55,7 @@ captcha:
   dotCount: 80
 
 casbin:
-  path: './rbac_model.conf'
+  path: "./rbac_model.conf"
 
 limiter:
   rate: 100

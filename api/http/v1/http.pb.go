@@ -456,6 +456,164 @@ func (x *MenuResponse) GetChildren() []*MenuResponse {
 	return nil
 }
 
+type GetCasbinRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	RoleIDs  string `protobuf:"bytes,1,opt,name=roleIDs,proto3" json:"roleIDs,omitempty"`
+	Path     string `protobuf:"bytes,2,opt,name=path,proto3" json:"path,omitempty"`
+	Method   string `protobuf:"bytes,3,opt,name=method,proto3" json:"method,omitempty"`
+	Page     int32  `protobuf:"varint,4,opt,name=page,proto3" json:"page,omitempty"`
+	PageSize int32  `protobuf:"varint,5,opt,name=pageSize,proto3" json:"pageSize,omitempty"`
+}
+
+func (x *GetCasbinRequest) Reset() {
+	*x = GetCasbinRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_http_v1_http_proto_msgTypes[5]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetCasbinRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCasbinRequest) ProtoMessage() {}
+
+func (x *GetCasbinRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_http_v1_http_proto_msgTypes[5]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCasbinRequest.ProtoReflect.Descriptor instead.
+func (*GetCasbinRequest) Descriptor() ([]byte, []int) {
+	return file_http_v1_http_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetCasbinRequest) GetRoleIDs() string {
+	if x != nil {
+		return x.RoleIDs
+	}
+	return ""
+}
+
+func (x *GetCasbinRequest) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *GetCasbinRequest) GetMethod() string {
+	if x != nil {
+		return x.Method
+	}
+	return ""
+}
+
+func (x *GetCasbinRequest) GetPage() int32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *GetCasbinRequest) GetPageSize() int32 {
+	if x != nil {
+		return x.PageSize
+	}
+	return 0
+}
+
+type GetCasbinResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	ID      int32  `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	RoleIDs string `protobuf:"bytes,12,opt,name=roleIDs,proto3" json:"roleIDs,omitempty"`
+	Path    string `protobuf:"bytes,3,opt,name=path,proto3" json:"path,omitempty"`
+	Method  string `protobuf:"bytes,4,opt,name=method,proto3" json:"method,omitempty"`
+	Desc    string `protobuf:"bytes,5,opt,name=desc,proto3" json:"desc,omitempty"`
+}
+
+func (x *GetCasbinResponse) Reset() {
+	*x = GetCasbinResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_http_v1_http_proto_msgTypes[6]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *GetCasbinResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetCasbinResponse) ProtoMessage() {}
+
+func (x *GetCasbinResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_http_v1_http_proto_msgTypes[6]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetCasbinResponse.ProtoReflect.Descriptor instead.
+func (*GetCasbinResponse) Descriptor() ([]byte, []int) {
+	return file_http_v1_http_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *GetCasbinResponse) GetID() int32 {
+	if x != nil {
+		return x.ID
+	}
+	return 0
+}
+
+func (x *GetCasbinResponse) GetRoleIDs() string {
+	if x != nil {
+		return x.RoleIDs
+	}
+	return ""
+}
+
+func (x *GetCasbinResponse) GetPath() string {
+	if x != nil {
+		return x.Path
+	}
+	return ""
+}
+
+func (x *GetCasbinResponse) GetMethod() string {
+	if x != nil {
+		return x.Method
+	}
+	return ""
+}
+
+func (x *GetCasbinResponse) GetDesc() string {
+	if x != nil {
+		return x.Desc
+	}
+	return ""
+}
+
 type MenuResponse_Meta struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -474,7 +632,7 @@ type MenuResponse_Meta struct {
 func (x *MenuResponse_Meta) Reset() {
 	*x = MenuResponse_Meta{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_http_v1_http_proto_msgTypes[5]
+		mi := &file_http_v1_http_proto_msgTypes[7]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -487,7 +645,7 @@ func (x *MenuResponse_Meta) String() string {
 func (*MenuResponse_Meta) ProtoMessage() {}
 
 func (x *MenuResponse_Meta) ProtoReflect() protoreflect.Message {
-	mi := &file_http_v1_http_proto_msgTypes[5]
+	mi := &file_http_v1_http_proto_msgTypes[7]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -636,12 +794,29 @@ var file_http_v1_http_proto_rawDesc = []byte{
 	0x08, 0x52, 0x06, 0x68, 0x69, 0x64, 0x64, 0x65, 0x6e, 0x12, 0x1c, 0x0a, 0x09, 0x6b, 0x65, 0x65,
 	0x70, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x18, 0x07, 0x20, 0x01, 0x28, 0x08, 0x52, 0x09, 0x6b, 0x65,
 	0x65, 0x70, 0x41, 0x6c, 0x69, 0x76, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x73, 0x6f, 0x72, 0x74, 0x18,
-	0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x73, 0x6f, 0x72, 0x74, 0x42, 0x43, 0x0a, 0x0b, 0x61,
-	0x70, 0x69, 0x2e, 0x68, 0x74, 0x74, 0x70, 0x2e, 0x76, 0x31, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69,
-	0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x78, 0x69, 0x61, 0x6f, 0x68, 0x75, 0x62,
-	0x61, 0x69, 0x2f, 0x67, 0x6f, 0x2d, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x6c, 0x61, 0x79, 0x6f, 0x75,
-	0x74, 0x2f, 0x61, 0x70, 0x69, 0x2f, 0x68, 0x74, 0x74, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x76, 0x31,
-	0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x08, 0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x73, 0x6f, 0x72, 0x74, 0x22, 0x88, 0x01, 0x0a, 0x10,
+	0x47, 0x65, 0x74, 0x43, 0x61, 0x73, 0x62, 0x69, 0x6e, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x18, 0x0a, 0x07, 0x72, 0x6f, 0x6c, 0x65, 0x49, 0x44, 0x73, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x52, 0x07, 0x72, 0x6f, 0x6c, 0x65, 0x49, 0x44, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61,
+	0x74, 0x68, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x74, 0x68, 0x12, 0x16,
+	0x0a, 0x06, 0x6d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06,
+	0x6d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x67, 0x65, 0x18, 0x04,
+	0x20, 0x01, 0x28, 0x05, 0x52, 0x04, 0x70, 0x61, 0x67, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61,
+	0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x05, 0x52, 0x08, 0x70, 0x61,
+	0x67, 0x65, 0x53, 0x69, 0x7a, 0x65, 0x22, 0x7d, 0x0a, 0x11, 0x47, 0x65, 0x74, 0x43, 0x61, 0x73,
+	0x62, 0x69, 0x6e, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x49,
+	0x44, 0x18, 0x01, 0x20, 0x01, 0x28, 0x05, 0x52, 0x02, 0x49, 0x44, 0x12, 0x18, 0x0a, 0x07, 0x72,
+	0x6f, 0x6c, 0x65, 0x49, 0x44, 0x73, 0x18, 0x0c, 0x20, 0x01, 0x28, 0x09, 0x52, 0x07, 0x72, 0x6f,
+	0x6c, 0x65, 0x49, 0x44, 0x73, 0x12, 0x12, 0x0a, 0x04, 0x70, 0x61, 0x74, 0x68, 0x18, 0x03, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x70, 0x61, 0x74, 0x68, 0x12, 0x16, 0x0a, 0x06, 0x6d, 0x65, 0x74,
+	0x68, 0x6f, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x6d, 0x65, 0x74, 0x68, 0x6f,
+	0x64, 0x12, 0x12, 0x0a, 0x04, 0x64, 0x65, 0x73, 0x63, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x64, 0x65, 0x73, 0x63, 0x42, 0x43, 0x0a, 0x0b, 0x61, 0x70, 0x69, 0x2e, 0x68, 0x74, 0x74,
+	0x70, 0x2e, 0x76, 0x31, 0x50, 0x01, 0x5a, 0x32, 0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63,
+	0x6f, 0x6d, 0x2f, 0x78, 0x69, 0x61, 0x6f, 0x68, 0x75, 0x62, 0x61, 0x69, 0x2f, 0x67, 0x6f, 0x2d,
+	0x67, 0x72, 0x70, 0x63, 0x2d, 0x6c, 0x61, 0x79, 0x6f, 0x75, 0x74, 0x2f, 0x61, 0x70, 0x69, 0x2f,
+	0x68, 0x74, 0x74, 0x70, 0x2f, 0x76, 0x31, 0x3b, 0x76, 0x31, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
+	0x6f, 0x33,
 }
 
 var (
@@ -656,17 +831,19 @@ func file_http_v1_http_proto_rawDescGZIP() []byte {
 	return file_http_v1_http_proto_rawDescData
 }
 
-var file_http_v1_http_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_http_v1_http_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_http_v1_http_proto_goTypes = []interface{}{
 	(*PageRequest)(nil),       // 0: api.http.v1.PageRequest
 	(*LoginRequest)(nil),      // 1: api.http.v1.LoginRequest
 	(*LoginResponse)(nil),     // 2: api.http.v1.LoginResponse
 	(*CaptchaResponse)(nil),   // 3: api.http.v1.CaptchaResponse
 	(*MenuResponse)(nil),      // 4: api.http.v1.MenuResponse
-	(*MenuResponse_Meta)(nil), // 5: api.http.v1.MenuResponse.Meta
+	(*GetCasbinRequest)(nil),  // 5: api.http.v1.GetCasbinRequest
+	(*GetCasbinResponse)(nil), // 6: api.http.v1.GetCasbinResponse
+	(*MenuResponse_Meta)(nil), // 7: api.http.v1.MenuResponse.Meta
 }
 var file_http_v1_http_proto_depIdxs = []int32{
-	5, // 0: api.http.v1.MenuResponse.meta:type_name -> api.http.v1.MenuResponse.Meta
+	7, // 0: api.http.v1.MenuResponse.meta:type_name -> api.http.v1.MenuResponse.Meta
 	4, // 1: api.http.v1.MenuResponse.children:type_name -> api.http.v1.MenuResponse
 	2, // [2:2] is the sub-list for method output_type
 	2, // [2:2] is the sub-list for method input_type
@@ -742,6 +919,30 @@ func file_http_v1_http_proto_init() {
 			}
 		}
 		file_http_v1_http_proto_msgTypes[5].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetCasbinRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_http_v1_http_proto_msgTypes[6].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*GetCasbinResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_http_v1_http_proto_msgTypes[7].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MenuResponse_Meta); i {
 			case 0:
 				return &v.state
@@ -760,7 +961,7 @@ func file_http_v1_http_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_http_v1_http_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

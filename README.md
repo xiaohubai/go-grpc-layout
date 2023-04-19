@@ -24,7 +24,7 @@
 ├── pkg                 // 公共组件
 │   └── utils           // 工具
 ├── scripts             // 脚本
-└── third_party         // api依赖的第三方proto
+└── third               // api依赖的第三方proto
 ```
 ## 大仓
 ``` go
@@ -50,10 +50,10 @@
 ├── pkg                 // 公共组件
 │   └── utils           // 工具
 ├── scripts             // 脚本
-└── third_party         // api依赖的第三方proto
+└── third               // api依赖的第三方proto
 ```
 
-## 主要功能
+# 主要功能
 - gin web框架（github.com/gin-gonic/gin）
 - jwt认证（github.com/golang-jwt/jwt）
 - casbin鉴权（github.com/casbin/casbin/v2）
@@ -68,8 +68,7 @@
 - 分布式接口限流 （github.com/go-redis/redis_rate/v9）
 - consul服务注册/发现，远程配置文件 (github.com/hashicorp/consul)
 
-
-## 组件访问接口
+# 组件访问接口
 ``` go
 - api           172.21.0.2:8000
 - jaeger        172.21.0.2:16686
@@ -77,8 +76,68 @@
 - prometheus    172.21.0.2:9090
 - grafana       172.21.0.2:3000 （admin admin）
 ```
+## 设计图
+![](./docs/user-req-resp.png)
+### 网关
+``` go
+服务管理
+    服务发现 服务注册 健康检查
+配置管理
+    版本管理
+API 元信息管理
+    路由匹配(前缀 精准 正则 RESTful),文档 OpenAPI
+流量管理
+    灰度发布 流量复制 负载均衡
+隔离保护
+    限流、熔断、降级、缓存
+访问控制
+    统一鉴权、跨域、风控
+可观测性
+    QPS、P99 各埋点 上下游基础信息(容器id,环境,请求接口,返回码),
+```
+### 持续部署
+```go
+流水线(触发方式 代码检查 单侧 质量红线 构建镜像 人工确认 自动发布 通知方式)
+制品仓库
+部署容器(手动)
 
+```
 # TODO
+
+## 基建
 - [x] gin
 - [x] grpc
-- [ ] 全链路
+- [ ] 全链路跟踪(opentelemetry)的log trace metric到es
+- [ ] openAPI和swagger
+- [x] 入参校验
+- [x] errors业务错误码
+- [x] 统一返回格式数据
+- [x] 权限
+- [x] 认证
+- [x] 接口限流
+- [x] 部署
+- [x] 本地或远程读取配置文件
+- [x] 埋点
+- [x] 捕获painc
+- [x] 日志
+- [x] gorm gen自动化生成
+- [ ] 路由注册和发现
+- [x] jenkins流水线
+
+
+## 业务
+- [x] 字典序
+- [x] 获取全部路由
+- [ ] 获取角色路由
+- [ ] 接口jwt加入黑名单
+- [ ] 获取layout配置信息
+- [ ] 获取 设置用户信息
+- [x] 登录
+- [x] 获取验证码
+- [x] 下发token和验证
+
+# 未来
+- nginx前端部署
+- 北极星做网关
+- 工蜂代码仓库
+- gokins持续部署

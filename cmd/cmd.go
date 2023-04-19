@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"github.com/go-kratos/kratos/v2"
@@ -31,7 +31,7 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, rr registry.Reg
 	)
 }
 
-func main() {
+func Run() (*kratos.App, func()) {
 	cc, err := conf.Load()
 	if err != nil {
 		panic("load config failed")
@@ -47,8 +47,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	defer cleanup()
-	if err := app.Run(); err != nil {
-		panic(err)
-	}
+	return app, cleanup
 }

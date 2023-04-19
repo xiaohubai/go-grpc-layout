@@ -37,6 +37,7 @@ CREATE TABLE `casbin_rule` (
     `v3` varchar(100) NOT NULL DEFAULT '' COMMENT '',
     `v4` varchar(100) NOT NULL DEFAULT '' COMMENT '',
     `v5` varchar(100) NOT NULL DEFAULT '' COMMENT '',
+    `desc` varchar(180) NOT NULL DEFAULT '' COMMENT '描述',
     `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
     `update_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
     `delete_time` datetime DEFAULT NULL COMMENT '删除时间',

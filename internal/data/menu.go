@@ -16,3 +16,12 @@ func (d *dataRepo) ListAllMenu(ctx context.Context, p *v1.PageRequest) (menuList
 	menuList, err = db.Limit(int(p.PageSize)).Offset(int(p.PageSize * (p.Page - 1))).Find()
 	return
 }
+
+func (d *dataRepo) ListRoleMenu(ctx context.Context, m *model.Menu) (menuList []*model.Menu, err error) {
+	db := d.data.db.Menu.WithContext(ctx)
+	if m.RoleIDs != "" {
+		db = db.Where(d.data.db.Menu.RoleIDs.FindInSetWith(m.RoleIDs))
+	}
+	menuList, err = db.Find()
+	return
+}

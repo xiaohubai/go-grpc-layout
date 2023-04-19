@@ -30,7 +30,7 @@ init:
 # generate api proto
 api:
 	protoc --proto_path=./api \
-	       --proto_path=./third_party \
+	       --proto_path=./third \
  	       --go_out=paths=source_relative:./api \
  	       --go-http_out=paths=source_relative:./api \
  	       --go-grpc_out=paths=source_relative:./api \
@@ -63,17 +63,6 @@ sql:
 configs:
 	kratos proto client configs/configs.proto
 
-
-.PHONY: run
-# generate run
-run:
-	go run cmd/main.go cmd/wire_gen.go
-
-.PHONY: runRemote
-# generate runRemote
-runRemote:
-	go run cmd/main.go cmd/wire_gen.go -env remote
-
 .PHONY: all
 # generate all
 all:
@@ -85,8 +74,6 @@ all:
 	make build;
 	make dockerBuild;
 	make run;
-	make runRemote;
-
 
 # show help
 help:

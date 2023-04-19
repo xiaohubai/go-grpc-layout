@@ -9,24 +9,22 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 )
 
-func (s *HttpService) Login(c *gin.Context) {
-	req := &v1.LoginRequest{}
+func (s *HttpService) AddTokenBlack(c *gin.Context) {
+	req := &v1.GetCasbinRequest{}
 	err := request.ShouldBindJSON(c, req)
 	if err != nil {
 		response.Fail(c, errors.ParamsFailed, err)
 		return
 	}
-	/* 	if !store.Verify(req.CaptchaID, req.Captcha, true) {
-		response.Fail(c, errors.CaptchaFailed, nil)
-		return
-	} */
 
-	data, err := s.uc.Login(c.Request.Context(), &model.User{
-		Username: req.UserName,
-		Password: req.Password,
-	})
+	data, err := s.uc.GetCasbinList(c.Request.Context(),
+		&model.CasbinRule{
+			V0: req.RoleIDs,
+			V1: req.Path,
+			V2: req.Method,
+		}, &v1.PageRequest{Page: req.Page, PageSize: req.PageSize})
 	if err != nil {
-		response.Fail(c, errors.LoginFailed, err)
+		response.Fail(c, errors.GetCasbinListFailed, err)
 		return
 	}
 	response.Success(c, data)

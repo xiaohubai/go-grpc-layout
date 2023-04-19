@@ -7,7 +7,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
-// Login 用户登录
+// GetAllMenuList 获取全部路由列表
 func (uc *HttpUsecase) GetAllMenuList(ctx context.Context, p *v1.PageRequest) (*v1.PageResponse, error) {
 	menuList, total, err := uc.repo.ListAllMenu(ctx, p)
 	if err != nil {
@@ -21,6 +21,15 @@ func (uc *HttpUsecase) GetAllMenuList(ctx context.Context, p *v1.PageRequest) (*
 		List:     list,
 	}
 	return res, nil
+}
+
+// GetRoleMenuList 获取角色路由列表
+func (uc *HttpUsecase) GetRoleMenuList(ctx context.Context, m *model.Menu) ([]*v1.MenuResponse, error) {
+	menuList, err := uc.repo.ListRoleMenu(ctx, m)
+	if err != nil {
+		return nil, err
+	}
+	return menuTreeHandler(menuList), nil
 }
 
 func menuTreeHandler(menuList []*model.Menu) []*v1.MenuResponse {

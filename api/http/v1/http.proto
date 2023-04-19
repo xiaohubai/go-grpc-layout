@@ -66,3 +66,20 @@ message LoginResponse {
 	Meta meta = 5;
 	repeated MenuResponse children=6;
   }
+
+
+  message GetCasbinRequest {
+	string roleIDs  = 1;
+	string path = 2;
+	string method = 3;
+	int32 page = 4;
+	int32 pageSize = 5;
+  }
+
+	message GetCasbinResponse {
+	int32 ID = 1;
+	string roleIDs = 12;
+	string path = 3;
+	string method = 4;
+	string desc = 5;
+  }

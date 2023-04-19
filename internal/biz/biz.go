@@ -41,4 +41,6 @@ type Repo interface {
 	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
 	ListAllMenu(context.Context, *v1.PageRequest) ([]*model.Menu, int64, error)
+	ListRoleMenu(context.Context, *model.Menu) ([]*model.Menu, error)
+	ListCasbinList(context.Context, *model.CasbinRule, *v1.PageRequest) ([]*model.CasbinRule, int64, error)
 }

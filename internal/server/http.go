@@ -3,6 +3,7 @@ package server
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
+
 	"github.com/spf13/viper"
 
 	swaggerfiles "github.com/swaggo/files"
@@ -53,6 +54,10 @@ func routers(s *service.HttpService) *gin.Engine {
 		r2.GET("/v1/get/dictList", s.GetDictList)         //获取字典序
 		r2.POST("/v1/get/allMenuList", s.GetAllMenuList)  //获取全部路由菜单
 		r2.GET("/v1/get/roleMenuList", s.GetRoleMenuList) //获取角色路由菜单
+		r2.POST("/v1/get/casbinList", s.GetCasbinList)    //获取权限列表
+		r2.GET("/v1/add/tokenBlack", s.AddTokenBlack)     //token加入黑名单
+		r2.GET("/v1/get/settings", s.GetSettings)         //获取模板设置
+		r2.GET("/v1/set/settings", s.SetSettings)         //设置模板配置
 	}
 
 	return router

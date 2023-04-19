@@ -35,6 +35,7 @@ func newCasbinRule(db *gorm.DB, opts ...gen.DOOption) casbinRule {
 	_casbinRule.V3 = field.NewString(tableName, "v3")
 	_casbinRule.V4 = field.NewString(tableName, "v4")
 	_casbinRule.V5 = field.NewString(tableName, "v5")
+	_casbinRule.Desc = field.NewString(tableName, "desc")
 	_casbinRule.CreateTime = field.NewTime(tableName, "create_time")
 	_casbinRule.UpdateTime = field.NewTime(tableName, "update_time")
 	_casbinRule.DeleteTime = field.NewTime(tableName, "delete_time")
@@ -52,12 +53,13 @@ type casbinRule struct {
 	ALL        field.Asterisk
 	ID         field.Int64
 	Ptype      field.String
-	V0         field.String
-	V1         field.String
-	V2         field.String
+	V0         field.String // 角色
+	V1         field.String // 接口地址
+	V2         field.String // method
 	V3         field.String
 	V4         field.String
 	V5         field.String
+	Desc       field.String // 描述
 	CreateTime field.Time   // 记录创建时间
 	UpdateTime field.Time   // 记录修改时间
 	DeleteTime field.Time   // 删除时间
@@ -87,6 +89,7 @@ func (c *casbinRule) updateTableName(table string) *casbinRule {
 	c.V3 = field.NewString(table, "v3")
 	c.V4 = field.NewString(table, "v4")
 	c.V5 = field.NewString(table, "v5")
+	c.Desc = field.NewString(table, "desc")
 	c.CreateTime = field.NewTime(table, "create_time")
 	c.UpdateTime = field.NewTime(table, "update_time")
 	c.DeleteTime = field.NewTime(table, "delete_time")
@@ -116,7 +119,7 @@ func (c *casbinRule) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (c *casbinRule) fillFieldMap() {
-	c.fieldMap = make(map[string]field.Expr, 13)
+	c.fieldMap = make(map[string]field.Expr, 14)
 	c.fieldMap["id"] = c.ID
 	c.fieldMap["ptype"] = c.Ptype
 	c.fieldMap["v0"] = c.V0
@@ -125,6 +128,7 @@ func (c *casbinRule) fillFieldMap() {
 	c.fieldMap["v3"] = c.V3
 	c.fieldMap["v4"] = c.V4
 	c.fieldMap["v5"] = c.V5
+	c.fieldMap["desc"] = c.Desc
 	c.fieldMap["create_time"] = c.CreateTime
 	c.fieldMap["update_time"] = c.UpdateTime
 	c.fieldMap["delete_time"] = c.DeleteTime

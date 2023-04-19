@@ -688,6 +688,228 @@ var _ interface {
 	ErrorName() string
 } = MenuResponseValidationError{}
 
+// Validate checks the field values on GetCasbinRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetCasbinRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetCasbinRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetCasbinRequestMultiError, or nil if none found.
+func (m *GetCasbinRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetCasbinRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for RoleIDs
+
+	// no validation rules for Path
+
+	// no validation rules for Method
+
+	// no validation rules for Page
+
+	// no validation rules for PageSize
+
+	if len(errors) > 0 {
+		return GetCasbinRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetCasbinRequestMultiError is an error wrapping multiple validation errors
+// returned by GetCasbinRequest.ValidateAll() if the designated constraints
+// aren't met.
+type GetCasbinRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetCasbinRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetCasbinRequestMultiError) AllErrors() []error { return m }
+
+// GetCasbinRequestValidationError is the validation error returned by
+// GetCasbinRequest.Validate if the designated constraints aren't met.
+type GetCasbinRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetCasbinRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetCasbinRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetCasbinRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetCasbinRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetCasbinRequestValidationError) ErrorName() string { return "GetCasbinRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e GetCasbinRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetCasbinRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetCasbinRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetCasbinRequestValidationError{}
+
+// Validate checks the field values on GetCasbinResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *GetCasbinResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetCasbinResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetCasbinResponseMultiError, or nil if none found.
+func (m *GetCasbinResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetCasbinResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	// no validation rules for RoleIDs
+
+	// no validation rules for Path
+
+	// no validation rules for Method
+
+	// no validation rules for Desc
+
+	if len(errors) > 0 {
+		return GetCasbinResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetCasbinResponseMultiError is an error wrapping multiple validation errors
+// returned by GetCasbinResponse.ValidateAll() if the designated constraints
+// aren't met.
+type GetCasbinResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetCasbinResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetCasbinResponseMultiError) AllErrors() []error { return m }
+
+// GetCasbinResponseValidationError is the validation error returned by
+// GetCasbinResponse.Validate if the designated constraints aren't met.
+type GetCasbinResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetCasbinResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetCasbinResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetCasbinResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetCasbinResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetCasbinResponseValidationError) ErrorName() string {
+	return "GetCasbinResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetCasbinResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetCasbinResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetCasbinResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetCasbinResponseValidationError{}
+
 // Validate checks the field values on MenuResponse_Meta with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
