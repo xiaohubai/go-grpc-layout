@@ -7,7 +7,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
-func (d *dataRepo) ListCasbinList(ctx context.Context, casbin *model.CasbinRule, p *v1.PageRequest) (
+func (d *dataRepo) ListCasbin(ctx context.Context, casbin *model.CasbinRule, p *v1.PageRequest) (
 	casbinList []*model.CasbinRule, total int64, err error) {
 	db := d.data.db.CasbinRule.WithContext(ctx)
 	total, err = db.Count()

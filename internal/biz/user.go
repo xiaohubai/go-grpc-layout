@@ -50,9 +50,19 @@ func (uc *HttpUsecase) Login(ctx context.Context, u *model.User) (*v1.LoginRespo
 
 	span.SetAttributes(attribute.Key("userList").String(cast.ToString(userInfo)))
 	res := &v1.LoginResponse{
+		ID:           userInfo.ID,
+		UID:          userInfo.UID,
 		UserName:     userInfo.Username,
 		NickName:     userInfo.Nickname,
 		Birth:        userInfo.Birth.Local().Format("2006-01-02"),
+		Avatar:       userInfo.Avatar,
+		RoleID:       userInfo.RoleID,
+		RoleName:     userInfo.RoleName,
+		Phone:        userInfo.Phone,
+		Wechat:       userInfo.Wechat,
+		Email:        userInfo.Email,
+		State:        userInfo.State,
+		Motto:        userInfo.Motto,
 		Token:        token,
 		RefreshToken: token,
 	}

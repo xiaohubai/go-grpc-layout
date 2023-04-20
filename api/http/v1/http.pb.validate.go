@@ -194,16 +194,7 @@ func (m *LoginRequest) validate(all bool) error {
 
 	}
 
-	if utf8.RuneCountInString(m.GetCaptchaID()) < 6 {
-		err := LoginRequestValidationError{
-			field:  "CaptchaID",
-			reason: "value length must be at least 6 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	// no validation rules for CaptchaID
 
 	if len(errors) > 0 {
 		return LoginRequestMultiError(errors)
@@ -909,6 +900,796 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = GetCasbinResponseValidationError{}
+
+// Validate checks the field values on AddTokenBlackRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddTokenBlackRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddTokenBlackRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddTokenBlackRequestMultiError, or nil if none found.
+func (m *AddTokenBlackRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddTokenBlackRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Token
+
+	if len(errors) > 0 {
+		return AddTokenBlackRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddTokenBlackRequestMultiError is an error wrapping multiple validation
+// errors returned by AddTokenBlackRequest.ValidateAll() if the designated
+// constraints aren't met.
+type AddTokenBlackRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddTokenBlackRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddTokenBlackRequestMultiError) AllErrors() []error { return m }
+
+// AddTokenBlackRequestValidationError is the validation error returned by
+// AddTokenBlackRequest.Validate if the designated constraints aren't met.
+type AddTokenBlackRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddTokenBlackRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddTokenBlackRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddTokenBlackRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddTokenBlackRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddTokenBlackRequestValidationError) ErrorName() string {
+	return "AddTokenBlackRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddTokenBlackRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddTokenBlackRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddTokenBlackRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddTokenBlackRequestValidationError{}
+
+// Validate checks the field values on IsTokenBlackkRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *IsTokenBlackkRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on IsTokenBlackkRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// IsTokenBlackkRequestMultiError, or nil if none found.
+func (m *IsTokenBlackkRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *IsTokenBlackkRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Token
+
+	if len(errors) > 0 {
+		return IsTokenBlackkRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// IsTokenBlackkRequestMultiError is an error wrapping multiple validation
+// errors returned by IsTokenBlackkRequest.ValidateAll() if the designated
+// constraints aren't met.
+type IsTokenBlackkRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m IsTokenBlackkRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m IsTokenBlackkRequestMultiError) AllErrors() []error { return m }
+
+// IsTokenBlackkRequestValidationError is the validation error returned by
+// IsTokenBlackkRequest.Validate if the designated constraints aren't met.
+type IsTokenBlackkRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e IsTokenBlackkRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e IsTokenBlackkRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e IsTokenBlackkRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e IsTokenBlackkRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e IsTokenBlackkRequestValidationError) ErrorName() string {
+	return "IsTokenBlackkRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e IsTokenBlackkRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sIsTokenBlackkRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = IsTokenBlackkRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = IsTokenBlackkRequestValidationError{}
+
+// Validate checks the field values on SettingRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *SettingRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SettingRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in SettingRequestMultiError,
+// or nil if none found.
+func (m *SettingRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SettingRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Lang
+
+	// no validation rules for SideModeColor
+
+	// no validation rules for Collapse
+
+	// no validation rules for Breadcrumb
+
+	// no validation rules for DefaultRouter
+
+	// no validation rules for ActiveTextColor
+
+	// no validation rules for ActiveBackgroundColor
+
+	// no validation rules for UID
+
+	if len(errors) > 0 {
+		return SettingRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// SettingRequestMultiError is an error wrapping multiple validation errors
+// returned by SettingRequest.ValidateAll() if the designated constraints
+// aren't met.
+type SettingRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SettingRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SettingRequestMultiError) AllErrors() []error { return m }
+
+// SettingRequestValidationError is the validation error returned by
+// SettingRequest.Validate if the designated constraints aren't met.
+type SettingRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SettingRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SettingRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SettingRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SettingRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SettingRequestValidationError) ErrorName() string { return "SettingRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SettingRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSettingRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SettingRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SettingRequestValidationError{}
+
+// Validate checks the field values on SettingResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *SettingResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on SettingResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// SettingResponseMultiError, or nil if none found.
+func (m *SettingResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *SettingResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	// no validation rules for Lang
+
+	// no validation rules for SideModeColor
+
+	// no validation rules for Collapse
+
+	// no validation rules for Breadcrumb
+
+	// no validation rules for DefaultRouter
+
+	// no validation rules for ActiveTextColor
+
+	// no validation rules for ActiveBackgroundColor
+
+	// no validation rules for UID
+
+	if len(errors) > 0 {
+		return SettingResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// SettingResponseMultiError is an error wrapping multiple validation errors
+// returned by SettingResponse.ValidateAll() if the designated constraints
+// aren't met.
+type SettingResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m SettingResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m SettingResponseMultiError) AllErrors() []error { return m }
+
+// SettingResponseValidationError is the validation error returned by
+// SettingResponse.Validate if the designated constraints aren't met.
+type SettingResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e SettingResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e SettingResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e SettingResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e SettingResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e SettingResponseValidationError) ErrorName() string { return "SettingResponseValidationError" }
+
+// Error satisfies the builtin error interface
+func (e SettingResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sSettingResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = SettingResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = SettingResponseValidationError{}
+
+// Validate checks the field values on AddRoleMenuRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *AddRoleMenuRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddRoleMenuRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddRoleMenuRequestMultiError, or nil if none found.
+func (m *AddRoleMenuRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddRoleMenuRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Component
+
+	// no validation rules for Hidden
+
+	// no validation rules for Icon
+
+	// no validation rules for KeepAlive
+
+	// no validation rules for Name
+
+	// no validation rules for ParentID
+
+	// no validation rules for Path
+
+	// no validation rules for RoleIDs
+
+	// no validation rules for Sort
+
+	// no validation rules for Title
+
+	if len(errors) > 0 {
+		return AddRoleMenuRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddRoleMenuRequestMultiError is an error wrapping multiple validation errors
+// returned by AddRoleMenuRequest.ValidateAll() if the designated constraints
+// aren't met.
+type AddRoleMenuRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddRoleMenuRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddRoleMenuRequestMultiError) AllErrors() []error { return m }
+
+// AddRoleMenuRequestValidationError is the validation error returned by
+// AddRoleMenuRequest.Validate if the designated constraints aren't met.
+type AddRoleMenuRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddRoleMenuRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddRoleMenuRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddRoleMenuRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddRoleMenuRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddRoleMenuRequestValidationError) ErrorName() string {
+	return "AddRoleMenuRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e AddRoleMenuRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddRoleMenuRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddRoleMenuRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddRoleMenuRequestValidationError{}
+
+// Validate checks the field values on UpdateRoleMenuRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateRoleMenuRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateRoleMenuRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateRoleMenuRequestMultiError, or nil if none found.
+func (m *UpdateRoleMenuRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateRoleMenuRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Component
+
+	// no validation rules for Hidden
+
+	// no validation rules for Icon
+
+	// no validation rules for KeepAlive
+
+	// no validation rules for Name
+
+	// no validation rules for ParentID
+
+	// no validation rules for Path
+
+	// no validation rules for RoleIDs
+
+	// no validation rules for Sort
+
+	// no validation rules for Title
+
+	if len(errors) > 0 {
+		return UpdateRoleMenuRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateRoleMenuRequestMultiError is an error wrapping multiple validation
+// errors returned by UpdateRoleMenuRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UpdateRoleMenuRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateRoleMenuRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateRoleMenuRequestMultiError) AllErrors() []error { return m }
+
+// UpdateRoleMenuRequestValidationError is the validation error returned by
+// UpdateRoleMenuRequest.Validate if the designated constraints aren't met.
+type UpdateRoleMenuRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateRoleMenuRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateRoleMenuRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateRoleMenuRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateRoleMenuRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateRoleMenuRequestValidationError) ErrorName() string {
+	return "UpdateRoleMenuRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateRoleMenuRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateRoleMenuRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateRoleMenuRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateRoleMenuRequestValidationError{}
+
+// Validate checks the field values on DeleteRoleMenuRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteRoleMenuRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteRoleMenuRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteRoleMenuRequestMultiError, or nil if none found.
+func (m *DeleteRoleMenuRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteRoleMenuRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	if len(errors) > 0 {
+		return DeleteRoleMenuRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteRoleMenuRequestMultiError is an error wrapping multiple validation
+// errors returned by DeleteRoleMenuRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteRoleMenuRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteRoleMenuRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteRoleMenuRequestMultiError) AllErrors() []error { return m }
+
+// DeleteRoleMenuRequestValidationError is the validation error returned by
+// DeleteRoleMenuRequest.Validate if the designated constraints aren't met.
+type DeleteRoleMenuRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteRoleMenuRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteRoleMenuRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteRoleMenuRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteRoleMenuRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteRoleMenuRequestValidationError) ErrorName() string {
+	return "DeleteRoleMenuRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteRoleMenuRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteRoleMenuRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteRoleMenuRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteRoleMenuRequestValidationError{}
 
 // Validate checks the field values on MenuResponse_Meta with the rules defined
 // in the proto definition for this message. If any rules are violated, the

@@ -24,7 +24,7 @@ func (uc *HttpUsecase) GetAllMenuList(ctx context.Context, p *v1.PageRequest) (*
 }
 
 // GetRoleMenuList 获取角色路由列表
-func (uc *HttpUsecase) GetRoleMenuList(ctx context.Context, m *model.Menu) ([]*v1.MenuResponse, error) {
+func (uc *HttpUsecase) GetRoleMenuList(ctx context.Context, m *model.Menu) (any, error) {
 	menuList, err := uc.repo.ListRoleMenu(ctx, m)
 	if err != nil {
 		return nil, err
@@ -61,4 +61,16 @@ func menuTreeHandler(menuList []*model.Menu) []*v1.MenuResponse {
 		m[int(v.ID)] = &data
 	}
 	return res
+}
+
+func (uc *HttpUsecase) AddRoleMenu(ctx context.Context, m *model.Menu) error {
+	return uc.repo.AddRoleMenu(ctx, m)
+}
+
+func (uc *HttpUsecase) DeleteRoleMenu(ctx context.Context, m *model.Menu) error {
+	return uc.repo.DeleteRoleMenu(ctx, m)
+}
+
+func (uc *HttpUsecase) UpdateRoleMenu(ctx context.Context, m *model.Menu) error {
+	return uc.repo.UpdateRoleMenu(ctx, m)
 }

@@ -25,3 +25,30 @@ func (d *dataRepo) ListRoleMenu(ctx context.Context, m *model.Menu) (menuList []
 	menuList, err = db.Find()
 	return
 }
+
+func (d *dataRepo) AddRoleMenu(ctx context.Context, m *model.Menu) (err error) {
+	db := d.data.db.Menu.WithContext(ctx)
+	if m.RoleIDs != "" {
+		db = db.Where(d.data.db.Menu.RoleIDs.FindInSetWith(m.RoleIDs))
+	}
+	menuList, err = db.Find()
+	return
+}
+
+func (d *dataRepo) DeleteRoleMenu(ctx context.Context, m *model.Menu) (err error) {
+	db := d.data.db.Menu.WithContext(ctx)
+	if m.RoleIDs != "" {
+		db = db.Where(d.data.db.Menu.RoleIDs.FindInSetWith(m.RoleIDs))
+	}
+	menuList, err = db.Find()
+	return
+}
+
+func (d *dataRepo) UpdateRoleMenu(ctx context.Context, m *model.Menu) (err error) {
+	db := d.data.db.Menu.WithContext(ctx)
+	if m.RoleIDs != "" {
+		db = db.Where(d.data.db.Menu.RoleIDs.FindInSetWith(m.RoleIDs))
+	}
+	menuList, err = db.Find()
+	return
+}

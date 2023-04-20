@@ -54,10 +54,15 @@ func routers(s *service.HttpService) *gin.Engine {
 		r2.GET("/v1/get/dictList", s.GetDictList)         //获取字典序
 		r2.POST("/v1/get/allMenuList", s.GetAllMenuList)  //获取全部路由菜单
 		r2.GET("/v1/get/roleMenuList", s.GetRoleMenuList) //获取角色路由菜单
+		r2.POST("/v1/add/roleMenu", s.AddRoleMenu)        //添加菜单
+		r2.POST("/v1/delete/roleMenu", s.DeleteRoleMenu)  //删除菜单
+		r2.POST("/v1/update/roleMenu", s.UpdateRoleMenu)  //更新菜单
 		r2.POST("/v1/get/casbinList", s.GetCasbinList)    //获取权限列表
-		r2.GET("/v1/add/tokenBlack", s.AddTokenBlack)     //token加入黑名单
-		r2.GET("/v1/get/settings", s.GetSettings)         //获取模板设置
-		r2.GET("/v1/set/settings", s.SetSettings)         //设置模板配置
+		r2.POST("/v1/add/casbin", s.AddCasbin)            //添加权限
+		r2.POST("/v1/delete/casbin", s.DeleteCasbin)      //更新权限
+		r2.POST("/v1/update/casbin", s.UpdateCasbin)      //删除权限
+		r2.GET("/v1/get/setting", s.GetSetting)           //获取模板设置
+		r2.POST("/v1/update/setting", s.UpdateSetting)    //设置模板配置
 	}
 
 	return router

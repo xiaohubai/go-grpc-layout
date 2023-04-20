@@ -36,11 +36,16 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 	}
 }
 
-// data层共享
+// data层共享  入参 返参只接收表model和其他条件
 type Repo interface {
 	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
 	ListAllMenu(context.Context, *v1.PageRequest) ([]*model.Menu, int64, error)
 	ListRoleMenu(context.Context, *model.Menu) ([]*model.Menu, error)
-	ListCasbinList(context.Context, *model.CasbinRule, *v1.PageRequest) ([]*model.CasbinRule, int64, error)
+	ListCasbin(context.Context, *model.CasbinRule, *v1.PageRequest) ([]*model.CasbinRule, int64, error)
+	UpdateSetting(context.Context, *model.Setting) error
+	GetSetting(context.Context, *model.Setting) (*model.Setting, error)
+	AddRoleMenu(context.Context, *model.Menu) error
+	DeleteRoleMenu(context.Context, *model.Menu) error
+	UpdateRoleMenu(context.Context, *model.Menu) error
 }
