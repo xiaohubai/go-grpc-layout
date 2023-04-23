@@ -42,9 +42,9 @@ func newUser(db *gorm.DB, opts ...gen.DOOption) user {
 	_user.Wechat = field.NewString(tableName, "wechat")
 	_user.Email = field.NewString(tableName, "email")
 	_user.State = field.NewInt32(tableName, "state")
-	_user.CreateTime = field.NewTime(tableName, "create_time")
-	_user.UpdateTime = field.NewTime(tableName, "update_time")
-	_user.DeleteTime = field.NewTime(tableName, "delete_time")
+	_user.CreateAt = field.NewTime(tableName, "create_at")
+	_user.UpdateAt = field.NewTime(tableName, "update_at")
+	_user.DeletedAt = field.NewField(tableName, "deleted_at")
 	_user.CreateUser = field.NewString(tableName, "create_user")
 	_user.UpdateUser = field.NewString(tableName, "update_user")
 
@@ -72,9 +72,9 @@ type user struct {
 	Wechat     field.String
 	Email      field.String
 	State      field.Int32
-	CreateTime field.Time
-	UpdateTime field.Time
-	DeleteTime field.Time
+	CreateAt   field.Time
+	UpdateAt   field.Time
+	DeletedAt  field.Field
 	CreateUser field.String
 	UpdateUser field.String
 
@@ -108,9 +108,9 @@ func (u *user) updateTableName(table string) *user {
 	u.Wechat = field.NewString(table, "wechat")
 	u.Email = field.NewString(table, "email")
 	u.State = field.NewInt32(table, "state")
-	u.CreateTime = field.NewTime(table, "create_time")
-	u.UpdateTime = field.NewTime(table, "update_time")
-	u.DeleteTime = field.NewTime(table, "delete_time")
+	u.CreateAt = field.NewTime(table, "create_at")
+	u.UpdateAt = field.NewTime(table, "update_at")
+	u.DeletedAt = field.NewField(table, "deleted_at")
 	u.CreateUser = field.NewString(table, "create_user")
 	u.UpdateUser = field.NewString(table, "update_user")
 
@@ -151,9 +151,9 @@ func (u *user) fillFieldMap() {
 	u.fieldMap["wechat"] = u.Wechat
 	u.fieldMap["email"] = u.Email
 	u.fieldMap["state"] = u.State
-	u.fieldMap["create_time"] = u.CreateTime
-	u.fieldMap["update_time"] = u.UpdateTime
-	u.fieldMap["delete_time"] = u.DeleteTime
+	u.fieldMap["create_at"] = u.CreateAt
+	u.fieldMap["update_at"] = u.UpdateAt
+	u.fieldMap["deleted_at"] = u.DeletedAt
 	u.fieldMap["create_user"] = u.CreateUser
 	u.fieldMap["update_user"] = u.UpdateUser
 }

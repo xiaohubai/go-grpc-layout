@@ -40,12 +40,18 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 type Repo interface {
 	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
-	ListAllMenu(context.Context, *v1.PageRequest) ([]*model.Menu, int64, error)
-	ListRoleMenu(context.Context, *model.Menu) ([]*model.Menu, error)
-	ListCasbin(context.Context, *model.CasbinRule, *v1.PageRequest) ([]*model.CasbinRule, int64, error)
+
 	UpdateSetting(context.Context, *model.Setting) error
 	GetSetting(context.Context, *model.Setting) (*model.Setting, error)
+
 	AddRoleMenu(context.Context, *model.Menu) error
-	DeleteRoleMenu(context.Context, *model.Menu) error
+	DeleteRoleMenuByID(context.Context, *model.Menu) error
 	UpdateRoleMenu(context.Context, *model.Menu) error
+	ListAllMenu(context.Context) ([]*model.Menu, error)
+	ListRoleMenu(context.Context, *model.Menu) ([]*model.Menu, error)
+
+	ListRoleCasbin(context.Context, *model.CasbinRule, *v1.PageRequest) ([]*model.CasbinRule, int64, error)
+	AddRoleCasbin(context.Context, *model.CasbinRule) error
+	UpdateRoleCasbin(context.Context, *model.CasbinRule) error
+	DeleteRoleCasbin(context.Context, *model.CasbinRule) error
 }

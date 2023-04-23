@@ -160,9 +160,9 @@ func (m *LoginRequest) validate(all bool) error {
 
 	var errors []error
 
-	if l := utf8.RuneCountInString(m.GetUserName()); l < 3 || l > 11 {
+	if l := utf8.RuneCountInString(m.GetUsername()); l < 3 || l > 11 {
 		err := LoginRequestValidationError{
-			field:  "UserName",
+			field:  "Username",
 			reason: "value length must be between 3 and 11 runes, inclusive",
 		}
 		if !all {
@@ -1507,6 +1507,8 @@ func (m *UpdateRoleMenuRequest) validate(all bool) error {
 
 	// no validation rules for Title
 
+	// no validation rules for ID
+
 	if len(errors) > 0 {
 		return UpdateRoleMenuRequestMultiError(errors)
 	}
@@ -1690,6 +1692,330 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = DeleteRoleMenuRequestValidationError{}
+
+// Validate checks the field values on AddCasbinRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *AddCasbinRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on AddCasbinRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// AddCasbinRequestMultiError, or nil if none found.
+func (m *AddCasbinRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *AddCasbinRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for RoleIDs
+
+	// no validation rules for Path
+
+	// no validation rules for Method
+
+	// no validation rules for Desc
+
+	if len(errors) > 0 {
+		return AddCasbinRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// AddCasbinRequestMultiError is an error wrapping multiple validation errors
+// returned by AddCasbinRequest.ValidateAll() if the designated constraints
+// aren't met.
+type AddCasbinRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m AddCasbinRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m AddCasbinRequestMultiError) AllErrors() []error { return m }
+
+// AddCasbinRequestValidationError is the validation error returned by
+// AddCasbinRequest.Validate if the designated constraints aren't met.
+type AddCasbinRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e AddCasbinRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e AddCasbinRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e AddCasbinRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e AddCasbinRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e AddCasbinRequestValidationError) ErrorName() string { return "AddCasbinRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e AddCasbinRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sAddCasbinRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = AddCasbinRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = AddCasbinRequestValidationError{}
+
+// Validate checks the field values on UpdateCasbinRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateCasbinRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateCasbinRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateCasbinRequestMultiError, or nil if none found.
+func (m *UpdateCasbinRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateCasbinRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	// no validation rules for RoleIDs
+
+	// no validation rules for Path
+
+	// no validation rules for Method
+
+	// no validation rules for Desc
+
+	if len(errors) > 0 {
+		return UpdateCasbinRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateCasbinRequestMultiError is an error wrapping multiple validation
+// errors returned by UpdateCasbinRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UpdateCasbinRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateCasbinRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateCasbinRequestMultiError) AllErrors() []error { return m }
+
+// UpdateCasbinRequestValidationError is the validation error returned by
+// UpdateCasbinRequest.Validate if the designated constraints aren't met.
+type UpdateCasbinRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateCasbinRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateCasbinRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateCasbinRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateCasbinRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateCasbinRequestValidationError) ErrorName() string {
+	return "UpdateCasbinRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateCasbinRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateCasbinRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateCasbinRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateCasbinRequestValidationError{}
+
+// Validate checks the field values on DeleteCasbinRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *DeleteCasbinRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DeleteCasbinRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DeleteCasbinRequestMultiError, or nil if none found.
+func (m *DeleteCasbinRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DeleteCasbinRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	if len(errors) > 0 {
+		return DeleteCasbinRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DeleteCasbinRequestMultiError is an error wrapping multiple validation
+// errors returned by DeleteCasbinRequest.ValidateAll() if the designated
+// constraints aren't met.
+type DeleteCasbinRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DeleteCasbinRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DeleteCasbinRequestMultiError) AllErrors() []error { return m }
+
+// DeleteCasbinRequestValidationError is the validation error returned by
+// DeleteCasbinRequest.Validate if the designated constraints aren't met.
+type DeleteCasbinRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DeleteCasbinRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DeleteCasbinRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DeleteCasbinRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DeleteCasbinRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DeleteCasbinRequestValidationError) ErrorName() string {
+	return "DeleteCasbinRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DeleteCasbinRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDeleteCasbinRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DeleteCasbinRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DeleteCasbinRequestValidationError{}
 
 // Validate checks the field values on MenuResponse_Meta with the rules defined
 // in the proto definition for this message. If any rules are violated, the

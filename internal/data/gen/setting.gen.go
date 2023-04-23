@@ -36,9 +36,9 @@ func newSetting(db *gorm.DB, opts ...gen.DOOption) setting {
 	_setting.DefaultRouter = field.NewString(tableName, "default_router")
 	_setting.ActiveTextColor = field.NewString(tableName, "active_text_color")
 	_setting.ActiveBackgroundColor = field.NewString(tableName, "active_background_color")
-	_setting.CreateTime = field.NewTime(tableName, "create_time")
-	_setting.UpdateTime = field.NewTime(tableName, "update_time")
-	_setting.DeleteTime = field.NewTime(tableName, "delete_time")
+	_setting.CreateAt = field.NewTime(tableName, "create_at")
+	_setting.UpdateAt = field.NewTime(tableName, "update_at")
+	_setting.DeletedAt = field.NewField(tableName, "deleted_at")
 	_setting.CreateUser = field.NewString(tableName, "create_user")
 	_setting.UpdateUser = field.NewString(tableName, "update_user")
 
@@ -60,9 +60,9 @@ type setting struct {
 	DefaultRouter         field.String // 默认路由
 	ActiveTextColor       field.String // 活跃文本颜色
 	ActiveBackgroundColor field.String // 活跃文本背景色
-	CreateTime            field.Time   // 记录创建时间
-	UpdateTime            field.Time   // 记录修改时间
-	DeleteTime            field.Time   // 删除时间
+	CreateAt              field.Time   // 记录创建时间
+	UpdateAt              field.Time   // 记录修改时间
+	DeletedAt             field.Field  // 删除时间
 	CreateUser            field.String // 创建人
 	UpdateUser            field.String // 修改人
 
@@ -90,9 +90,9 @@ func (s *setting) updateTableName(table string) *setting {
 	s.DefaultRouter = field.NewString(table, "default_router")
 	s.ActiveTextColor = field.NewString(table, "active_text_color")
 	s.ActiveBackgroundColor = field.NewString(table, "active_background_color")
-	s.CreateTime = field.NewTime(table, "create_time")
-	s.UpdateTime = field.NewTime(table, "update_time")
-	s.DeleteTime = field.NewTime(table, "delete_time")
+	s.CreateAt = field.NewTime(table, "create_at")
+	s.UpdateAt = field.NewTime(table, "update_at")
+	s.DeletedAt = field.NewField(table, "deleted_at")
 	s.CreateUser = field.NewString(table, "create_user")
 	s.UpdateUser = field.NewString(table, "update_user")
 
@@ -127,9 +127,9 @@ func (s *setting) fillFieldMap() {
 	s.fieldMap["default_router"] = s.DefaultRouter
 	s.fieldMap["active_text_color"] = s.ActiveTextColor
 	s.fieldMap["active_background_color"] = s.ActiveBackgroundColor
-	s.fieldMap["create_time"] = s.CreateTime
-	s.fieldMap["update_time"] = s.UpdateTime
-	s.fieldMap["delete_time"] = s.DeleteTime
+	s.fieldMap["create_at"] = s.CreateAt
+	s.fieldMap["update_at"] = s.UpdateAt
+	s.fieldMap["deleted_at"] = s.DeletedAt
 	s.fieldMap["create_user"] = s.CreateUser
 	s.fieldMap["update_user"] = s.UpdateUser
 }

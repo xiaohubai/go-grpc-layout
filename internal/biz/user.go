@@ -1,9 +1,9 @@
 package biz
 
 import (
-	"context"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
@@ -17,16 +17,16 @@ import (
 )
 
 // Login 用户登录
-func (uc *HttpUsecase) Login(ctx context.Context, u *model.User) (*v1.LoginResponse, error) {
-	ctx, span := tracing.NewSpan(ctx, "biz-Login")
+func (uc *HttpUsecase) Login(c *gin.Context, req *v1.LoginRequest) (*v1.LoginResponse, error) {
+	ctx, span := tracing.NewSpan(c.Request.Context(), "biz-Login")
 	defer span.End()
 
-	userInfo, err := uc.repo.FirstUser(ctx, &model.User{Username: u.Username})
+	userInfo, err := uc.repo.FirstUser(ctx, &model.User{Username: req.Username})
 	if err != nil {
 		return nil, err
 	}
 
-	if userInfo.Password != utils.Md5([]byte(u.Password+userInfo.Salt)) {
+	if userInfo.Password != utils.Md5([]byte(req.Password+userInfo.Salt)) {
 		return nil, errors.New("密码错误")
 	}
 

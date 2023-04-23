@@ -36,9 +36,9 @@ func newCasbinRule(db *gorm.DB, opts ...gen.DOOption) casbinRule {
 	_casbinRule.V4 = field.NewString(tableName, "v4")
 	_casbinRule.V5 = field.NewString(tableName, "v5")
 	_casbinRule.Desc = field.NewString(tableName, "desc")
-	_casbinRule.CreateTime = field.NewTime(tableName, "create_time")
-	_casbinRule.UpdateTime = field.NewTime(tableName, "update_time")
-	_casbinRule.DeleteTime = field.NewTime(tableName, "delete_time")
+	_casbinRule.CreateAt = field.NewTime(tableName, "create_at")
+	_casbinRule.UpdateAt = field.NewTime(tableName, "update_at")
+	_casbinRule.DeletedAt = field.NewField(tableName, "deleted_at")
 	_casbinRule.CreateUser = field.NewString(tableName, "create_user")
 	_casbinRule.UpdateUser = field.NewString(tableName, "update_user")
 
@@ -60,9 +60,9 @@ type casbinRule struct {
 	V4         field.String
 	V5         field.String
 	Desc       field.String // 描述
-	CreateTime field.Time   // 记录创建时间
-	UpdateTime field.Time   // 记录修改时间
-	DeleteTime field.Time   // 删除时间
+	CreateAt   field.Time   // 记录创建时间
+	UpdateAt   field.Time   // 记录修改时间
+	DeletedAt  field.Field  // 删除时间
 	CreateUser field.String // 创建人
 	UpdateUser field.String // 修改人
 
@@ -90,9 +90,9 @@ func (c *casbinRule) updateTableName(table string) *casbinRule {
 	c.V4 = field.NewString(table, "v4")
 	c.V5 = field.NewString(table, "v5")
 	c.Desc = field.NewString(table, "desc")
-	c.CreateTime = field.NewTime(table, "create_time")
-	c.UpdateTime = field.NewTime(table, "update_time")
-	c.DeleteTime = field.NewTime(table, "delete_time")
+	c.CreateAt = field.NewTime(table, "create_at")
+	c.UpdateAt = field.NewTime(table, "update_at")
+	c.DeletedAt = field.NewField(table, "deleted_at")
 	c.CreateUser = field.NewString(table, "create_user")
 	c.UpdateUser = field.NewString(table, "update_user")
 
@@ -129,9 +129,9 @@ func (c *casbinRule) fillFieldMap() {
 	c.fieldMap["v4"] = c.V4
 	c.fieldMap["v5"] = c.V5
 	c.fieldMap["desc"] = c.Desc
-	c.fieldMap["create_time"] = c.CreateTime
-	c.fieldMap["update_time"] = c.UpdateTime
-	c.fieldMap["delete_time"] = c.DeleteTime
+	c.fieldMap["create_at"] = c.CreateAt
+	c.fieldMap["update_at"] = c.UpdateAt
+	c.fieldMap["deleted_at"] = c.DeletedAt
 	c.fieldMap["create_user"] = c.CreateUser
 	c.fieldMap["update_user"] = c.UpdateUser
 }

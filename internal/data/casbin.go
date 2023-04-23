@@ -7,7 +7,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
-func (d *dataRepo) ListCasbin(ctx context.Context, casbin *model.CasbinRule, p *v1.PageRequest) (
+func (d *dataRepo) ListRoleCasbin(ctx context.Context, casbin *model.CasbinRule, p *v1.PageRequest) (
 	casbinList []*model.CasbinRule, total int64, err error) {
 	db := d.data.db.CasbinRule.WithContext(ctx)
 	total, err = db.Count()
@@ -24,5 +24,22 @@ func (d *dataRepo) ListCasbin(ctx context.Context, casbin *model.CasbinRule, p *
 		db = db.Where(d.data.db.CasbinRule.V2.Eq(casbin.V2))
 	}
 	casbinList, err = db.Limit(int(p.PageSize)).Offset(int(p.PageSize * (p.Page - 1))).Find()
+	return
+}
+
+func (d *dataRepo) AddRoleCasbin(ctx context.Context, casbin *model.CasbinRule) (err error) {
+	db := d.data.db.CasbinRule.WithContext(ctx)
+	return db.Create(casbin)
+}
+
+func (d *dataRepo) DeleteRoleCasbin(ctx context.Context, casbin *model.CasbinRule) (err error) {
+	db := d.data.db.CasbinRule.WithContext(ctx)
+	_, err = db.Where(d.data.db.CasbinRule.ID.Eq(casbin.ID)).Delete()
+	return
+}
+
+func (d *dataRepo) UpdateRoleCasbin(ctx context.Context, casbin *model.CasbinRule) (err error) {
+	db := d.data.db.CasbinRule.WithContext(ctx)
+	_, err = db.Omit(d.data.db.CasbinRule.ID).Where(d.data.db.CasbinRule.ID.Eq(casbin.ID)).Updates(casbin)
 	return
 }

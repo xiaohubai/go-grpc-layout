@@ -1,15 +1,22 @@
 package biz
 
 import (
-	"context"
+	"errors"
 
+	"github.com/gin-gonic/gin"
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
+	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 )
 
 // GetCasbinList 获取权限列表
-func (uc *HttpUsecase) GetSetting(ctx context.Context, s *model.Setting) (*v1.SettingResponse, error) {
-	setting, err := uc.repo.GetSetting(ctx, s)
+func (uc *HttpUsecase) GetSetting(c *gin.Context) (*v1.SettingResponse, error) {
+	claims, ok := c.Get("claims")
+	if !ok {
+		return nil, errors.New("token解析失败")
+	}
+	userInfo := claims.(*jwt.Claims)
+	setting, err := uc.repo.GetSetting(c.Request.Context(), &model.Setting{UID: userInfo.UID})
 	if err != nil {
 		return nil, err
 	}
@@ -28,9 +35,15 @@ func (uc *HttpUsecase) GetSetting(ctx context.Context, s *model.Setting) (*v1.Se
 }
 
 // SetSetting 设置layout配置
-func (uc *HttpUsecase) UpdateSetting(ctx context.Context, s *v1.SettingRequest) error {
-	return uc.repo.UpdateSetting(ctx, &model.Setting{
-		UID:                   s.UID,
+func (uc *HttpUsecase) UpdateSetting(c *gin.Context, s *v1.SettingRequest) error {
+	claims, ok := c.Get("claims")
+	if !ok {
+		return errors.New("token解析失败")
+	}
+	userInfo := claims.(*jwt.Claims)
+
+	return uc.repo.UpdateSetting(c.Request.Context(), &model.Setting{
+		UID:                   userInfo.UID,
 		Lang:                  s.Lang,
 		SideModeColor:         s.SideModeColor,
 		Collapse:              s.Collapse,
@@ -38,5 +51,6 @@ func (uc *HttpUsecase) UpdateSetting(ctx context.Context, s *v1.SettingRequest) 
 		DefaultRouter:         s.DefaultRouter,
 		ActiveTextColor:       s.ActiveTextColor,
 		ActiveBackgroundColor: s.ActiveBackgroundColor,
+		UpdateUser:            userInfo.UserName,
 	})
 }

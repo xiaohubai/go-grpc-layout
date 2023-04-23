@@ -3,7 +3,6 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
-	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	"github.com/xiaohubai/go-grpc-layout/internal/errors"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/request"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
@@ -21,10 +20,7 @@ func (s *HttpService) Login(c *gin.Context) {
 		return
 	} */
 
-	data, err := s.uc.Login(c.Request.Context(), &model.User{
-		Username: req.UserName,
-		Password: req.Password,
-	})
+	data, err := s.uc.Login(c, req)
 	if err != nil {
 		response.Fail(c, errors.LoginFailed, err)
 		return

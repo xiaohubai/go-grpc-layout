@@ -13,7 +13,16 @@ func (d *dataRepo) UpdateSetting(ctx context.Context, s *model.Setting) error {
 		return errors.New("UID must not be empty")
 	}
 	db = db.Where(d.data.db.Setting.UID.Eq(s.UID))
-	_, err := db.Updates(s)
+	_, err := db.Updates(map[string]interface{}{
+		"lang":                    s.Lang,
+		"side_mode_color":         s.SideModeColor,
+		"collapse":                s.Collapse,
+		"breadcrumb":              s.Breadcrumb,
+		"default_router":          s.DefaultRouter,
+		"active_text_color":       s.ActiveTextColor,
+		"active_background_color": s.ActiveBackgroundColor,
+		"update_user":             s.UpdateUser,
+	})
 	return err
 }
 

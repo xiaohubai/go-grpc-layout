@@ -39,9 +39,9 @@ func newMenu(db *gorm.DB, opts ...gen.DOOption) menu {
 	_menu.Hidden = field.NewBool(tableName, "hidden")
 	_menu.KeepAlive = field.NewBool(tableName, "keepAlive")
 	_menu.Sort = field.NewInt32(tableName, "sort")
-	_menu.CreateTime = field.NewTime(tableName, "create_time")
-	_menu.UpdateTime = field.NewTime(tableName, "update_time")
-	_menu.DeleteTime = field.NewTime(tableName, "delete_time")
+	_menu.CreateAt = field.NewTime(tableName, "create_at")
+	_menu.UpdateAt = field.NewTime(tableName, "update_at")
+	_menu.DeletedAt = field.NewField(tableName, "deleted_at")
 	_menu.CreateUser = field.NewString(tableName, "create_user")
 	_menu.UpdateUser = field.NewString(tableName, "update_user")
 
@@ -66,9 +66,9 @@ type menu struct {
 	Hidden     field.Bool   // 是否隐藏
 	KeepAlive  field.Bool   // keepAlive
 	Sort       field.Int32  // 排序
-	CreateTime field.Time   // 记录创建时间
-	UpdateTime field.Time   // 记录修改时间
-	DeleteTime field.Time   // 删除时间
+	CreateAt   field.Time   // 记录创建时间
+	UpdateAt   field.Time   // 记录修改时间
+	DeletedAt  field.Field  // 删除时间
 	CreateUser field.String // 创建人
 	UpdateUser field.String // 修改人
 
@@ -99,9 +99,9 @@ func (m *menu) updateTableName(table string) *menu {
 	m.Hidden = field.NewBool(table, "hidden")
 	m.KeepAlive = field.NewBool(table, "keepAlive")
 	m.Sort = field.NewInt32(table, "sort")
-	m.CreateTime = field.NewTime(table, "create_time")
-	m.UpdateTime = field.NewTime(table, "update_time")
-	m.DeleteTime = field.NewTime(table, "delete_time")
+	m.CreateAt = field.NewTime(table, "create_at")
+	m.UpdateAt = field.NewTime(table, "update_at")
+	m.DeletedAt = field.NewField(table, "deleted_at")
 	m.CreateUser = field.NewString(table, "create_user")
 	m.UpdateUser = field.NewString(table, "update_user")
 
@@ -139,9 +139,9 @@ func (m *menu) fillFieldMap() {
 	m.fieldMap["hidden"] = m.Hidden
 	m.fieldMap["keepAlive"] = m.KeepAlive
 	m.fieldMap["sort"] = m.Sort
-	m.fieldMap["create_time"] = m.CreateTime
-	m.fieldMap["update_time"] = m.UpdateTime
-	m.fieldMap["delete_time"] = m.DeleteTime
+	m.fieldMap["create_at"] = m.CreateAt
+	m.fieldMap["update_at"] = m.UpdateAt
+	m.fieldMap["deleted_at"] = m.DeletedAt
 	m.fieldMap["create_user"] = m.CreateUser
 	m.fieldMap["update_user"] = m.UpdateUser
 }
