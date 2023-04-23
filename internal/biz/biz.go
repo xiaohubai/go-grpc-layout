@@ -40,6 +40,8 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 type Repo interface {
 	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
+	UpdateUserInfo(context.Context, *model.User) error
+	UpdatePassword(context.Context, *model.User) error
 
 	UpdateSetting(context.Context, *model.Setting) error
 	GetSetting(context.Context, *model.Setting) (*model.Setting, error)

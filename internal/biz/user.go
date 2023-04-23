@@ -68,3 +68,64 @@ func (uc *HttpUsecase) Login(c *gin.Context, req *v1.LoginRequest) (*v1.LoginRes
 	}
 	return res, nil
 }
+
+// Login 用户登录
+func (uc *HttpUsecase) GetUserInfo(c *gin.Context) (*v1.GetUserInfoResponse, error) {
+	claims, ok := c.Get("claims")
+	if !ok {
+		return nil, errors.New("token解析失败")
+	}
+	userInfo := claims.(*pJwt.Claims)
+
+	u, err := uc.repo.FirstUser(c.Request.Context(), &model.User{UID: userInfo.UID})
+	if err != nil {
+		return nil, err
+	}
+	res := &v1.GetUserInfoResponse{
+		ID:       u.ID,
+		UID:      u.UID,
+		UserName: u.Username,
+		NickName: u.Nickname,
+		Birth:    u.Birth.Local().Format("2006-01-02"),
+		Avatar:   u.Avatar,
+		RoleID:   u.RoleID,
+		RoleName: u.RoleName,
+		Phone:    u.Phone,
+		Wechat:   u.Wechat,
+		Email:    u.Email,
+		State:    u.State,
+		Motto:    u.Motto,
+	}
+	return res, nil
+}
+
+// Login 用户登录
+func (uc *HttpUsecase) UpdateUserInfo(c *gin.Context, req *v1.UpdateUserInfoRequest) error {
+	t, _ := time.Parse(time.DateOnly, req.Birth)
+	return uc.repo.UpdateUserInfo(c.Request.Context(), &model.User{
+		UID:      req.UID,
+		Nickname: req.NickName,
+		Birth:    t,
+		Phone:    req.Phone,
+		Wechat:   req.Wechat,
+		Email:    req.Email,
+		Motto:    req.Motto,
+	})
+}
+
+// Login 用户登录
+func (uc *HttpUsecase) UpdatePassword(c *gin.Context, req *v1.UpdatePasswordRequest) error {
+	u, err := uc.repo.FirstUser(c.Request.Context(), &model.User{UID: req.UID})
+	if err != nil {
+		return err
+	}
+	if u.Password != utils.Md5([]byte(req.OldPassword+u.Salt)) {
+		return errors.New("原密码错误")
+	}
+	salt := utils.RandString(8)
+	return uc.repo.UpdatePassword(c.Request.Context(), &model.User{
+		UID:      req.UID,
+		Password: utils.Md5([]byte(req.NewPassword + salt)),
+		Salt:     salt,
+	})
+}

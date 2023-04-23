@@ -21,7 +21,7 @@ const (
 	FileReportFailed     = 4016 // 文件上传失败
 	FileOpenFailed       = 4017 // 文件打开失败
 	GetUserInfoFailed    = 4018 // 获取用户信息失败
-	SetUserInfoFailed    = 4019 // 更新用户信息失败
+	UpdateUserInfoFailed = 4019 // 更新用户信息失败
 	GetCasbinListFailed  = 4020 // 获取权限表信息失败
 	NotAdminID           = 4021 // 无权限操作该接口
 	SetCasbinFailed      = 4022 // 更新权限失败
@@ -29,6 +29,7 @@ const (
 	GetSettingsFailed    = 4024 // 获取layout配置失败
 	UpdateSettingsFailed = 4025 // 设置layout配置失败
 	TokenValidateFailed  = 4026 // token解析失败
+	UpdatePasswordFailed = 4027 // 更新用户密码失败
 )
 
 var Msg = map[int]string{
@@ -52,7 +53,7 @@ var Msg = map[int]string{
 	FileReportFailed:     "文件上传失败",
 	FileOpenFailed:       "文件打开失败",
 	GetUserInfoFailed:    "获取用户信息失败",
-	SetUserInfoFailed:    "更新用户信息失败",
+	UpdateUserInfoFailed: "更新用户信息失败",
 	GetCasbinListFailed:  "获取权限表信息失败",
 	NotAdminID:           "无权限操作该接口",
 	SetCasbinFailed:      "更新权限失败",
@@ -60,4 +61,5 @@ var Msg = map[int]string{
 	GetSettingsFailed:    "获取layout配置失败",
 	UpdateSettingsFailed: "设置layout配置失败",
 	TokenValidateFailed:  "token解析失败",
+	UpdatePasswordFailed: "更新用户密码失败",
 }

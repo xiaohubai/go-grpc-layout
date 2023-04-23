@@ -2017,6 +2017,358 @@ var _ interface {
 	ErrorName() string
 } = DeleteCasbinRequestValidationError{}
 
+// Validate checks the field values on GetUserInfoResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *GetUserInfoResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on GetUserInfoResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// GetUserInfoResponseMultiError, or nil if none found.
+func (m *GetUserInfoResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *GetUserInfoResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	// no validation rules for UID
+
+	// no validation rules for UserName
+
+	// no validation rules for NickName
+
+	// no validation rules for Birth
+
+	// no validation rules for Avatar
+
+	// no validation rules for RoleID
+
+	// no validation rules for RoleName
+
+	// no validation rules for Phone
+
+	// no validation rules for Wechat
+
+	// no validation rules for Email
+
+	// no validation rules for State
+
+	// no validation rules for Motto
+
+	if len(errors) > 0 {
+		return GetUserInfoResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// GetUserInfoResponseMultiError is an error wrapping multiple validation
+// errors returned by GetUserInfoResponse.ValidateAll() if the designated
+// constraints aren't met.
+type GetUserInfoResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m GetUserInfoResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m GetUserInfoResponseMultiError) AllErrors() []error { return m }
+
+// GetUserInfoResponseValidationError is the validation error returned by
+// GetUserInfoResponse.Validate if the designated constraints aren't met.
+type GetUserInfoResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e GetUserInfoResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e GetUserInfoResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e GetUserInfoResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e GetUserInfoResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e GetUserInfoResponseValidationError) ErrorName() string {
+	return "GetUserInfoResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e GetUserInfoResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sGetUserInfoResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = GetUserInfoResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = GetUserInfoResponseValidationError{}
+
+// Validate checks the field values on UpdateUserInfoRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdateUserInfoRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdateUserInfoRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdateUserInfoRequestMultiError, or nil if none found.
+func (m *UpdateUserInfoRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdateUserInfoRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for UID
+
+	// no validation rules for NickName
+
+	// no validation rules for Birth
+
+	// no validation rules for Phone
+
+	// no validation rules for Wechat
+
+	// no validation rules for Email
+
+	// no validation rules for Motto
+
+	if len(errors) > 0 {
+		return UpdateUserInfoRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdateUserInfoRequestMultiError is an error wrapping multiple validation
+// errors returned by UpdateUserInfoRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UpdateUserInfoRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdateUserInfoRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdateUserInfoRequestMultiError) AllErrors() []error { return m }
+
+// UpdateUserInfoRequestValidationError is the validation error returned by
+// UpdateUserInfoRequest.Validate if the designated constraints aren't met.
+type UpdateUserInfoRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdateUserInfoRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdateUserInfoRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdateUserInfoRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdateUserInfoRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdateUserInfoRequestValidationError) ErrorName() string {
+	return "UpdateUserInfoRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdateUserInfoRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdateUserInfoRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdateUserInfoRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdateUserInfoRequestValidationError{}
+
+// Validate checks the field values on UpdatePasswordRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *UpdatePasswordRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on UpdatePasswordRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// UpdatePasswordRequestMultiError, or nil if none found.
+func (m *UpdatePasswordRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *UpdatePasswordRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for UID
+
+	// no validation rules for OldPassword
+
+	// no validation rules for NewPassword
+
+	if len(errors) > 0 {
+		return UpdatePasswordRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// UpdatePasswordRequestMultiError is an error wrapping multiple validation
+// errors returned by UpdatePasswordRequest.ValidateAll() if the designated
+// constraints aren't met.
+type UpdatePasswordRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m UpdatePasswordRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m UpdatePasswordRequestMultiError) AllErrors() []error { return m }
+
+// UpdatePasswordRequestValidationError is the validation error returned by
+// UpdatePasswordRequest.Validate if the designated constraints aren't met.
+type UpdatePasswordRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e UpdatePasswordRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e UpdatePasswordRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e UpdatePasswordRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e UpdatePasswordRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e UpdatePasswordRequestValidationError) ErrorName() string {
+	return "UpdatePasswordRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e UpdatePasswordRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sUpdatePasswordRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = UpdatePasswordRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = UpdatePasswordRequestValidationError{}
+
 // Validate checks the field values on MenuResponse_Meta with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.

@@ -153,3 +153,36 @@ message UpdateCasbinRequest {
 }
 
 message DeleteCasbinRequest { int64 ID = 1; }
+
+
+message GetUserInfoResponse {
+  int64 ID = 1;
+  string UID = 2;
+  string userName = 3;
+  string nickName = 4;
+  string birth = 5;
+  string avatar = 6;
+  string roleID = 7;
+  string roleName = 8;
+  string phone = 9;
+  string wechat = 10;
+  string email = 11;
+  int32 state = 12;
+  string motto = 13;
+}
+
+message UpdateUserInfoRequest{
+  string UID = 1;
+  string nickName = 2;
+  string birth = 3;
+  string phone = 4;
+  string wechat = 5;
+  string email = 6;
+  string motto = 7;
+}
+
+message UpdatePasswordRequest {
+  string UID = 1;
+  string oldPassword = 2;
+  string newPassword = 3;
+}

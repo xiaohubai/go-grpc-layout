@@ -66,9 +66,9 @@ func routers(s *service.HttpService) *gin.Engine {
 		r2.POST("/v1/delete/roleCasbin", s.DeleteRoleCasbin)   //更新权限
 		r2.POST("/v1/update/roleCasbin", s.UpdateRoleCasbin)   //删除权限
 
-		//r2.POST("/v1/get/userInfo", s.GetUserInfo)       //获取用户信息
-		//r2.POST("/v1/update/userInfo", s.UpdateUserInfo) //更新用户信息
-
+		r2.GET("/v1/get/userInfo", s.GetUserInfo)        //获取用户信息
+		r2.POST("/v1/update/userInfo", s.UpdateUserInfo) //更新用户信息
+		r2.POST("/v1/update/password", s.UpdatePassword) //更新用户密码
 	}
 
 	return router
