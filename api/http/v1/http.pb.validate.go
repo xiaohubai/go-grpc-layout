@@ -1385,6 +1385,8 @@ func (m *AddRoleMenuRequest) validate(all bool) error {
 
 	// no validation rules for Title
 
+	// no validation rules for Redirect
+
 	if len(errors) > 0 {
 		return AddRoleMenuRequestMultiError(errors)
 	}
@@ -1508,6 +1510,8 @@ func (m *UpdateRoleMenuRequest) validate(all bool) error {
 	// no validation rules for Title
 
 	// no validation rules for ID
+
+	// no validation rules for Redirect
 
 	if len(errors) > 0 {
 		return UpdateRoleMenuRequestMultiError(errors)

@@ -10,7 +10,7 @@ import (
 func (d *dataRepo) ListRoleCasbin(ctx context.Context, casbin *model.CasbinRule, p *v1.PageRequest) (
 	casbinList []*model.CasbinRule, total int64, err error) {
 	db := d.data.db.CasbinRule.WithContext(ctx)
-	total, err = db.Count()
+	total, err = db.Where(d.data.db.CasbinRule.DeletedAt.IsNull()).Count()
 	if err != nil {
 		return
 	}

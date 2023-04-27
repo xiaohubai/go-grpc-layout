@@ -142,7 +142,9 @@ API 元信息管理
 - 北极星做网关
 - 工蜂代码仓库
 - gokins持续部署
+- 写一个gin缓存中间件
+## 注意事项:
+- **Note**:servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
+- **Note**: gorm 做更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
 
-注意:
-    servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
-    gorm 做更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
+- gorm 统计 加上 delete_at  is null

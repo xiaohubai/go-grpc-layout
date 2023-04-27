@@ -44,12 +44,12 @@ func routers(s *service.HttpService) *gin.Engine {
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	}
-	r1 := r.Group("")
+	r1 := router.Group("")
 	{
 		r1.POST("/v1/login", s.Login)    //登录
 		r1.GET("/v1/captcha", s.Captcha) //获取验证码
 	}
-	r2 := r.Group("").Use(m.Jwt(), m.Casbin(), m.Limiter())
+	r2 := router.Group("").Use(m.Jwt(), m.Casbin(), m.Limiter())
 	{
 		r2.GET("/v1/get/setting", s.GetSetting)        //获取模板设置
 		r2.POST("/v1/update/setting", s.UpdateSetting) //设置模板配置

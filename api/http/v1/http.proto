@@ -119,6 +119,7 @@ message AddRoleMenuRequest {
   string roleIDs = 8;
   int32 sort = 9;
   string title = 10;
+  string redirect = 11;
 }
 
 message UpdateRoleMenuRequest {
@@ -133,6 +134,7 @@ message UpdateRoleMenuRequest {
   int32 sort = 9;
   string title = 10;
   int64 ID = 11;
+  string redirect =12;
 }
 
 message DeleteRoleMenuRequest { int64 ID = 1; }

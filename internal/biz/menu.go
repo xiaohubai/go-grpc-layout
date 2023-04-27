@@ -81,6 +81,7 @@ func (uc *HttpUsecase) AddRoleMenu(c *gin.Context, req *v1.AddRoleMenuRequest) e
 		Icon:       req.Icon,
 		Hidden:     req.Hidden,
 		KeepAlive:  req.KeepAlive,
+		Redirect:   req.Redirect,
 		Sort:       req.Sort,
 		CreateUser: userInfo.UserName,
 		UpdateUser: userInfo.UserName,
@@ -109,6 +110,7 @@ func (uc *HttpUsecase) UpdateRoleMenu(c *gin.Context, req *v1.UpdateRoleMenuRequ
 		Icon:       req.Icon,
 		Hidden:     req.Hidden,
 		KeepAlive:  req.KeepAlive,
+		Redirect:   req.Redirect,
 		Sort:       req.Sort,
 		UpdateUser: userInfo.UserName,
 	})
