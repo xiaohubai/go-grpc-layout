@@ -29,7 +29,7 @@ func Limiter() gin.HandlerFunc {
 			seconds := int(res.RetryAfter / time.Second)
 			c.Header("RateLimit-RetryAfter", strconv.Itoa(seconds))
 			response.Fail(c, errors.RateLimited, nil)
-			c.Abort()
+			c.Abort() 
 			return
 		}
 		c.Next()

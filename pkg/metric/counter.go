@@ -4,6 +4,12 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+type Counter interface {
+	With(lvs ...string) Counter
+	Inc()
+	Add(delta float64)
+}
+
 var _ Counter = (*counter)(nil)
 
 type counter struct {

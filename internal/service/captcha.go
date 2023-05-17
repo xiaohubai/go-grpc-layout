@@ -18,7 +18,7 @@ func (s *HttpService) Captcha(c *gin.Context) {
 	cp := base64Captcha.NewCaptcha(driver, store)
 	id, b64s, err := cp.Generate()
 	if err != nil {
-		response.Fail(c, errors.ParamsFailed, nil)
+		response.Fail(c, errors.CaptchaFailed, nil)
 		return
 	}
 	response.Success(c, v1.CaptchaResponse{

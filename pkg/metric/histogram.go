@@ -11,6 +11,12 @@ type histogram struct {
 	lvs []string
 }
 
+// Histogram is metrics histogram.
+type Histogram interface {
+	With(lvs ...string) Histogram
+	Observe(float64)
+}
+
 // NewHistogram new a prometheus histogram and returns Histogram.
 func NewHistogram(hv *prometheus.HistogramVec) Histogram {
 	prometheus.MustRegister(hv)

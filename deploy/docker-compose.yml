@@ -33,6 +33,18 @@ services:
       - TZ=Asia/Shanghai
 
   #### consul ####
+  #acl配置,在/opt/bitnami/consul/conf/consul.json
+  #"acl":{
+  #        "enabled":true,
+  #        "default_policy":"deny",
+  #     "enable_token_persistence":true,
+  #      "tokens": {
+  #          "master": "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402"
+  #     }
+  #  }
+ ## 重置acl https://developer.hashicorp.com/consul/tutorials/security/access-control-troubleshoot#reset-the-acl-system
+ # echo 13 >> bitnami/consul/acl-bootstrap-reset
+ # 获取token curl -i -X PUT 'http://172.21.0.2:8500/v1/acl/bootstrap'
   consul:
     image: bitnami/consul:1.13.0
     container_name: consul
@@ -68,7 +80,7 @@ services:
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
 
   #### prometheus ####
-  ## 注意数据集data要保证其他用户可读写，直接设置777
+  ## 注意数据集data要保证其他用户可读写，直接设置777,默认存储15天,可以远程读取es持久化存储
   prometheus:
     image: bitnami/prometheus:2.37.0
     container_name: prometheus

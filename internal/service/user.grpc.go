@@ -7,5 +7,7 @@ import (
 )
 
 func (s *GrpcService) GetUserInfo(ctx context.Context, req *v1.UserInfoRequest) (*v1.UserInfoResponse, error) {
-	return &v1.UserInfoResponse{}, nil
+	return &v1.UserInfoResponse{
+		Code: 21312,
+	}, nil
 }

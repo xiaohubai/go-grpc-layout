@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
+	"github.com/xiaohubai/go-grpc-layout/configs"
 	otelcontrib "go.opentelemetry.io/contrib"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -26,7 +27,7 @@ const (
 	tracerName = "otelgin"
 )
 
-func Tracing(service string, opts ...Option) gin.HandlerFunc {
+func Tracing(g *configs.Global, opts ...Option) gin.HandlerFunc {
 	cfg := config{}
 	for _, opt := range opts {
 		opt(&cfg)
@@ -50,7 +51,7 @@ func Tracing(service string, opts ...Option) gin.HandlerFunc {
 		ctx := cfg.Propagators.Extract(savedCtx, propagation.HeaderCarrier(c.Request.Header))
 		route := c.FullPath()
 		opts := []oteltrace.SpanStartOption{
-			oteltrace.WithAttributes(httpconv.ServerRequest(service, c.Request)...),
+			oteltrace.WithAttributes(httpconv.ServerRequest(g.AppName, c.Request)...),
 			oteltrace.WithSpanKind(oteltrace.SpanKindServer),
 		}
 		spanName := route

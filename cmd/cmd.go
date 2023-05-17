@@ -43,7 +43,7 @@ func Run() (*kratos.App, func()) {
 	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, cc.Global); err != nil {
 		panic("load tracing failed")
 	}
-	app, cleanup, err := wireApp(cc.Server, cc.Data, cc.Registry, cc.Global, logger)
+	app, cleanup, err := wireApp(cc.Server, cc.Data, cc.Consul, cc.Global, logger)
 	if err != nil {
 		panic(err)
 	}

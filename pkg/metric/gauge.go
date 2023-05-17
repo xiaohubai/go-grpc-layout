@@ -4,6 +4,15 @@ import (
 	"github.com/prometheus/client_golang/prometheus"
 )
 
+// Gauge is metrics gauge.
+type Gauge interface {
+	With(lvs ...string) Gauge
+	Inc()
+	Set(value float64)
+	Add(delta float64)
+	Sub(delta float64)
+}
+
 var _ Gauge = (*gauge)(nil)
 
 type gauge struct {

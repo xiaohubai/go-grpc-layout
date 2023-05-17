@@ -38,7 +38,7 @@ func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *ht
 func routers(s *service.HttpService) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-	router.Use(m.Recovery(), m.Tracing(consts.Cfg.Global.AppName), m.Metrics(consts.Cfg.Global.AppName))
+	router.Use(m.Recovery(), m.Cors(), m.Tracing(consts.Cfg.Global), m.Metrics(consts.Cfg.Global))
 	r := router.Group("")
 	{
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

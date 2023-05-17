@@ -28,15 +28,16 @@ jwt:
   issuer: xiaohubai@outlook.com
 trace:
   endpoint: http://172.21.0.2:14268/api/traces
-registry:
-  consul:
-    host: 172.21.0.2:8500
-    scheme: http
-    healthCheck: false
 
-conf:
+consul:
   host: 172.21.0.2:8500
-  dictPath: dev/dict.json
+  scheme: http
+  healthCheck: false
+  token: "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402"
+  kv:
+    dictPath: dev/dict.json
+  discovery:
+    goGrpcLayout: "discovery://default/go-grpc-layout"
 
 zap:
   level: "info"

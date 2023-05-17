@@ -54,7 +54,8 @@
 ```
 
 # 主要功能
-- gin web框架（github.com/gin-gonic/gin）
+- gin框架（github.com/gin-gonic/gin）
+- kratos微服务框架 (github.com/go-kratos/kratos)
 - jwt认证（github.com/golang-jwt/jwt）
 - casbin鉴权（github.com/casbin/casbin/v2）
 - gorm数据库组件及gentool代码生成（gorm.io/gorm,gorm.io/gen）
@@ -62,8 +63,8 @@
 - swagger 接口文档生成 （github.com/swaggo/swag）
 - redis组件 （github.com/go-redis/redis）
 - zap日志定制化 （go.uber.org/zap）
-- 参数校验（github.com/envoyproxy/protoc-gen-validate/validate）
-- jaeger全链路监控opentelemetry（go.opentelemetry.io/otel）
+- validate参数校验（github.com/envoyproxy/protoc-gen-validate/validate）
+- jaeger全链路监控 opentelemetry+jaeger（go.opentelemetry.io/otel）
 - prometheus埋点 （github.com/prometheus/client_golang）
 - 分布式接口限流 （github.com/go-redis/redis_rate/v9）
 - consul服务注册/发现，远程配置文件 (github.com/hashicorp/consul)
@@ -107,8 +108,6 @@ API 元信息管理
 ## 基建
 - [x] gin
 - [x] grpc
-- [ ] 全链路跟踪(opentelemetry)的log trace metric到es
-- [ ] openAPI和swagger
 - [x] 入参校验
 - [x] errors业务错误码
 - [x] 统一返回格式数据
@@ -117,12 +116,20 @@ API 元信息管理
 - [x] 接口限流
 - [x] 部署
 - [x] 本地或远程读取配置文件
-- [x] 埋点
 - [x] 捕获painc
-- [x] 日志
 - [x] gorm gen自动化生成
-- [ ] 路由注册和发现
+- [x] 路由注册和发现
 - [x] jenkins流水线
+- [x] metric使用prometheus收集
+- [x] trace使用jaeger(基于opentelemetry标准)
+- [x] log使用zap
+- [x] grafana看板
+- [ ] 用户请求和结果中间件到kafka,
+- [ ] 捕捉瞬时异常的cpu 内存堆栈, 等收集信息到kafka
+- [ ] kafka->es
+- [ ] openAPI和swagger
+- [ ] 写一个热点缓存中间件(使用到redis分布式锁)
+- [ ] grpc的中间件和gin补齐
 
 
 ## 业务
@@ -130,21 +137,13 @@ API 元信息管理
 - [x] 获取全部路由
 - [x] 获取角色路由
 - [x] 获取layout配置信息
-- [ ] 获取 设置用户信息
-- [ ] 登录,加state确认
+- [x] 获取 设置用户信息
 - [ ] 注册
-- [ ]管理员审批注册用户
 - [x] 获取验证码
 - [x] 下发token和验证
 
-# 未来
-- nginx前端部署
-- 北极星做网关
-- 工蜂代码仓库
-- gokins持续部署
-- 写一个gin缓存中间件
 ## 注意事项:
 - **Note**:servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
 - **Note**: gorm 做更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
 
-- gorm 统计 加上 delete_at  is null
+- **gorm** 统计 加上 delete_at  is null

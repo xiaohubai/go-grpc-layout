@@ -14,6 +14,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/internal/data"
 	"github.com/xiaohubai/go-grpc-layout/internal/server"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
+	"github.com/xiaohubai/go-grpc-layout/pkg/consul"
 )
 
 import (
@@ -23,7 +24,7 @@ import (
 // Injectors from wire.go:
 
 // wireApp init kratos application.
-func wireApp(configsServer *configs.Server, configsData *configs.Data, registry *configs.Registry, global *configs.Global, logger log.Logger) (*kratos.App, func(), error) {
+func wireApp(configsServer *configs.Server, configsData *configs.Data, configsConsul *configs.Consul, global *configs.Global, logger log.Logger) (*kratos.App, func(), error) {
 	dataData, cleanup, err := data.NewData(configsData, logger)
 	if err != nil {
 		return nil, nil, err
@@ -35,7 +36,7 @@ func wireApp(configsServer *configs.Server, configsData *configs.Data, registry 
 	grpcUsecase := biz.NewGrpcUsecase(repo, logger)
 	grpcService := service.NewGrpcService(grpcUsecase, logger)
 	grpcServer := server.NewGRPCServer(configsServer, grpcService, logger)
-	registrar := server.NewRegistry(registry)
+	registrar := consul.NewRegistry(configsConsul)
 	app := newApp(logger, httpServer, grpcServer, registrar, global)
 	return app, func() {
 		cleanup()

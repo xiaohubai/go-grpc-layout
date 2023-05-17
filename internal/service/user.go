@@ -15,11 +15,12 @@ func (s *HttpService) Login(c *gin.Context) {
 		response.Fail(c, errors.ParamsFailed, err)
 		return
 	}
-	/* 	if !store.Verify(req.CaptchaID, req.Captcha, true) {
-		response.Fail(c, errors.CaptchaFailed, nil)
-		return
-	} */
 
+	/* 	if !store.Verify(req.CaptchaID, req.Captcha, true) {
+	   		response.Fail(c, errors.CaptchaVerifyFailed, nil)
+	   		return
+	   	}
+	*/
 	data, err := s.uc.Login(c, req)
 	if err != nil {
 		response.Fail(c, errors.LoginFailed, err)

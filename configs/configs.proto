@@ -3,7 +3,6 @@ package kratos.api;
 
 option go_package = "github.com/xiaohubai/go-grpc-layout/internal/configs;configs";
 
-
 message Configs {
   Global global = 1;
   Server server = 2;
@@ -11,11 +10,10 @@ message Configs {
   Jwt jwt = 4;
   Trace trace = 5;
   Zap zap = 6;
-  Captcha captcha =7;
-  Registry Registry=8;
-  Conf conf =9;
-  Casbin casbin =10;
-  Limiter limiter =11;
+  Captcha captcha = 7;
+  Consul Consul = 8;
+  Casbin casbin = 9;
+  Limiter limiter = 10;
 }
 
 message Global {
@@ -58,18 +56,19 @@ message Data {
   Redis redis = 2;
 }
 
-message Registry {
-  message Consul {
-    string host = 1;
-    string scheme = 2;
-    bool healthCheck = 3;
+message Consul {
+  string host = 1;
+  string scheme = 2;
+  bool healthCheck = 3;
+  string token = 4;
+  message Kv {
+    string dictPath = 1;
   }
-  Consul consul = 1;
-}
-
-message Conf {
-    string host = 1;
-    string dictPath = 2;
+   message Discovery {
+    string goGrpcLayout = 1;
+  }
+  Kv kv = 5;
+  Discovery discovery = 6;
 }
 
 message Jwt {
@@ -99,10 +98,6 @@ message Captcha {
   int32 dotCount = 5;
 }
 
-message Casbin {
-  string path = 1;
-}
+message Casbin { string path = 1; }
 
-message Limiter {
-  int32 rate = 1;
-}
+message Limiter { int32 rate = 1; }

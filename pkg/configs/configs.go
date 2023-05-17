@@ -3,23 +3,23 @@ package configs
 import (
 	"errors"
 	"flag"
-	"strings"
-	"time"
+	"fmt"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/spf13/viper"
-	_ "github.com/spf13/viper/remote"
 	"github.com/xiaohubai/go-grpc-layout/configs"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
+	"github.com/xiaohubai/go-grpc-layout/pkg/consul"
 )
 
 type cmdFlags struct {
-	env        string //环境:local remote
-	filePath   string //local的文件地址
-	remoteHost string //remote的地址
-	remoteType string //remote的类型选项:consul
-	remotePath string //remote的文件位置
+	env         string //环境:local remote
+	filePath    string //local的文件地址
+	remoteHost  string //remote的地址
+	remoteType  string //remote的类型选项:consul
+	remotePath  string //remote的文件位置
+	remoteToken string //remote的密钥
 }
 
 // LoadConfig 读取一个本地文件或远程配置
@@ -30,8 +30,9 @@ func Load() (*configs.Configs, error) {
 	flag.StringVar(&f.filePath, "conf", "configs/configs.yaml", "config path, eg: -conf configs.yaml")
 
 	flag.StringVar(&f.remoteHost, "chost", "172.21.0.2:8500", "config server host, eg: -chost 172.21.0.2:8500")
-	flag.StringVar(&f.remoteType, "ctype", "consul", "config server host, eg: -ctype consul")
-	flag.StringVar(&f.remotePath, "cpath", "dev/config.yaml", "config server path, eg: -cpath dev/config.yaml")
+	flag.StringVar(&f.remoteType, "ctype", "consul", "remote config server host, eg: -ctype consul")
+	flag.StringVar(&f.remotePath, "cpath", "dev/config.yaml", "remote config server path, eg: -cpath dev/config.yaml")
+	flag.StringVar(&f.remoteToken, "ctoken", "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402", "remote config server token")
 	flag.Parse()
 
 	var cc configs.Configs
@@ -40,7 +41,7 @@ func Load() (*configs.Configs, error) {
 			return nil, err
 		}
 	} else {
-		if err := newRemoteConfigSource(f.remoteType, f.remoteHost, f.remotePath, &cc); err != nil {
+		if err := newRemoteConfigSource(f.remoteType, f.remoteHost, f.remotePath, f.remoteToken, &cc); err != nil {
 			return nil, err
 		}
 	}
@@ -61,7 +62,7 @@ func newFileConfig(filePath string, conf any) error {
 	}
 	v.OnConfigChange(func(e fsnotify.Event) {
 		if err := v.Unmarshal(conf); err != nil {
-			log.Errorw(err)
+			log.Errorw("key", "loading", "msg", fmt.Sprintf("%s:%s", "v.OnConfigChange", err))
 		}
 	})
 
@@ -69,36 +70,10 @@ func newFileConfig(filePath string, conf any) error {
 }
 
 // newRemoteConfigSource 创建一个远程配置源
-func newRemoteConfigSource(remoteType, remoteHost, remotePath string, conf any) error {
+func newRemoteConfigSource(remoteType, remoteHost, remotePath, remoteToken string, conf any) error {
 	switch remoteType {
 	case "consul":
-		return NewConsulConfigSource(remoteHost, remotePath, conf)
+		return consul.NewConsulConfigSource(remoteHost, remotePath, remoteToken, conf)
 	}
 	return errors.New("empty remote type source")
-}
-
-// NewConsulConfigSource 创建一个远程配置源 - Consul
-func NewConsulConfigSource(remoteHost, remotePath string, conf any) error {
-	v := viper.New()
-	confType := strings.TrimSpace(remotePath[strings.LastIndex(remotePath, ".")+1:])
-	v.AddRemoteProvider("consul", remoteHost, remotePath)
-	v.SetConfigType(confType)
-	if err := v.ReadRemoteConfig(); err != nil {
-		return err
-	}
-	if err := v.Unmarshal(conf); err != nil {
-		return err
-	}
-	go func() {
-		for {
-			time.Sleep(time.Second * 5)
-			err := v.WatchRemoteConfig()
-			if err != nil {
-				log.Errorw(err)
-				continue
-			}
-			v.Unmarshal(conf)
-		}
-	}()
-	return nil
 }
