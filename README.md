@@ -78,7 +78,7 @@
 - grafana       172.21.0.2:3000 （admin admin）
 ```
 ## 设计图
-![](./docs/user-req-resp.png)
+![](https://github.com/xiaohubai/go-grpc-layout/blob/master/docs/user-req-resp.png)
 ### 网关
 ``` go
 服务管理
