@@ -6,3 +6,9 @@ type PageResponse struct {
 	Total    int64 `json:"total"`
 	List     any   `json:"list"`
 }
+
+type Warn struct {
+	DateTime string `json:"DateTime"`
+	TraceID  string `json:"traceID"`
+	Error    string `json:"error"`
+}

@@ -33,18 +33,6 @@ services:
       - TZ=Asia/Shanghai
 
   #### consul ####
-  #acl配置,在/opt/bitnami/consul/conf/consul.json
-  #"acl":{
-  #        "enabled":true,
-  #        "default_policy":"deny",
-  #     "enable_token_persistence":true,
-  #      "tokens": {
-  #          "master": "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402"
-  #     }
-  #  }
- ## 重置acl https://developer.hashicorp.com/consul/tutorials/security/access-control-troubleshoot#reset-the-acl-system
- # echo 13 >> bitnami/consul/acl-bootstrap-reset
- # 获取token curl -i -X PUT 'http://172.21.0.2:8500/v1/acl/bootstrap'
   consul:
     image: bitnami/consul:1.13.0
     container_name: consul
@@ -114,8 +102,38 @@ services:
       - prometheus
 
   node-exporter:
-        image: bitnami/node-exporter:1.5.0
-        container_name: node-exporter
-        restart: always
-        ports:
-            - "9100:9100"
+    image: bitnami/node-exporter:1.5.0
+    container_name: node-exporter
+    restart: always
+    ports:
+      - "9100:9100"
+  #### zookeeper ####
+  zookeeper:
+    image: bitnami/zookeeper:3.7.1
+    container_name: zookeeper
+    restart: always
+    ports:
+      - "2181:2181"
+    environment:
+      - TZ=Asia/Shanghai
+      - ALLOW_ANONYMOUS_LOGIN=yes
+
+  #### kafka ####
+  kafka:
+    image: bitnami/kafka:3.0.2
+    container_name: kafka
+    restart: always
+    user: root
+    ports:
+      - '9092:9092'
+    volumes:
+      - /usr/local/volumes/kafka:/bitnami/kafka
+    environment:
+      - TZ=Asia/Shanghai
+      - KAFKA_BROKER_ID=1
+      - KAFKA_LISTENERS=PLAINTEXT://:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.21.0.2:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - ALLOW_PLAINTEXT_LISTENER=yes
+    depends_on:
+      - zookeeper

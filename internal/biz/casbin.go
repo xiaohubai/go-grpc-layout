@@ -5,13 +5,14 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 )
 
 // GetCasbinList 获取权限列表
-func (uc *HttpUsecase) GetRoleCasbinList(c *gin.Context, req *v1.GetCasbinRequest) (*v1.PageResponse, error) {
+func (uc *HttpUsecase) GetRoleCasbinList(c *gin.Context, req *v1.GetCasbinRequest) (*pbAny.PageResponse, error) {
 	casbinList, total, err := uc.repo.ListRoleCasbin(c.Request.Context(), &model.CasbinRule{
 		V0: req.RoleIDs,
 		V1: req.Path,
@@ -31,7 +32,7 @@ func (uc *HttpUsecase) GetRoleCasbinList(c *gin.Context, req *v1.GetCasbinReques
 		}
 		list = append(list, data)
 	}
-	res := &v1.PageResponse{
+	res := &pbAny.PageResponse{
 		Page:     req.Page,
 		PageSize: req.PageSize,
 		Total:    total,

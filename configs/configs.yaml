@@ -59,4 +59,34 @@ casbin:
   path: "./rbac_model.conf"
 
 limiter:
-  rate: 100
+  rate: 25
+
+cors:
+  mode: allow-whitelist # allow-all: 放行全部; allow-whitelist
+  whitelist:
+    - allowOrigin: http://www.hao123.com
+      allowHeaders: Content-Type,Authorization
+      allowMethods: POST, GET
+      exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+      allowCredentials: true
+    - allowOrigin: chrome-extension://aejoelaoggembcahagimdiliamlcdmfm
+      allowHeaders: Content-Type,Authorization
+      allowMethods: POST, GET
+      exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
+      allowCredentials: true
+
+kafka:
+  node:
+    - topic: operationRecord
+      address: [172.21.0.2:9092]
+
+email:
+  host: "smtp.qq.com"
+  port: 25
+  from: "1124938791@qq.com"
+  isSsl: false
+  secret: "bvewllmttezxjehi"
+  topics:
+    - name: warn
+      subject: "系统告警"
+      to: [xiaohubai@outlook.com]

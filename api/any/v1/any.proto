@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package api.any.v1;
+
+option go_package = "github.com/xiaohubai/go-grpc-layout/api/any/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.any.v1";
+
+message OperationRecord {
+  string uid = 1;
+  string ip = 2;
+  string Method = 3;
+  string Path = 4;
+  string Agent = 5;
+  int32 Status = 6;
+  string Latency = 7;
+  string ReqBody = 8;
+  string RespBody = 9;
+  string DateTime = 10;
+  string TraceID = 11;
+}

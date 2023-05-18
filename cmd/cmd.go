@@ -8,6 +8,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 
 	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
 	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
 
 	conf "github.com/xiaohubai/go-grpc-layout/pkg/configs"
@@ -42,6 +43,9 @@ func Run() (*kratos.App, func()) {
 	}
 	if err := tracing.NewTracerProvider(cc.Trace.Endpoint, cc.Global); err != nil {
 		panic("load tracing failed")
+	}
+	if err := kafka.Server(cc.Kafka.Node); err != nil {
+		panic("load kafka failed")
 	}
 	app, cleanup, err := wireApp(cc.Server, cc.Data, cc.Consul, cc.Global, logger)
 	if err != nil {

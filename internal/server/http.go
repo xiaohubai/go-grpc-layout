@@ -38,7 +38,7 @@ func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *ht
 func routers(s *service.HttpService) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-	router.Use(m.Recovery(), m.Cors(), m.Tracing(consts.Cfg.Global), m.Metrics(consts.Cfg.Global))
+	router.Use(m.Recovery(), m.Cors(consts.Cfg.Cors), m.Tracing(consts.Cfg.Global), m.Metrics(consts.Cfg.Global))
 	r := router.Group("")
 	{
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
@@ -49,7 +49,7 @@ func routers(s *service.HttpService) *gin.Engine {
 		r1.POST("/v1/login", s.Login)    //登录
 		r1.GET("/v1/captcha", s.Captcha) //获取验证码
 	}
-	r2 := router.Group("").Use(m.Jwt(), m.Casbin(), m.Limiter())
+	r2 := router.Group("").Use(m.Jwt(), m.Casbin(), m.Limiter(), m.Operation())
 	{
 		r2.GET("/v1/get/setting", s.GetSetting)        //获取模板设置
 		r2.POST("/v1/update/setting", s.UpdateSetting) //设置模板配置

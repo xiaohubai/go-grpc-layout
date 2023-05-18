@@ -41,7 +41,7 @@ func NewConsulConfigSource(remoteHost, remotePath, remoteToken string, conf any)
 	NewConsulClient(remoteHost, remoteToken)
 	v, err := GetConsulKV(remotePath, conf)
 	if err == nil {
-		go watcher(v, remotePath, conf)
+		watcher(v, remotePath, conf)
 	}
 	return err
 }

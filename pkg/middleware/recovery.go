@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/xiaohubai/go-grpc-layout/internal/errors"
+	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 
@@ -24,11 +25,13 @@ func Recovery() gin.HandlerFunc {
 				buf := make([]byte, 64<<10)
 				buf = buf[:runtime.Stack(buf, false)]
 				bufs := string(buf)
-
-				log.Errorw("traceId", tracing.TraceID(c.Request.Context()), "msg", "recover", "painc", bufs)
-
 				span.SetAttributes(attribute.Key("err").String(fmt.Sprintf("%s", err)))
 				span.SetAttributes(attribute.Key("painc").String(bufs))
+
+				//email告警
+				email.SendWarn(c.Request.Context(), bufs)
+				log.Errorw("key", "warn", "msg", bufs)
+
 				response.Fail(c, errors.Failed, nil)
 				c.Abort()
 			}

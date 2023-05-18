@@ -106,30 +106,32 @@ API 元信息管理
 # TODO
 
 ## 基建
-- [x] gin
-- [x] grpc
-- [x] 入参校验
-- [x] errors业务错误码
-- [x] 统一返回格式数据
+- [x] gin HTTP框架
+- [x] grpc RPC框架
+- [x] 入参校验validate
+- [x] 统一业务错误码和请求返回格式数据
 - [x] 权限
 - [x] 认证
 - [x] 接口限流
-- [x] 部署
-- [x] 本地或远程读取配置文件
-- [x] 捕获painc
-- [x] gorm gen自动化生成
-- [x] 路由注册和发现
+- [x] 跨域
+- [x] 部署(快速脚本构建,运行)
+- [x] 读取本地或远程配置文件及监听
+- [x] 捕获panic和运行pkg包中error发送邮件告警,日志记录,jaeger上报
+- [x] gorm的gen自动化生成
+- [x] 服务注册和发现
 - [x] jenkins流水线
-- [x] metric使用prometheus收集
+- [x] 埋点metric(使用prometheus和上报每一接口的请求用于记录QPS,P99等指标)
 - [x] trace使用jaeger(基于opentelemetry标准)
-- [x] log使用zap
+- [x] 日志使用zap
 - [x] grafana看板
-- [ ] 用户请求和结果中间件到kafka,
+- [ ] 捕获用户请求和结果到kafka,
 - [ ] 捕捉瞬时异常的cpu 内存堆栈, 等收集信息到kafka
 - [ ] kafka->es
 - [ ] openAPI和swagger
-- [ ] 写一个热点缓存中间件(使用到redis分布式锁)
+- [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
+- [x] 产生的painc和pkg包的error发送邮件告警
 - [ ] grpc的中间件和gin补齐
+- [ ] kafka通用消费处理器和规则匹配
 
 
 ## 业务

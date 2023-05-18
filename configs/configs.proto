@@ -14,6 +14,9 @@ message Configs {
   Consul Consul = 8;
   Casbin casbin = 9;
   Limiter limiter = 10;
+  Cors cors = 11;
+  Kafka kafka = 12;
+  Email email = 13;
 }
 
 message Global {
@@ -61,12 +64,8 @@ message Consul {
   string scheme = 2;
   bool healthCheck = 3;
   string token = 4;
-  message Kv {
-    string dictPath = 1;
-  }
-   message Discovery {
-    string goGrpcLayout = 1;
-  }
+  message Kv { string dictPath = 1; }
+  message Discovery { string goGrpcLayout = 1; }
   Kv kv = 5;
   Discovery discovery = 6;
 }
@@ -101,3 +100,37 @@ message Captcha {
 message Casbin { string path = 1; }
 
 message Limiter { int32 rate = 1; }
+
+message Cors {
+  string mode = 1;
+  message Whitelist {
+    string allowOrigin = 1;
+    string allowHeaders = 2;
+    string allowMethods = 3;
+    string exposeHeaders = 4;
+    bool allowCredentials = 5;
+  }
+  repeated Whitelist whitelist = 2;
+}
+
+message Kafka {
+  message Node {
+    string topic = 1;
+    repeated string address = 2;
+  }
+  repeated Node node = 1;
+}
+
+message Email {
+  string host = 1;
+  int32 port = 2;
+  string from = 3;
+  bool isSsl = 4;
+  string secret = 5;
+  message Topics {
+    string name = 1;
+    string subject = 2;
+    repeated string to = 3;
+  }
+  repeated Topics topics = 6;
+}
