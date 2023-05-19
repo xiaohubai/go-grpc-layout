@@ -21,7 +21,7 @@ type gauge struct {
 }
 
 // NewGauge new a prometheus gauge and returns Gauge.
-func NewGauge(gv *prometheus.GaugeVec) Gauge {
+func NewRegisterGauge(gv *prometheus.GaugeVec) Gauge {
 	prometheus.MustRegister(gv)
 	return &gauge{
 		gv: gv,

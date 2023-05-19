@@ -1,6 +1,8 @@
 package main
 
-import "github.com/xiaohubai/go-grpc-layout/cmd"
+import (
+	"github.com/xiaohubai/go-grpc-layout/cmd"
+)
 
 func main() {
 	app, close := cmd.Run()

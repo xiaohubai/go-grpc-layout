@@ -9,7 +9,7 @@ package cmd
 import (
 	"github.com/go-kratos/kratos/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 	"github.com/xiaohubai/go-grpc-layout/internal/data"
 	"github.com/xiaohubai/go-grpc-layout/internal/server"
@@ -24,7 +24,7 @@ import (
 // Injectors from wire.go:
 
 // wireApp init kratos application.
-func wireApp(configsServer *configs.Server, configsData *configs.Data, configsConsul *configs.Consul, global *configs.Global, logger log.Logger) (*kratos.App, func(), error) {
+func wireApp(configsServer *conf.Server, configsData *conf.Data, configsConsul *conf.Consul, global *conf.Global, logger log.Logger) (*kratos.App, func(), error) {
 	dataData, cleanup, err := data.NewData(configsData, logger)
 	if err != nil {
 		return nil, nil, err

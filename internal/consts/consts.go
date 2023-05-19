@@ -5,7 +5,7 @@ import (
 
 	"github.com/go-redis/redis/v8"
 	"github.com/spf13/viper"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"gorm.io/gorm"
 )
 
@@ -47,6 +47,6 @@ const (
 var (
 	DB    *gorm.DB
 	RDB   *redis.Client
-	Cfg   *configs.Configs
+	Conf  *conf.Conf
 	Viper *viper.Viper
 )

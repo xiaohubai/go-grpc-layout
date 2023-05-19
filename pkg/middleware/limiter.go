@@ -23,13 +23,13 @@ func Limiter() gin.HandlerFunc {
 		} else {
 			key = uri[:index]
 		}
-		res, _ := limiter.Allow(c, key, redis_rate.PerMinute(int(consts.Cfg.Limiter.Rate)))
+		res, _ := limiter.Allow(c, key, redis_rate.PerMinute(int(consts.Conf.Limiter.Rate)))
 		c.Header("RateLimit-Remaining", strconv.Itoa(res.Remaining))
 		if res.Allowed == 0 {
 			seconds := int(res.RetryAfter / time.Second)
 			c.Header("RateLimit-RetryAfter", strconv.Itoa(seconds))
 			response.Fail(c, errors.RateLimited, nil)
-			c.Abort() 
+			c.Abort()
 			return
 		}
 		c.Next()

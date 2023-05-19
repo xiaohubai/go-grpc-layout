@@ -11,14 +11,14 @@ import (
 
 	"github.com/go-kratos/kratos/v2/transport/http"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 	m "github.com/xiaohubai/go-grpc-layout/pkg/middleware"
 )
 
 // NewHTTPServer new a HTTP server.
-func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *http.Server {
+func NewHTTPServer(c *conf.Server, s *service.HttpService, lg log.Logger) *http.Server {
 	var opts = []http.ServerOption{}
 	if c.Http.Network != "" {
 		opts = append(opts, http.Network(c.Http.Network))
@@ -38,7 +38,7 @@ func NewHTTPServer(c *configs.Server, s *service.HttpService, lg log.Logger) *ht
 func routers(s *service.HttpService) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-	router.Use(m.Recovery(), m.Cors(consts.Cfg.Cors), m.Tracing(consts.Cfg.Global), m.Metrics(consts.Cfg.Global))
+	router.Use(m.Recovery(), m.Cors(consts.Conf.Cors), m.Tracing(consts.Conf.Global), m.Metrics(consts.Conf.Global))
 	r := router.Group("")
 	{
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

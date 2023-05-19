@@ -4,10 +4,10 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
-func Cors(cors *configs.Cors) gin.HandlerFunc {
+func Cors(cors *conf.Cors) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		origin := c.GetHeader("Origin")
 		if cors.Mode == "allow-all" || origin == "" || origin == "null" {
@@ -40,7 +40,7 @@ func Cors(cors *configs.Cors) gin.HandlerFunc {
 	}
 }
 
-func checkOrigin(origin string, whitelist []*configs.Cors_Whitelist) *configs.Cors_Whitelist {
+func checkOrigin(origin string, whitelist []*conf.Cors_Whitelist) *conf.Cors_Whitelist {
 	for _, v := range whitelist {
 		if origin == v.AllowOrigin {
 			return v

@@ -3,7 +3,7 @@ package serviceInfo
 import (
 	"os"
 
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 type ServiceInfo struct {
@@ -14,7 +14,7 @@ type ServiceInfo struct {
 	Metadata map[string]string
 }
 
-func New(g *configs.Global) ServiceInfo {
+func New(g *conf.Global) ServiceInfo {
 	id, _ := os.Hostname()
 	return ServiceInfo{
 		Name:     g.AppName,

@@ -38,7 +38,7 @@ var (
 func SyncedEnforcer() *casbin.SyncedEnforcer {
 	once.Do(func() {
 		a, _ := gormadapter.NewAdapterByDBUseTableName(consts.DB, "", model.TableNameCasbinRule)
-		syncedEnforcer, _ = casbin.NewSyncedEnforcer(consts.Cfg.Casbin.Path, a)
+		syncedEnforcer, _ = casbin.NewSyncedEnforcer(consts.Conf.Casbin.Path, a)
 	})
 	_ = syncedEnforcer.LoadPolicy()
 	return syncedEnforcer

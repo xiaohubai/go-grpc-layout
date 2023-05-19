@@ -11,10 +11,10 @@ import (
 	semConv "go.opentelemetry.io/otel/semconv/v1.7.0"
 	"go.opentelemetry.io/otel/trace"
 
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
-func NewTracerProvider(endpoint string, g *configs.Global) error {
+func RegisterTracer(endpoint string, g *conf.Global) error {
 	exp, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint)))
 	if err != nil {
 		return err

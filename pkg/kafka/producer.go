@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/Shopify/sarama"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 var (
@@ -17,9 +17,9 @@ type Producer struct {
 	SyncProducer sarama.SyncProducer `json:"map"`
 }
 
-func Server(node []*configs.Kafka_Node) error {
+func RegisterProducer(nodes []*conf.Kafka_Producer) error {
 	m = make(map[string]sarama.SyncProducer, 0)
-	for _, v := range node {
+	for _, v := range nodes {
 		cfg := sarama.NewConfig()
 		cfg.Producer.RequiredAcks = sarama.WaitForAll          // 发送完数据需要leader和follow都确认
 		cfg.Producer.Partitioner = sarama.NewRandomPartitioner // 新选出一个partition

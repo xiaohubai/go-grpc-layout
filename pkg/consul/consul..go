@@ -13,7 +13,7 @@ import (
 	"github.com/hashicorp/consul/api"
 	"github.com/spf13/viper"
 	_ "github.com/spf13/viper/remote"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"google.golang.org/grpc"
 )
 
@@ -46,13 +46,13 @@ func NewConsulConfigSource(remoteHost, remotePath, remoteToken string, conf any)
 	return err
 }
 
-func NewRegistry(cul *configs.Consul) registry.Registrar {
+func NewRegistry(cul *conf.Consul) registry.Registrar {
 	cli := NewConsulClient(cul.Host, cul.Token)
 	r := consul.New(cli, consul.WithHealthCheck(cul.HealthCheck))
 	return r
 }
 
-func NewDiscovery(cul *configs.Consul) (*grpc.ClientConn, error) {
+func NewDiscovery(cul *conf.Consul) (*grpc.ClientConn, error) {
 	cli := NewConsulClient(cul.Host, cul.Token)
 	r := consul.New(cli, consul.WithHealthCheck(cul.HealthCheck))
 	return ggrpc.DialInsecure(context.Background(), ggrpc.WithEndpoint(cul.Discovery.GoGrpcLayout), ggrpc.WithDiscovery(r))

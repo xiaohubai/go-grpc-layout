@@ -76,9 +76,18 @@ cors:
       allowCredentials: true
 
 kafka:
-  node:
+  producer:
     - topic: operationRecord
       address: [172.21.0.2:9092]
+    - topic: pprof
+      address: [172.21.0.2:9092]
+  consumer:
+    - topic: operationRecord
+      address: [172.21.0.2:9092]
+      func: [OperationRecordReportES, TestRecord]
+    - topic: pprof
+      address: [172.21.0.2:9092]
+      func: [PprofES]
 
 email:
   host: "smtp.qq.com"

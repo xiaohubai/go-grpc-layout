@@ -11,6 +11,8 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
+	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
+	"github.com/xiaohubai/go-grpc-layout/pkg/pprof"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"golang.org/x/sync/errgroup"
 
@@ -42,7 +44,7 @@ func Operation() gin.HandlerFunc {
 		g.Go(func() error {
 			record := pbAny.OperationRecord{
 				Uid:      uid,
-				DateTime: time.Now().String(),
+				DateTime: time.Now().Local().Format(time.DateTime),
 				Ip:       c.ClientIP(),
 				Method:   c.Request.Method,
 				Path:     c.Request.RequestURI,
@@ -61,8 +63,10 @@ func Operation() gin.HandlerFunc {
 		})
 		if err := g.Wait(); err != nil {
 			email.SendWarn(c.Request.Context(), err.Error())
+			metric.Count.With(fmt.Sprintf("%s_producer_error", "operationRecord")).Inc()
 			log.Errorw("key", "warn", "msg", err.Error())
 		}
+		pprof.Report()
 	}
 }
 

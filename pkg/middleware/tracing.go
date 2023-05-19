@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	otelcontrib "go.opentelemetry.io/contrib"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -27,7 +27,7 @@ const (
 	tracerName = "otelgin"
 )
 
-func Tracing(g *configs.Global, opts ...Option) gin.HandlerFunc {
+func Tracing(g *conf.Global, opts ...Option) gin.HandlerFunc {
 	cfg := config{}
 	for _, opt := range opts {
 		opt(&cfg)

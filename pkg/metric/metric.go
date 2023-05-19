@@ -8,7 +8,7 @@ var (
 	namespace = "metric"
 	labels    = []string{"env", "service", "protocol", "path", "method", "status"}
 	// 请求数统计
-	ReqCount = NewCounter(
+	ReqCount = NewRegisterCounter(
 		prometheus.NewCounterVec(prometheus.CounterOpts{
 			Namespace: namespace,
 			Name:      "requests_total",
@@ -16,7 +16,7 @@ var (
 		}, []string{"env", "service", "protocol", "path", "method"}),
 	)
 
-	RespCount = NewCounter(
+	RespCount = NewRegisterCounter(
 		prometheus.NewCounterVec(prometheus.CounterOpts{
 			Namespace: namespace,
 			Name:      "responses_total",
@@ -25,7 +25,7 @@ var (
 	)
 
 	// 响应时间分布统计
-	RespDurationHistogram = NewHistogram(
+	RespDurationHistogram = NewRegisterHistogram(
 		prometheus.NewHistogramVec(prometheus.HistogramOpts{
 			Namespace: namespace,
 			Name:      "responses_duration_histogram",
@@ -34,11 +34,19 @@ var (
 	)
 
 	// 响应最大时间统计
-	RespDurationGauge = NewGauge(
+	RespDurationGauge = NewRegisterGauge(
 		prometheus.NewGaugeVec(prometheus.GaugeOpts{
 			Namespace: namespace,
 			Name:      "responses_duration_gauge",
 			Help:      "responses latencies in gauge seconds",
 		}, labels),
+	)
+
+	Count = NewRegisterCounter(
+		prometheus.NewCounterVec(prometheus.CounterOpts{
+			Namespace: namespace,
+			Name:      "name_count_total",
+			Help:      "Total number of Requests.",
+		}, []string{"name"}),
 	)
 )

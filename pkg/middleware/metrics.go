@@ -5,12 +5,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
 )
 
 // Metrics returns a gin.HandlerFunc for exporting some Web metrics
-func Metrics(g *configs.Global) gin.HandlerFunc {
+func Metrics(g *conf.Global) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		start := time.Now()
 		path := c.Request.URL.Path

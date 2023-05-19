@@ -6,7 +6,7 @@ import (
 
 	kzap "github.com/go-kratos/kratos/contrib/log/zap/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func New(c *configs.Zap, g *configs.Global) (log.Logger, error) {
+func New(c *conf.Zap, g *conf.Global) (log.Logger, error) {
 	encoderConfig := zapcore.EncoderConfig{
 		LevelKey:       "level",
 		TimeKey:        "ts",

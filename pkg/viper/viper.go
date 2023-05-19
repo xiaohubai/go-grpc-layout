@@ -1,4 +1,4 @@
-package configs
+package viper
 
 import (
 	"errors"
@@ -8,7 +8,7 @@ import (
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/spf13/viper"
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/consul"
 )
@@ -22,20 +22,20 @@ type cmdFlags struct {
 	remoteToken string //remote的密钥
 }
 
-// LoadConfig 读取一个本地文件或远程配置
-func Load() (*configs.Configs, error) {
+// Load 读取一个本地文件或远程配置
+func Load() (*conf.Conf, error) {
 	var f cmdFlags
 	//flag.StringVar(&p,"args", "defaultValue","eg:xxx") p:绑定的对象, args:-选项, defaultValue:默认值,eg:说明
 	flag.StringVar(&f.env, "env", "local", "runtime environment, eg: -env remote")
-	flag.StringVar(&f.filePath, "conf", "configs/configs.yaml", "config path, eg: -conf configs.yaml")
+	flag.StringVar(&f.filePath, "conf", "configs/conf/conf.yaml", "config path, eg: -conf configs.yaml")
 
 	flag.StringVar(&f.remoteHost, "chost", "172.21.0.2:8500", "config server host, eg: -chost 172.21.0.2:8500")
 	flag.StringVar(&f.remoteType, "ctype", "consul", "remote config server host, eg: -ctype consul")
-	flag.StringVar(&f.remotePath, "cpath", "dev/config.yaml", "remote config server path, eg: -cpath dev/config.yaml")
+	flag.StringVar(&f.remotePath, "cpath", "dev/conf.yaml", "remote config server path, eg: -cpath dev/conf.yaml")
 	flag.StringVar(&f.remoteToken, "ctoken", "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402", "remote config server token")
 	flag.Parse()
 
-	var cc configs.Configs
+	var cc conf.Conf
 	if f.env == "local" {
 		if err := newFileConfig(f.filePath, &cc); err != nil {
 			return nil, err
@@ -45,7 +45,7 @@ func Load() (*configs.Configs, error) {
 			return nil, err
 		}
 	}
-	consts.Cfg = &cc
+	consts.Conf = &cc
 	return &cc, nil
 }
 

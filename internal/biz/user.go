@@ -37,11 +37,11 @@ func (uc *HttpUsecase) Login(c *gin.Context, req *v1.LoginRequest) (*v1.LoginRes
 		RoleID:     userInfo.RoleID,
 		RoleName:   userInfo.RoleName,
 		State:      userInfo.State,
-		BufferTime: consts.Cfg.Jwt.BufferTime,
+		BufferTime: consts.Conf.Jwt.BufferTime,
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,                              // 签名生效时间
-			ExpiresAt: time.Now().Unix() + int64(consts.Cfg.Jwt.ExpiresTime), // 过期时间
-			Issuer:    consts.Cfg.Jwt.Issuer,                                 // 签名的发行者
+			NotBefore: time.Now().Unix() - 1000,                               // 签名生效时间
+			ExpiresAt: time.Now().Unix() + int64(consts.Conf.Jwt.ExpiresTime), // 过期时间
+			Issuer:    consts.Conf.Jwt.Issuer,                                 // 签名的发行者
 		},
 	})
 	if err != nil {

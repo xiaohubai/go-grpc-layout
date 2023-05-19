@@ -1,9 +1,9 @@
 syntax = "proto3";
-package kratos.api;
+package configs.any.conf; // 大仓 eg: configs.user.config
 
-option go_package = "github.com/xiaohubai/go-grpc-layout/internal/configs;configs";
+option go_package = "github.com/xiaohubai/go-grpc-layout/conf;conf";
 
-message Configs {
+message Conf {
   Global global = 1;
   Server server = 2;
   Data Data = 3;
@@ -114,11 +114,17 @@ message Cors {
 }
 
 message Kafka {
-  message Node {
+  message Producer {
     string topic = 1;
     repeated string address = 2;
   }
-  repeated Node node = 1;
+  message Consumer {
+    string topic = 1;
+    repeated string address = 2;
+    repeated string func = 3;
+  }
+  repeated Producer producer = 1;
+  repeated Consumer consumer = 2;
 }
 
 message Email {

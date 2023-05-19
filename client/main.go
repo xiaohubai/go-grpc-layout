@@ -5,12 +5,12 @@ import (
 	"fmt"
 
 	v1 "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
-	conf "github.com/xiaohubai/go-grpc-layout/pkg/configs"
 	"github.com/xiaohubai/go-grpc-layout/pkg/consul"
+	"github.com/xiaohubai/go-grpc-layout/pkg/viper"
 )
 
 func main() {
-	cc, err := conf.Load()
+	cc, err := viper.Load()
 	if err != nil {
 		panic("load config failed")
 	}

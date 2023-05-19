@@ -3,7 +3,7 @@ package data
 import (
 	"fmt"
 
-	"github.com/xiaohubai/go-grpc-layout/configs"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/gen"
@@ -11,7 +11,6 @@ import (
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/logger"
 	"gorm.io/gorm/schema"
 
 	"github.com/go-kratos/kratos/v2/log"
@@ -41,7 +40,7 @@ type Data struct {
 }
 
 // NewData .
-func NewData(c *configs.Data, logg log.Logger) (*Data, func(), error) {
+func NewData(c *conf.Data, logg log.Logger) (*Data, func(), error) {
 	mysqlConfig := mysql.Config{
 		DSN:                       c.Mysql.Source, // DSN data source name
 		DefaultStringSize:         191,            // string 类型字段的默认长度
@@ -51,7 +50,7 @@ func NewData(c *configs.Data, logg log.Logger) (*Data, func(), error) {
 		SkipInitializeWithVersion: false,          // 根据版本自动配置
 	}
 	db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{
-		Logger:                                   logger.Default.LogMode(logger.Info),
+		//Logger:                                   logger.Default.LogMode(logger.Info),
 		DisableForeignKeyConstraintWhenMigrating: true, //禁用外键约束
 		NamingStrategy: schema.NamingStrategy{
 			SingularTable: true, //禁用表复数形式

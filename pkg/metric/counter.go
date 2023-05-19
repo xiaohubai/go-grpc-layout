@@ -17,8 +17,8 @@ type counter struct {
 	lvs []string
 }
 
-// NewCounter new a prometheus counter and returns Counter.
-func NewCounter(cv *prometheus.CounterVec) Counter {
+// Counter new a prometheus counter and returns Counter.
+func NewRegisterCounter(cv *prometheus.CounterVec) Counter {
 	prometheus.MustRegister(cv)
 	return &counter{
 		cv: cv,

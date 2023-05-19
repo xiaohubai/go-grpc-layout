@@ -81,7 +81,7 @@ sql:
 .PHONY: configs
 # generate configs
 configs:
-	kratos proto client configs/configs.proto
+	kratos proto client configs/conf/conf.proto
 
 .PHONY: all
 # generate all

@@ -18,7 +18,7 @@ type Histogram interface {
 }
 
 // NewHistogram new a prometheus histogram and returns Histogram.
-func NewHistogram(hv *prometheus.HistogramVec) Histogram {
+func NewRegisterHistogram(hv *prometheus.HistogramVec) Histogram {
 	prometheus.MustRegister(hv)
 	return &histogram{
 		hv: hv,

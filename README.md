@@ -124,14 +124,15 @@ API 元信息管理
 - [x] trace使用jaeger(基于opentelemetry标准)
 - [x] 日志使用zap
 - [x] grafana看板
-- [ ] 捕获用户请求和结果到kafka,
+- [x] 捕获用户请求和结果到kafka,
 - [ ] 捕捉瞬时异常的cpu 内存堆栈, 等收集信息到kafka
 - [ ] kafka->es
 - [ ] openAPI和swagger
 - [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
 - [x] 产生的painc和pkg包的error发送邮件告警
 - [ ] grpc的中间件和gin补齐
-- [ ] kafka通用消费处理器和规则匹配
+- [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
+- [x] kafka生产,消费数据失败,埋点量级
 
 
 ## 业务
