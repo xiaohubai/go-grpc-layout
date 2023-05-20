@@ -12,9 +12,9 @@ type PprofES struct {
 	kafka.WorkerHandler
 }
 
-func (h *PprofES) Do(c context.Context, msg *sarama.ConsumerMessage) (err error) {
+func (h *PprofES) Do(ctx context.Context, msg *sarama.ConsumerMessage) (err error) {
 	fmt.Println("pprof写入es...")
-	fmt.Printf("Message Value:%s,Message topic:%q partition:%d offset:%d\n", string(msg.Value), msg.Topic, msg.Partition, msg.Offset)
+	/* fmt.Printf("Message Value:%s,Message topic:%q partition:%d offset:%d\n", string(msg.Value), msg.Topic, msg.Partition, msg.Offset) */
 	return
 }
 

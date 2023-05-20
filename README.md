@@ -125,15 +125,20 @@ API 元信息管理
 - [x] 日志使用zap
 - [x] grafana看板
 - [x] 捕获用户请求和结果到kafka,
-- [ ] 捕捉瞬时异常的cpu 内存堆栈, 等收集信息到kafka
 - [ ] kafka->es
+- [ ] 读取es,分析用户请求每个接口量级,时延,到vue页面
 - [ ] openAPI和swagger
 - [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
-- [x] 产生的painc和pkg包的error发送邮件告警
+- [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
 - [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
 - [x] kafka生产,消费数据失败,埋点量级
+- [x] pyroscope实时性能分析火焰图
+- [ ] holmes现场异常自动采样
+- [ ] 压测分析(写一个post请求,参数校验,跨域,trace链路,连表查询数据库,查询es,更新es,更新mysql,for将mysql和es参数合并,写入kafka,埋点,日志写入;同时消费kafka,查询mysql 查es 更新es 和 mysql)
 
+
+## 系统基本能力 log trace metric pprof
 
 ## 业务
 - [x] 字典序

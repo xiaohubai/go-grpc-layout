@@ -6,6 +6,7 @@ import (
 
 	"github.com/spf13/viper"
 
+	"github.com/gin-contrib/pprof"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 
@@ -39,6 +40,7 @@ func routers(s *service.HttpService) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
 	router.Use(m.Recovery(), m.Cors(consts.Conf.Cors), m.Tracing(consts.Conf.Global), m.Metrics(consts.Conf.Global))
+	pprof.Register(router)
 	r := router.Group("")
 	{
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))

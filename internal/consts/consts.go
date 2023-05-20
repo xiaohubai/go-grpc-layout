@@ -1,6 +1,7 @@
 package consts
 
 import (
+	"os"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -49,4 +50,18 @@ var (
 	RDB   *redis.Client
 	Conf  *conf.Conf
 	Viper *viper.Viper
+)
+
+var (
+	KafkaTopicOperationRecord = "operationRecord"
+)
+
+var (
+	EmailTitleViperRemoteWatch = "viper remote watch"
+	EmailTitleViperLocalWatch  = "viper local watch"
+	EmailTitlePanic            = "panic"
+	EmailTitlePprof            = "pprof"
+	EmailTitleKafkaProducer    = "kafka producer"
+	EmailTitleKafkaConsumer    = "kafka consumer"
+	PwdPath, _                 = os.Getwd()
 )

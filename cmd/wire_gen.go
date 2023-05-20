@@ -18,27 +18,27 @@ import (
 )
 
 import (
+	_ "github.com/xiaohubai/go-grpc-layout/internal/biz"
 	_ "go.uber.org/automaxprocs"
+	_ "net/http/pprof"
 )
 
 // Injectors from wire.go:
 
 // wireApp init kratos application.
-func wireApp(configsServer *conf.Server, configsData *conf.Data, configsConsul *conf.Consul, global *conf.Global, logger log.Logger) (*kratos.App, func(), error) {
-	dataData, cleanup, err := data.NewData(configsData, logger)
+func wireApp(confServer *conf.Server, confData *conf.Data, confConsul *conf.Consul, global *conf.Global, logger log.Logger) (*kratos.App, error) {
+	dataData, err := data.NewData(confData, logger)
 	if err != nil {
-		return nil, nil, err
+		return nil, err
 	}
 	repo := data.NewDataRepo(dataData, logger)
 	httpUsecase := biz.NewHttpUsecase(repo, logger)
 	httpService := service.NewHttpService(httpUsecase, logger)
-	httpServer := server.NewHTTPServer(configsServer, httpService, logger)
+	httpServer := server.NewHTTPServer(confServer, httpService, logger)
 	grpcUsecase := biz.NewGrpcUsecase(repo, logger)
 	grpcService := service.NewGrpcService(grpcUsecase, logger)
-	grpcServer := server.NewGRPCServer(configsServer, grpcService, logger)
-	registrar := consul.NewRegistry(configsConsul)
+	grpcServer := server.NewGRPCServer(confServer, grpcService, logger)
+	registrar := consul.NewRegistry(confConsul)
 	app := newApp(logger, httpServer, grpcServer, registrar, global)
-	return app, func() {
-		cleanup()
-	}, nil
+	return app, nil
 }

@@ -17,6 +17,7 @@ message Conf {
   Cors cors = 11;
   Kafka kafka = 12;
   Email email = 13;
+  Holmes holmes = 14;
 }
 
 message Global {
@@ -139,4 +140,40 @@ message Email {
     repeated string to = 3;
   }
   repeated Topics topics = 6;
+}
+
+message Holmes {
+  string path = 1;
+  string log = 2;
+  string collectInterval = 3;
+  message CPU {
+    int32 min = 1;
+    int32 diff = 2;
+    int32 abs = 3;
+    string coolDown = 4;
+  }
+  message Mem {
+    int32 min = 1;
+    int32 diff = 2;
+    int32 abs = 3;
+    string coolDown = 4;
+  }
+
+  message GCHeap {
+    int32 min = 1;
+    int32 diff = 2;
+    int32 abs = 3;
+    string coolDown = 4;
+  }
+  message Goroutine {
+    int32 min = 1;
+    int32 diff = 2;
+    int32 abs = 3;
+    int32 max = 4;
+    string coolDown = 5;
+  }
+  CPU cPU = 4;
+  Mem mem = 5;
+  GCHeap gCHeap = 6;
+  Goroutine goroutine = 7;
 }

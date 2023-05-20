@@ -1,0 +1,10 @@
+scrape-configs:
+  - job-name: pyroscope
+    scrape-interval: 60s
+    enabled-profiles: [cpu, mem, goroutines, mutex, block]
+    static-configs:
+      - application: my-pyroscope
+        targets:
+          - 172.21.0.2:8000
+        labels:
+          env: dev

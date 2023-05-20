@@ -5,7 +5,7 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
-	"github.com/go-kratos/kratos/v2/log"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/errors"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
@@ -28,9 +28,7 @@ func Recovery() gin.HandlerFunc {
 				span.SetAttributes(attribute.Key("err").String(fmt.Sprintf("%s", err)))
 				span.SetAttributes(attribute.Key("painc").String(bufs))
 
-				//email告警
-				email.SendWarn(c.Request.Context(), bufs)
-				log.Errorw("key", "warn", "msg", bufs)
+				email.SendWarn(c.Request.Context(), consts.EmailTitlePanic, bufs)
 
 				response.Fail(c, errors.Failed, nil)
 				c.Abort()

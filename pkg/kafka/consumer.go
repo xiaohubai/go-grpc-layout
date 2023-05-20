@@ -2,11 +2,11 @@ package kafka
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/Shopify/sarama"
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
-	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
+	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 )
 
 func RegisterConsumer(nodes []*conf.Kafka_Consumer) error {
@@ -45,8 +45,8 @@ func (Consumer) Setup(_ sarama.ConsumerGroupSession) error   { return nil }
 func (Consumer) Cleanup(_ sarama.ConsumerGroupSession) error { return nil }
 func (c Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 	for msg := range claim.Messages() {
-		if err := consumerMap[msg.Topic].Run(context.Background(), msg); err != nil {
-			metric.Count.With(fmt.Sprintf("%s_consumer_error", msg.Topic)).Inc()
+		if err := newWorkerByTopic(msg.Topic).Run(context.Background(), msg); err != nil {
+			email.SendWarn(context.Background(), consts.EmailTitleKafkaConsumer, err.Error())
 		}
 		session.MarkMessage(msg, "")
 	}

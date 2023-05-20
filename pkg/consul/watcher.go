@@ -5,10 +5,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/go-kratos/kratos/v2/log"
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/consul/api/watch"
 	"github.com/spf13/viper"
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"golang.org/x/sync/errgroup"
 )
@@ -43,7 +43,6 @@ func watcher(vp *viper.Viper, path string, conf any) {
 		return nil
 	})
 	if err := g.Wait(); err != nil {
-		email.SendWarn(context.Background(), err.Error())
-		log.Errorw("key", "warn", "msg", err.Error())
+		email.SendWarn(context.Background(), consts.EmailTitleViperRemoteWatch, err.Error())
 	}
 }

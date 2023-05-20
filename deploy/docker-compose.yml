@@ -137,3 +137,16 @@ services:
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+  #### pyroscope ####
+  pyroscope:
+    image: 'pyroscope/pyroscope:latest'
+    container_name: pyroscope
+    restart: always
+    ports:
+      - 4040:4040
+    command:
+      - server
+    volumes:
+      - /usr/local/volumes/pyroscope/server.yml:/etc/pyroscope/server.yml
+    environment:
+      - TZ=Asia/Shanghai

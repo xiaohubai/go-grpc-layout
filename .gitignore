@@ -31,9 +31,13 @@ Thumbs.db
 *.key
 *.log
 bin/
+logs
+tmp
 
 # Develop tools
 .vscode/
 .idea/
 *.swp
 *.xml
+
+benchmark

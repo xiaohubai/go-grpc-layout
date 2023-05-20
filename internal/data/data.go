@@ -40,7 +40,7 @@ type Data struct {
 }
 
 // NewData .
-func NewData(c *conf.Data, logg log.Logger) (*Data, func(), error) {
+func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 	mysqlConfig := mysql.Config{
 		DSN:                       c.Mysql.Source, // DSN data source name
 		DefaultStringSize:         191,            // string 类型字段的默认长度
@@ -64,12 +64,8 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, func(), error) {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 
-	initDB(db)
-
-	cleanup := func() {
-		if err := sqlDB.Close(); err != nil {
-			panic(err)
-		}
+	if err := AutoMigrate(db); err != nil {
+		panic(fmt.Errorf("autoMigrate failed: %s", err))
 	}
 
 	rdb := redis.NewClient(&redis.Options{
@@ -84,11 +80,12 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, func(), error) {
 
 	consts.DB = db
 	consts.RDB = rdb
-	return &Data{db: gen.Use(db), rdb: rdb}, cleanup, nil
+	return &Data{db: gen.Use(db), rdb: rdb}, nil
 }
 
-func initDB(db *gorm.DB) {
+func AutoMigrate(db *gorm.DB) error {
 	if err := db.AutoMigrate(&model.User{}); err != nil {
-		panic(err)
+		return err
 	}
+	return nil
 }

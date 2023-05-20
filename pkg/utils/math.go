@@ -6,7 +6,6 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/google/uuid"
 	"golang.org/x/crypto/sha3"
 )
 
@@ -49,9 +48,4 @@ func RandString(n int) string {
 func RandInt(n int) int {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	return r.Intn(n)
-}
-
-// 生成uuid
-func UUID() string {
-	return uuid.NewString()
 }

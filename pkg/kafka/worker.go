@@ -3,23 +3,32 @@ package kafka
 import (
 	"context"
 	"errors"
+	"sync"
 
 	"github.com/Shopify/sarama"
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 var (
-	consumerMap = make(map[string]Handler)
+	workers = make(map[string]Handler)
+	lock    sync.RWMutex
 )
+
+func newWorkerByTopic(topic string) Handler {
+	lock.RLock()
+	w := workers[topic]
+	lock.RUnlock()
+	return w
+}
 
 type WorkerHandler struct {
 	next Handler
 }
 
 type Handler interface {
-	Do(c context.Context, msg *sarama.ConsumerMessage) error
+	Do(ctx context.Context, msg *sarama.ConsumerMessage) error
 	SetNext(h Handler) Handler
-	Run(c context.Context, msg *sarama.ConsumerMessage) error
+	Run(ctx context.Context, msg *sarama.ConsumerMessage) error
 }
 
 func (n *WorkerHandler) SetNext(h Handler) Handler {
@@ -27,35 +36,36 @@ func (n *WorkerHandler) SetNext(h Handler) Handler {
 	return h
 }
 
-func (n *WorkerHandler) Run(c context.Context, msg *sarama.ConsumerMessage) (err error) {
+func (n *WorkerHandler) Run(ctx context.Context, msg *sarama.ConsumerMessage) (err error) {
 	if n.next != nil {
-		if err = (n.next).Do(c, msg); err != nil {
-			return
+		if err = (n.next).Do(ctx, msg); err != nil {
+			return err
 		}
-		return (n.next).Run(c, msg)
+		return (n.next).Run(ctx, msg)
 	}
 	return
 }
 
-var (
-	workerHandlers = make(map[string]Handler)
-)
+// 注册yaml和biz对应consumer实例
+var workerHandlers = make(map[string]Handler)
 
 func Register(name string, maker Handler) {
 	workerHandlers[name] = maker
 }
 
+// 首链
 type NullHandler struct {
 	WorkerHandler
 }
 
-func (h *NullHandler) Do(c context.Context, msg *sarama.ConsumerMessage) (err error) {
+func (h *NullHandler) Do(ctx context.Context, msg *sarama.ConsumerMessage) (err error) {
 	return
 }
 func HandlerInterface() Handler {
 	return &NullHandler{}
 }
 
+// NewConsumerWorker yaml配置topic对于的func调用链式实例
 func NewConsumerWorker(nodes []*conf.Kafka_Consumer) error {
 	for _, v := range nodes {
 		head := HandlerInterface()
@@ -67,7 +77,7 @@ func NewConsumerWorker(nodes []*conf.Kafka_Consumer) error {
 			}
 			temp = temp.SetNext(w)
 		}
-		consumerMap[v.Topic] = head
+		workers[v.Topic] = head
 	}
 	return nil
 }

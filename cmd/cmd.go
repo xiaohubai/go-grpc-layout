@@ -8,6 +8,7 @@ import (
 	"github.com/go-kratos/kratos/v2/transport/http"
 
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
+	"github.com/xiaohubai/go-grpc-layout/pkg/holmes"
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
 	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
 
@@ -33,7 +34,7 @@ func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, rr registry.Reg
 	)
 }
 
-func Run() (*kratos.App, func()) {
+func NewApp() *kratos.App {
 	cc, err := viper.Load()
 	if err != nil {
 		panic("load config failed")
@@ -51,9 +52,13 @@ func Run() (*kratos.App, func()) {
 	if err := kafka.RegisterConsumer(cc.Kafka.Consumer); err != nil {
 		panic("load kafka consumer failed")
 	}
-	app, cleanup, err := wireApp(cc.Server, cc.Data, cc.Consul, cc.Global, logger)
+	if err := holmes.NewRegisterHolmes(cc.Holmes); err != nil {
+		panic("load holmes failed")
+	}
+
+	app, err := wireApp(cc.Server, cc.Data, cc.Consul, cc.Global, logger)
 	if err != nil {
 		panic(err)
 	}
-	return app, cleanup
+	return app
 }

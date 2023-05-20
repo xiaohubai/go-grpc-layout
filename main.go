@@ -5,9 +5,7 @@ import (
 )
 
 func main() {
-	app, close := cmd.Run()
-	defer close()
-	if err := app.Run(); err != nil {
+	if err := cmd.NewApp().Run(); err != nil {
 		panic(err)
 	}
 }

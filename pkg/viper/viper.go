@@ -1,16 +1,16 @@
 package viper
 
 import (
+	"context"
 	"errors"
 	"flag"
-	"fmt"
 
 	"github.com/fsnotify/fsnotify"
-	"github.com/go-kratos/kratos/v2/log"
 	"github.com/spf13/viper"
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/consul"
+	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 )
 
 type cmdFlags struct {
@@ -62,7 +62,7 @@ func newFileConfig(filePath string, conf any) error {
 	}
 	v.OnConfigChange(func(e fsnotify.Event) {
 		if err := v.Unmarshal(conf); err != nil {
-			log.Errorw("key", "loading", "msg", fmt.Sprintf("%s:%s", "v.OnConfigChange", err))
+			email.SendWarn(context.Background(), consts.EmailTitleViperLocalWatch, err.Error())
 		}
 	})
 
