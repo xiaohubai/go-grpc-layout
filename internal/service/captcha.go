@@ -5,7 +5,8 @@ import (
 	"github.com/mojocn/base64Captcha"
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
-	"github.com/xiaohubai/go-grpc-layout/internal/errors"
+	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
+
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 )
 
@@ -18,7 +19,7 @@ func (s *HttpService) Captcha(c *gin.Context) {
 	cp := base64Captcha.NewCaptcha(driver, store)
 	id, b64s, err := cp.Generate()
 	if err != nil {
-		response.Fail(c, errors.CaptchaFailed, nil)
+		response.Fail(c, ecode.CaptchaFailed, nil)
 		return
 	}
 	response.Success(c, v1.CaptchaResponse{

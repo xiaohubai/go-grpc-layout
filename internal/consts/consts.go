@@ -4,10 +4,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/go-redis/redis/v8"
+	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
-	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"gorm.io/gorm"
+
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 const (

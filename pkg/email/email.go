@@ -13,12 +13,12 @@ import (
 	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
-	"github.com/xiaohubai/go-grpc-layout/pkg/html"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
+	"github.com/xiaohubai/go-grpc-layout/pkg/utils/html"
 	"golang.org/x/sync/errgroup"
 )
 
-func Send(topic, title, htmlText string) (err error) {
+func Send(topic, title, filePath, htmlText string) (err error) {
 	auth := smtp.PlainAuth("", consts.Conf.Email.From, consts.Conf.Email.Secret, consts.Conf.Email.Host)
 	t := checkTopics(topic, consts.Conf.Email.Topics)
 	if t == nil {
@@ -26,10 +26,15 @@ func Send(topic, title, htmlText string) (err error) {
 	}
 	e := &email.Email{
 		To:      t.To,
-		From:    consts.Conf.Email.From,
-		Subject: fmt.Sprintf("%s-%s(%s)", title, t.Subject, consts.Conf.Global.AppName),
+		From:    fmt.Sprintf("%s <%s>", consts.Conf.Email.Nickname, consts.Conf.Email.From),
+		Subject: fmt.Sprintf("%s-%s(%s)", t.Subject, title, consts.Conf.Global.AppName),
 		HTML:    []byte(htmlText),
 	}
+
+	if filePath != "" {
+		e.AttachFile(filePath)
+	}
+
 	address := fmt.Sprintf("%s:%d", consts.Conf.Email.Host, consts.Conf.Email.Port)
 	if consts.Conf.Email.IsSsl {
 		err = e.SendWithTLS(address, auth, &tls.Config{ServerName: consts.Conf.Email.Host})
@@ -52,16 +57,43 @@ func SendWarn(ctx context.Context, title, msg string) {
 	var g errgroup.Group
 	g.Go(func() error {
 		value := pbAny.Warn{
-			DateTime: time.Now().String(),
+			DateTime: time.Now().Local().Format(time.DateTime),
 			TraceID:  tracing.TraceID(ctx),
 			Error:    msg,
 		}
 
-		htmlText, err := html.FormatText("warn", value)
+		htmlText, err := html.EmailHTMLByText("warn", value)
 		if err != nil {
 			return err
 		}
-		return Send("warn", title, htmlText)
+		return Send("warn", title, "", htmlText)
+
+	})
+	if err := g.Wait(); err != nil {
+		log.Errorw("key", "warn", "title", "email", "msg", err.Error())
+	}
+
+	//配置是否邮件,日志双写
+	if true {
+		log.Errorw("key", "warn", "title", title, "msg", msg)
+	}
+
+}
+
+func SendWarnWithFile(ctx context.Context, title, filePath, msg string) {
+	var g errgroup.Group
+	g.Go(func() error {
+		value := pbAny.Warn{
+			DateTime: time.Now().Local().Format(time.DateTime),
+			TraceID:  tracing.TraceID(ctx),
+			Error:    msg,
+		}
+
+		htmlText, err := html.EmailHTMLByText("warn", value)
+		if err != nil {
+			return err
+		}
+		return Send("warn", title, filePath, htmlText)
 
 	})
 	if err := g.Wait(); err != nil {

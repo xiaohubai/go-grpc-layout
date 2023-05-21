@@ -6,7 +6,7 @@ import (
 	"html/template"
 )
 
-var emailHtmlTextMaps = map[string]string{
+var emailMaps = map[string]string{
 	//告警html
 	"warn": `
 		<html>
@@ -22,9 +22,9 @@ var emailHtmlTextMaps = map[string]string{
 	//
 }
 
-// FormatText 发送邮件的html格式化
-func FormatText(topic string, value interface{}) (string, error) {
-	text, ok := emailHtmlTextMaps[topic]
+// EmailHTMLByText 发送邮件的html格式化
+func EmailHTMLByText(topic string, value interface{}) (string, error) {
+	text, ok := emailMaps[topic]
 	if !ok {
 		return "", errors.New("topic not found")
 	}

@@ -5,7 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/xiaohubai/go-grpc-layout/internal/errors"
+	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
+
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 )
 
@@ -23,7 +24,7 @@ func Result(c *gin.Context, code int, data any, err any) {
 	resp := Body{
 		Code:    code,
 		Data:    data,
-		Msg:     errors.Msg[code],
+		Msg:     ecode.Msg[code],
 		TraceID: tracing.TraceID(c.Request.Context()),
 	}
 
@@ -34,7 +35,7 @@ func Result(c *gin.Context, code int, data any, err any) {
 }
 
 func Success(c *gin.Context, data any) {
-	Result(c, errors.Success, data, nil)
+	Result(c, ecode.Success, data, nil)
 }
 
 func Fail(c *gin.Context, code int, err any) {

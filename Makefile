@@ -68,6 +68,11 @@ doc:
 dockerBuild:
 	sh ./scripts/docker-build.sh
 
+.PHONY: goimports
+# generate goimports
+goimports:
+	sh ./scripts/goimports.sh
+
 .PHONY: build
 # generate build
 build:

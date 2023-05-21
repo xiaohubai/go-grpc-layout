@@ -59,7 +59,7 @@ casbin:
   path: "./rbac_model.conf"
 
 limiter:
-  rate: 25
+  rate: 500
 
 cors:
   mode: allow-whitelist # allow-all: 放行全部; allow-whitelist
@@ -93,6 +93,7 @@ email:
   host: "smtp.qq.com"
   port: 25
   from: "1124938791@qq.com"
+  nickname: "基础云架构部-研发一组"
   isSsl: false
   secret: "bvewllmttezxjehi"
   topics:

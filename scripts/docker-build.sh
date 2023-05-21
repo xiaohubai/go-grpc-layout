@@ -11,7 +11,7 @@ if [ -n "$(git cherry -v)" ];then
 fi
 
 Dir=$(pwd)
-CONFIG="$Dir/configs/configs.yaml"
+CONFIG="$Dir/configs/conf/conf.yaml"
 GIT_BRACH=$(git symbolic-ref --short -q HEAD)
 GIT_COMMIT=$(git rev-parse --short HEAD)
 GIT_TAG=$(git describe --tags --abbrev=0)

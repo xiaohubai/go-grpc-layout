@@ -13,8 +13,7 @@ require (
 	github.com/go-kratos/kratos/contrib/log/zap/v2 v2.0.0-20230326145430-f03f5f89881f
 	github.com/go-kratos/kratos/contrib/registry/consul/v2 v2.0.0-20230323030821-f47a238478e1
 	github.com/go-kratos/kratos/v2 v2.6.2
-	github.com/go-redis/redis/v8 v8.11.5
-	github.com/go-redis/redis_rate/v9 v9.1.2
+	github.com/go-redis/redis_rate/v10 v10.0.1
 	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/google/gnostic v0.6.9
 	github.com/google/wire v0.5.0
@@ -23,6 +22,7 @@ require (
 	github.com/mojocn/base64Captcha v1.3.5
 	github.com/pkg/errors v0.9.1
 	github.com/prometheus/client_golang v1.14.0
+	github.com/redis/go-redis/v9 v9.0.4
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/viper v1.15.0
 	github.com/swaggo/files v1.0.1
@@ -143,7 +143,6 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
-	github.com/onsi/gomega v1.20.1 // indirect
 	github.com/pelletier/go-toml/v2 v2.0.6 // indirect
 	github.com/pierrec/lz4/v4 v4.1.17 // indirect
 	github.com/prometheus/client_model v0.3.0 // indirect

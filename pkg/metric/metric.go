@@ -45,7 +45,7 @@ var (
 	Count = NewRegisterCounter(
 		prometheus.NewCounterVec(prometheus.CounterOpts{
 			Namespace: namespace,
-			Name:      "name_count_total",
+			Name:      "count_by_name_total",
 			Help:      "Total number of Requests.",
 		}, []string{"name"}),
 	)

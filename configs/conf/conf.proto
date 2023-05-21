@@ -132,14 +132,15 @@ message Email {
   string host = 1;
   int32 port = 2;
   string from = 3;
-  bool isSsl = 4;
-  string secret = 5;
+  string nickname = 4;
+  bool isSsl = 5;
+  string secret = 6;
   message Topics {
     string name = 1;
     string subject = 2;
     repeated string to = 3;
   }
-  repeated Topics topics = 6;
+  repeated Topics topics = 7;
 }
 
 message Holmes {

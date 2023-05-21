@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
-	"github.com/xiaohubai/go-grpc-layout/internal/errors"
+	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
@@ -30,7 +30,7 @@ func Recovery() gin.HandlerFunc {
 
 				email.SendWarn(c.Request.Context(), consts.EmailTitlePanic, bufs)
 
-				response.Fail(c, errors.Failed, nil)
+				response.Fail(c, ecode.Failed, nil)
 				c.Abort()
 			}
 		}()

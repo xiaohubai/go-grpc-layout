@@ -71,11 +71,14 @@
 
 # 组件访问接口
 ``` go
-- api           172.21.0.2:8000
+- http          172.21.0.2:8000
+- grpc          172.21.0.2:9000
 - jaeger        172.21.0.2:16686
 - consul:       172.21.0.2:8500
 - prometheus    172.21.0.2:9090
-- grafana       172.21.0.2:3000 （admin admin）
+- node-exporter 172.21.0.2:9100
+- pyroscope     172.21.0.2:4040
+- grafana       172.21.0.2:3000 (admin admin)
 ```
 ## 设计图
 ![](https://github.com/xiaohubai/go-grpc-layout/blob/master/docs/user-req-resp.png)
@@ -90,7 +93,13 @@ API 元信息管理
 流量管理
     灰度发布 流量复制 负载均衡
 隔离保护
-    限流、熔断、降级、缓存
+    限流(根据用户规则进行拒绝策略,或者拒绝多余请求):
+        计数器:计数达到阈值时，直接拒绝请求。
+        漏斗模式:桶内流量过多时出现积压，满了，则开始拒绝请求(eg:大池子洗澡,人流量多了,不让进澡堂)
+        令牌桶: 漏斗类似,中间人token放桶内,请求过来拿桶内token请求,拿不到拒绝请求(eg:独立房间洗澡,一个人一把钥匙,没有钥匙了,不让进澡堂)
+    熔断(自我诊断服务,决定是否拒绝,放行)
+    降级(弃卒保帅,保证主要功能)、
+    缓存
 访问控制
     统一鉴权、跨域、风控
 可观测性
@@ -124,17 +133,15 @@ API 元信息管理
 - [x] trace使用jaeger(基于opentelemetry标准)
 - [x] 日志使用zap
 - [x] grafana看板
+- [x] pyroscope实时性能分析火焰图(pull的方式)
+- [x] holmes现场异常自动采样到文件,并发送邮件告警(文件附件)
 - [x] 捕获用户请求和结果到kafka,
 - [ ] kafka->es
-- [ ] 读取es,分析用户请求每个接口量级,时延,到vue页面
 - [ ] openAPI和swagger
 - [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
 - [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
-- [x] kafka生产,消费数据失败,埋点量级
-- [x] pyroscope实时性能分析火焰图
-- [ ] holmes现场异常自动采样
 - [ ] 压测分析(写一个post请求,参数校验,跨域,trace链路,连表查询数据库,查询es,更新es,更新mysql,for将mysql和es参数合并,写入kafka,埋点,日志写入;同时消费kafka,查询mysql 查es 更新es 和 mysql)
 
 

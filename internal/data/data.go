@@ -1,6 +1,7 @@
 package data
 
 import (
+	"context"
 	"fmt"
 
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
@@ -14,8 +15,8 @@ import (
 	"gorm.io/gorm/schema"
 
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/go-redis/redis/v8"
 	"github.com/google/wire"
+	"github.com/redis/go-redis/v9"
 )
 
 // ProviderSet is data providers.
@@ -73,11 +74,10 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 		Password: c.Redis.Password,
 		DB:       int(c.Redis.Db),
 	})
-	_, err = rdb.Ping(rdb.Context()).Result()
+	_, err = rdb.Ping(context.Background()).Result()
 	if err != nil {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
-
 	consts.DB = db
 	consts.RDB = rdb
 	return &Data{db: gen.Use(db), rdb: rdb}, nil

@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
-	"github.com/xiaohubai/go-grpc-layout/internal/errors"
+	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 )
@@ -22,7 +22,7 @@ func Casbin() gin.HandlerFunc {
 		sub := userInfo.RoleID
 		e := SyncedEnforcer()
 		if ok, err := e.Enforce(sub, obj, act); !ok {
-			response.Fail(c, errors.CasbinFailed, err)
+			response.Fail(c, ecode.CasbinFailed, err)
 			c.Abort()
 			return
 		}
