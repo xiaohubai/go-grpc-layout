@@ -3,6 +3,7 @@ package service
 import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
+
 	v1 "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 )
@@ -27,6 +28,7 @@ func NewHttpService(uc *biz.HttpUsecase, lg log.Logger) *HttpService {
 		log: log.NewHelper(lg),
 	}
 }
+
 func NewGrpcService(uc *biz.GrpcUsecase, lg log.Logger) *GrpcService {
 	return &GrpcService{
 		uc:  uc,

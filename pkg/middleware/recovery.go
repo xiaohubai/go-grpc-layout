@@ -5,13 +5,13 @@ import (
 	"runtime"
 
 	"github.com/gin-gonic/gin"
+	"go.opentelemetry.io/otel/attribute"
+
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
-
-	"go.opentelemetry.io/otel/attribute"
 )
 
 func Recovery() gin.HandlerFunc {

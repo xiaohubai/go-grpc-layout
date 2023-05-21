@@ -39,7 +39,7 @@ api:
 		   --validate_out=paths=source_relative,lang=go:./api \
 	       $(API_PROTO_FILES)
 
-	sh scripts/http-omitempty.sh
+	sh scripts/remove-omitempty.sh
 
 .PHONY: compose
 compose:
@@ -76,7 +76,7 @@ goimports:
 .PHONY: build
 # generate build
 build:
-	go build -o server cmd/main.go cmd/wire_gen.go
+	go build -o server main.go
 
 .PHONY: sql
 # generate sql
@@ -87,18 +87,6 @@ sql:
 # generate configs
 configs:
 	kratos proto client configs/conf/conf.proto
-
-.PHONY: all
-# generate all
-all:
-	make init;
-	make api;
-	make compose;
-	make sql;
-	make configs;
-	make build;
-	make dockerBuild;
-	make run;
 
 # show help
 help:

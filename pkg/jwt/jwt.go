@@ -4,6 +4,7 @@ import (
 	"errors"
 
 	"github.com/golang-jwt/jwt"
+
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 )
 

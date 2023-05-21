@@ -1,6 +1,6 @@
 Dir=$(pwd)
-CONFIG="$Dir/configs/conf/conf.yaml"
+mod="$Dir/go.mod"
 
-APP_NAME=$(cat $CONFIG | grep "appName" | awk -F ":" '{print}' | awk '{gsub(/^\s+|\s+$/," ");print $2}')
+APP_NAME=$(cat $mod | grep "module" | awk '{gsub(/^\s+|\s+$/," ");print $2}')
 
-goimports -local $APP_NAME -w $Dir
+goimports-reviser -rm-unused -format -local $APP_NAME ./...

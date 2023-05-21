@@ -7,14 +7,11 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/middleware/validate"
+	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/spf13/viper"
 
-	"github.com/go-kratos/kratos/v2/transport/grpc"
-
-	"github.com/xiaohubai/go-grpc-layout/configs/conf"
-
 	v1 "github.com/xiaohubai/go-grpc-layout/api/grpc/v1"
-
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 )
 

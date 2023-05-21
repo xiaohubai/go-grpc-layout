@@ -13,8 +13,9 @@ import (
 	"github.com/hashicorp/consul/api"
 	"github.com/spf13/viper"
 	_ "github.com/spf13/viper/remote"
-	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"google.golang.org/grpc"
+
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 var (

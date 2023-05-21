@@ -10,12 +10,13 @@ import (
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/jordan-wright/email"
+	"golang.org/x/sync/errgroup"
+
 	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/html"
-	"golang.org/x/sync/errgroup"
 )
 
 func Send(topic, title, filePath, htmlText string) (err error) {

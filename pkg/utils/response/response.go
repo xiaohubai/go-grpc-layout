@@ -6,7 +6,6 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
-
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 )
 

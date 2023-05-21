@@ -7,13 +7,14 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/pkg/errors"
 	"github.com/spf13/cast"
+	"go.opentelemetry.io/otel/attribute"
+
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	pJwt "github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils"
-	"go.opentelemetry.io/otel/attribute"
 )
 
 // Login 用户登录

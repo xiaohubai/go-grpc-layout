@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Shopify/sarama"
+
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
 	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
 )

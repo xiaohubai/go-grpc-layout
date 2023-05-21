@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/Shopify/sarama"
+
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 

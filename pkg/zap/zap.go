@@ -6,12 +6,12 @@ import (
 
 	kzap "github.com/go-kratos/kratos/contrib/log/zap/v2"
 	"github.com/go-kratos/kratos/v2/log"
-	"github.com/xiaohubai/go-grpc-layout/configs/conf"
-
 	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
+
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 func New(c *conf.Zap, g *conf.Global) (log.Logger, error) {

@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/google/wire"
+
 	"github.com/xiaohubai/go-grpc-layout/pkg/consul"
 )
 

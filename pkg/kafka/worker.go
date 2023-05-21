@@ -6,6 +6,7 @@ import (
 	"sync"
 
 	"github.com/Shopify/sarama"
+
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
@@ -61,6 +62,7 @@ type NullHandler struct {
 func (h *NullHandler) Do(ctx context.Context, msg *sarama.ConsumerMessage) (err error) {
 	return
 }
+
 func HandlerInterface() Handler {
 	return &NullHandler{}
 }

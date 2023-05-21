@@ -8,9 +8,10 @@ import (
 	"github.com/hashicorp/consul/api"
 	"github.com/hashicorp/consul/api/watch"
 	"github.com/spf13/viper"
+	"golang.org/x/sync/errgroup"
+
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
-	"golang.org/x/sync/errgroup"
 )
 
 func watcher(vp *viper.Viper, path string, conf any) {

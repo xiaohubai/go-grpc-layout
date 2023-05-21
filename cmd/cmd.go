@@ -6,17 +6,15 @@ import (
 	"github.com/go-kratos/kratos/v2/registry"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	"github.com/go-kratos/kratos/v2/transport/http"
+	_ "go.uber.org/automaxprocs"
 
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
+	_ "github.com/xiaohubai/go-grpc-layout/internal/biz" //init biz
 	"github.com/xiaohubai/go-grpc-layout/pkg/holmes"
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
-	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
-
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/viper"
-
-	_ "github.com/xiaohubai/go-grpc-layout/internal/biz" //init biz
-	_ "go.uber.org/automaxprocs"
+	"github.com/xiaohubai/go-grpc-layout/pkg/zap"
 )
 
 func newApp(logger log.Logger, hs *http.Server, gs *grpc.Server, rr registry.Registrar, g *conf.Global) *kratos.App {

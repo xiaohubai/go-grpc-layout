@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	otelcontrib "go.opentelemetry.io/contrib"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -12,6 +11,8 @@ import (
 	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
 	"go.opentelemetry.io/otel/semconv/v1.17.0/httpconv"
 	oteltrace "go.opentelemetry.io/otel/trace"
+
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 type config struct {

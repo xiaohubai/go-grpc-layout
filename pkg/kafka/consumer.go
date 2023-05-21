@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/Shopify/sarama"
+
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
@@ -41,8 +42,10 @@ func NewConsumerGroup(nodes []*conf.Kafka_Consumer) {
 
 type Consumer struct{}
 
-func (Consumer) Setup(_ sarama.ConsumerGroupSession) error   { return nil }
+func (Consumer) Setup(_ sarama.ConsumerGroupSession) error { return nil }
+
 func (Consumer) Cleanup(_ sarama.ConsumerGroupSession) error { return nil }
+
 func (c Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 	for msg := range claim.Messages() {
 		if err := newWorkerByTopic(msg.Topic).Run(context.Background(), msg); err != nil {

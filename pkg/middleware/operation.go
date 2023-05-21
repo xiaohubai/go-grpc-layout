@@ -6,6 +6,9 @@ import (
 	"io"
 	"time"
 
+	"github.com/gin-gonic/gin"
+	"golang.org/x/sync/errgroup"
+
 	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
@@ -13,9 +16,6 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
 	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
-	"golang.org/x/sync/errgroup"
-
-	"github.com/gin-gonic/gin"
 )
 
 // Operation 记录请求流水

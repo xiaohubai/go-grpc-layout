@@ -4,19 +4,18 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/go-kratos/kratos/v2/log"
+	"github.com/google/wire"
+	"github.com/redis/go-redis/v9"
+	"gorm.io/driver/mysql"
+	"gorm.io/gorm"
+	"gorm.io/gorm/schema"
+
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/gen"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
-
-	"gorm.io/driver/mysql"
-	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
-
-	"github.com/go-kratos/kratos/v2/log"
-	"github.com/google/wire"
-	"github.com/redis/go-redis/v9"
 )
 
 // ProviderSet is data providers.

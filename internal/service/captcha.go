@@ -3,10 +3,10 @@ package service
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
+
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
-
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils/response"
 )
 
