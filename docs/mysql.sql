@@ -101,43 +101,19 @@ CREATE TABLE
         UNIQUE KEY `idx_settings` (`uid`)
     ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '前端layout设置';
 
+
 CREATE TABLE
-    `test1` (
+    `debug_perf` (
         `id` bigint unsigned NOT NULL AUTO_INCREMENT,
         `uid` varchar(100) NOT NULL DEFAULT '' COMMENT 'uid',
-        `lang` varchar(100) NOT NULL DEFAULT '' COMMENT '语言',
-        `side_mode_color` varchar(100) NOT NULL DEFAULT '' COMMENT '侧边栏颜色',
-        `collapse` BOOLEAN NOT NULL DEFAULT 0 COMMENT '侧边栏折叠',
-        `breadcrumb` BOOLEAN NOT NULL DEFAULT 1 COMMENT '面包屑',
-        `default_router` varchar(20) NOT NULL DEFAULT '' COMMENT '默认路由',
-        `active_text_color` varchar(20) NOT NULL DEFAULT '' COMMENT '活跃文本颜色',
-        `active_background_color` varchar(20) NOT NULL DEFAULT '' COMMENT '活跃文本背景色',
+        `username` varchar(100) NOT NULL DEFAULT '' COMMENT '用户名',
+        `motto` varchar(100) NOT NULL DEFAULT '' COMMENT '座右铭',
+        `text` varchar(100) NOT NULL DEFAULT '' COMMENT '内容',
         `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
         `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
-        `delete_time` datetime DEFAULT NULL COMMENT '删除时间',
         `deleted_at` datetime DEFAULT NULL,
         `create_user` varchar(20) NOT NULL DEFAULT '' COMMENT '创建人',
         `update_user` varchar(20) NOT NULL DEFAULT '' COMMENT '修改人',
         PRIMARY KEY (`id`),
-        UNIQUE KEY `idx_settings` (`uid`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '前端layout设置';
-
-CREATE TABLE
-    `test3` (
-        `id` bigint unsigned NOT NULL AUTO_INCREMENT,
-        `uid` varchar(100) NOT NULL DEFAULT '' COMMENT 'uid',
-        `lang` varchar(100) NOT NULL DEFAULT '' COMMENT '语言',
-        `side_mode_color` varchar(100) NOT NULL DEFAULT '' COMMENT '侧边栏颜色',
-        `collapse` BOOLEAN NOT NULL DEFAULT 0 COMMENT '侧边栏折叠',
-        `breadcrumb` BOOLEAN NOT NULL DEFAULT 1 COMMENT '面包屑',
-        `default_router` varchar(20) NOT NULL DEFAULT '' COMMENT '默认路由',
-        `active_text_color` varchar(20) NOT NULL DEFAULT '' COMMENT '活跃文本颜色',
-        `active_background_color` varchar(20) NOT NULL DEFAULT '' COMMENT '活跃文本背景色',
-        `create_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '记录创建时间',
-        `update_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '记录修改时间',
-        `deleted_at` datetime DEFAULT NULL COMMENT '删除时间',
-        `create_user` varchar(20) NOT NULL DEFAULT '' COMMENT '创建人',
-        `update_user` varchar(20) NOT NULL DEFAULT '' COMMENT '修改人',
-        PRIMARY KEY (`id`),
-        UNIQUE KEY `idx_settings` (`uid`)
-    ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '前端layout设置';
+        KEY `idx_key_debug_perf` (`uid`)
+    ) ENGINE = InnoDB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '性能测试';

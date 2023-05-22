@@ -20,7 +20,6 @@ import (
 import (
 	_ "github.com/xiaohubai/go-grpc-layout/internal/biz"
 	_ "go.uber.org/automaxprocs"
-	_ "net/http/pprof"
 )
 
 // Injectors from wire.go:

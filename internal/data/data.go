@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
@@ -37,6 +38,7 @@ func NewDataRepo(d *Data, lg log.Logger) biz.Repo {
 type Data struct {
 	db  *gen.Query
 	rdb *redis.Client
+	es  *elasticsearch.Client
 }
 
 // NewData .
@@ -77,9 +79,20 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 	if err != nil {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
+
+	es, err := elasticsearch.NewClient(elasticsearch.Config{
+		Addresses: c.Es.Address,
+		Username:  c.Es.Username,
+		Password:  c.Es.Password,
+	})
+	if err != nil {
+		panic(fmt.Errorf("elasticsearch connect failed: %s", err))
+	}
+
 	consts.DB = db
 	consts.RDB = rdb
-	return &Data{db: gen.Use(db), rdb: rdb}, nil
+	consts.ES = es
+	return &Data{db: gen.Use(db), rdb: rdb, es: es}, nil
 }
 
 func AutoMigrate(db *gorm.DB) error {

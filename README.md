@@ -112,7 +112,6 @@ API 元信息管理
 部署容器(手动)
 
 ```
-# TODO
 
 ## 基建
 - [x] gin HTTP框架
@@ -136,7 +135,7 @@ API 元信息管理
 - [x] pyroscope实时性能分析火焰图(pull的方式)
 - [x] holmes现场异常自动采样到文件,并发送邮件告警(文件附件)
 - [x] 捕获用户请求和结果到kafka,
-- [ ] kafka->es
+- [x] kafka->es
 - [ ] openAPI和swagger
 - [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
@@ -144,8 +143,6 @@ API 元信息管理
 - [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
 - [ ] 压测分析(写一个post请求,参数校验,跨域,trace链路,连表查询数据库,查询es,更新es,更新mysql,for将mysql和es参数合并,写入kafka,埋点,日志写入;同时消费kafka,查询mysql 查es 更新es 和 mysql)
 
-
-## 系统基本能力 log trace metric pprof
 
 ## 业务
 - [x] 字典序
@@ -158,7 +155,6 @@ API 元信息管理
 - [x] 下发token和验证
 
 ## 注意事项:
-- **Note**:servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
-- **Note**: gorm 做更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
-
-- **gorm** 统计 加上 delete_at  is null
+- **servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
+- **gorm 更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
+- gorm统计 加上 delete_at  is null

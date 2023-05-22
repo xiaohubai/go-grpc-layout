@@ -21,6 +21,11 @@ data:
     dialTimeout: 1s
     readTimeout: 0.4s
     writeTimeout: 0.6s
+  es:
+    address: [http://172.21.0.2:9200]
+    username: elastic
+    password: 1qaz!QAZ
+
 jwt:
   signingKey: some_jwt_sign_key
   expiresTime: 604800
@@ -59,7 +64,7 @@ casbin:
   path: "./rbac_model.conf"
 
 limiter:
-  rate: 500
+  rate: 0 # 0:不限流
 
 cors:
   mode: allow-whitelist # allow-all: 放行全部; allow-whitelist
@@ -79,15 +84,10 @@ kafka:
   producer:
     - topic: operationRecord
       address: [172.21.0.2:9092]
-    - topic: pprof
-      address: [172.21.0.2:9092]
   consumer:
     - topic: operationRecord
       address: [172.21.0.2:9092]
       func: [OperationRecordReportES] # 支持链式调用 eg:[funcA,funcB,funcX]
-    - topic: pprof
-      address: [172.21.0.2:9092]
-      func: [PprofES]
 
 email:
   host: "smtp.qq.com"

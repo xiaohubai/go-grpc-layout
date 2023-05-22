@@ -4,6 +4,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/redis/go-redis/v9"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
@@ -49,6 +50,7 @@ const (
 var (
 	DB    *gorm.DB
 	RDB   *redis.Client
+	ES    *elasticsearch.Client
 	Conf  *conf.Conf
 	Viper *viper.Viper
 )
@@ -58,11 +60,18 @@ var (
 )
 
 var (
+	PwdPath, _ = os.Getwd()
+)
+
+var (
 	EmailTitleViperRemoteWatch = "viper remote watch"
 	EmailTitleViperLocalWatch  = "viper local watch"
 	EmailTitlePanic            = "panic"
 	EmailTitlePprof            = "pprof"
 	EmailTitleKafkaProducer    = "kafka producer"
 	EmailTitleKafkaConsumer    = "kafka consumer"
-	PwdPath, _                 = os.Getwd()
+)
+
+var (
+	ESIndexOperationRecord = "operation_record"
 )

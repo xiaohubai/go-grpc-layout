@@ -15,7 +15,7 @@ import (
 )
 
 // NewRegisterHolmes 异常捕获
-func NewRegisterHolmes(c *conf.Holmes) error {
+func RegisterHolmes(c *conf.Holmes) error {
 	h, err := holmes.New(
 		holmes.WithCollectInterval(c.CollectInterval),
 		holmes.WithProfileReporter(&ReporterImpl{}),

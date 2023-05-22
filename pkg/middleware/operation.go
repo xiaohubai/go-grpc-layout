@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"time"
@@ -9,13 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang.org/x/sync/errgroup"
 
-	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
 	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
+	"github.com/xiaohubai/go-grpc-layout/pkg/utils"
 )
 
 // Operation 记录请求流水
@@ -37,24 +38,29 @@ func Operation() gin.HandlerFunc {
 
 		var g errgroup.Group
 		g.Go(func() error {
-			record := pbAny.OperationRecord{
-				Uid:      uid,
-				DateTime: time.Now().Local().Format(time.DateTime),
-				Ip:       c.ClientIP(),
-				Method:   c.Request.Method,
-				Path:     c.Request.RequestURI,
-				Agent:    c.Request.UserAgent(),
-				Status:   int32(c.Writer.Status()),
-				Latency:  time.Since(start).String(),
-				ReqBody:  string(reqBody),
-				RespBody: writer.body.String(),
-				TraceID:  tracing.TraceID(c.Request.Context()),
+			var respbody map[string]interface{}
+			var reqsBody map[string]interface{}
+			_ = json.Unmarshal(writer.body.Bytes(), &respbody)
+			_ = json.Unmarshal(reqBody, &reqsBody)
+			record := map[string]interface{}{
+				"uid":      uid,
+				"dateTime": time.Now().Local().Format(time.DateTime),
+				"ip":       c.ClientIP(),
+				"method":   c.Request.Method,
+				"path":     c.Request.RequestURI,
+				"agent":    c.Request.UserAgent(),
+				"status":   int32(c.Writer.Status()),
+				"latency":  time.Since(start).String(),
+				"reqBody":  reqsBody,
+				"respBody": respbody,
+				"traceID":  tracing.TraceID(c.Request.Context()),
 			}
 			producer, err := kafka.NewProducer(consts.KafkaTopicOperationRecord)
 			if err != nil {
 				return err
 			}
-			return producer.Send(record.String())
+			data := utils.JsonToMarshal(record)
+			return producer.Send(data)
 		})
 		if err := g.Wait(); err != nil {
 			email.SendWarn(c.Request.Context(), consts.EmailTitleKafkaProducer, err.Error())

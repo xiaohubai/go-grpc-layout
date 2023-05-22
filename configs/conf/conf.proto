@@ -56,8 +56,14 @@ message Data {
     string readTimeout = 6;
     string writeTimeout = 7;
   }
+  message ES {
+    repeated string address = 1;
+    string username = 2;
+    string password = 3;
+  }
   Mysql mysql = 1;
   Redis redis = 2;
+  ES es = 3;
 }
 
 message Consul {

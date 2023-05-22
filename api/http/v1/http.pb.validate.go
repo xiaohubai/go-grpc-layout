@@ -138,6 +138,224 @@ var _ interface {
 	ErrorName() string
 } = PageRequestValidationError{}
 
+// Validate checks the field values on DebugPerfRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *DebugPerfRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DebugPerfRequest with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DebugPerfRequestMultiError, or nil if none found.
+func (m *DebugPerfRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DebugPerfRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Text
+
+	if len(errors) > 0 {
+		return DebugPerfRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// DebugPerfRequestMultiError is an error wrapping multiple validation errors
+// returned by DebugPerfRequest.ValidateAll() if the designated constraints
+// aren't met.
+type DebugPerfRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DebugPerfRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DebugPerfRequestMultiError) AllErrors() []error { return m }
+
+// DebugPerfRequestValidationError is the validation error returned by
+// DebugPerfRequest.Validate if the designated constraints aren't met.
+type DebugPerfRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DebugPerfRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DebugPerfRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DebugPerfRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DebugPerfRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DebugPerfRequestValidationError) ErrorName() string { return "DebugPerfRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e DebugPerfRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDebugPerfRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DebugPerfRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DebugPerfRequestValidationError{}
+
+// Validate checks the field values on DebugPerfResponse with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// first error encountered is returned, or nil if there are no violations.
+func (m *DebugPerfResponse) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on DebugPerfResponse with the rules
+// defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// DebugPerfResponseMultiError, or nil if none found.
+func (m *DebugPerfResponse) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *DebugPerfResponse) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for ID
+
+	// no validation rules for UID
+
+	// no validation rules for UserName
+
+	// no validation rules for Motto
+
+	// no validation rules for Text
+
+	// no validation rules for CreateTime
+
+	// no validation rules for CreateUser
+
+	if len(errors) > 0 {
+		return DebugPerfResponseMultiError(errors)
+	}
+
+	return nil
+}
+
+// DebugPerfResponseMultiError is an error wrapping multiple validation errors
+// returned by DebugPerfResponse.ValidateAll() if the designated constraints
+// aren't met.
+type DebugPerfResponseMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m DebugPerfResponseMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m DebugPerfResponseMultiError) AllErrors() []error { return m }
+
+// DebugPerfResponseValidationError is the validation error returned by
+// DebugPerfResponse.Validate if the designated constraints aren't met.
+type DebugPerfResponseValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e DebugPerfResponseValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e DebugPerfResponseValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e DebugPerfResponseValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e DebugPerfResponseValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e DebugPerfResponseValidationError) ErrorName() string {
+	return "DebugPerfResponseValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e DebugPerfResponseValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sDebugPerfResponse.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = DebugPerfResponseValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = DebugPerfResponseValidationError{}
+
 // Validate checks the field values on LoginRequest with the rules defined in
 // the proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.

@@ -50,7 +50,7 @@ func NewApp() *kratos.App {
 	if err := kafka.RegisterConsumer(cc.Kafka.Consumer); err != nil {
 		panic("load kafka consumer failed")
 	}
-	if err := holmes.NewRegisterHolmes(cc.Holmes); err != nil {
+	if err := holmes.RegisterHolmes(cc.Holmes); err != nil {
 		panic("load holmes failed")
 	}
 

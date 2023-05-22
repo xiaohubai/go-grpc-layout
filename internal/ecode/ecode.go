@@ -1,6 +1,5 @@
 package ecode
 
-// 业务使用
 const (
 	Success                 = 0    // 成功
 	Failed                  = 4000 // 系统内部错误
@@ -34,7 +33,6 @@ const (
 	RateLimitAllowErrFailed = 4028 // 请求频率限制接口报错
 )
 
-// 返回体code->msg转换
 var Msg = map[int]string{
 	Success:       "成功",
 	Failed:        "系统内部错误",

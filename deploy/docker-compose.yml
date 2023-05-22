@@ -150,3 +150,40 @@ services:
       - /usr/local/volumes/pyroscope/server.yml:/etc/pyroscope/server.yml
     environment:
       - TZ=Asia/Shanghai
+
+  #### elasticsearch ####
+  # 不停重启，数据卷的data目录权限应root，777权限
+  # 增加安全认证：在配置文件挂在或者容器内的elasticsearch.yml添加：
+  # xpack.security.enabled: true
+  # xpack.license.self_generated.type: basic
+  # xpack.security.transport.ssl.enabled: true
+  # 设置密码:docker exec -it elasticsearch bash
+  # 在bin/elasticsearch-setup-passwords interactive 回车输入y，填写密码，重启容器
+  elasticsearch:
+    image: elasticsearch:7.17.0
+    container_name: elasticsearch
+    restart: always
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    volumes:
+      - /usr/local/volumes/elasticsearch/data:/usr/share/elasticsearch/data
+      - /usr/local/volumes/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+    environment:
+      - TZ=Asia/Shanghai
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+
+  #### kibana ####
+  kibana:
+    image: kibana:7.17.0
+    container_name: kibana
+    restart: always
+    ports:
+      - "5601:5601"
+    volumes:
+      - /usr/local/volumes/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+    environment:
+      - elasticsearch.hosts=http://172.21.0.2:9200
+    depends_on:
+      - elasticsearch

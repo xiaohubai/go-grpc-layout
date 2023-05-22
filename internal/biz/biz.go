@@ -23,11 +23,14 @@ type GrpcUsecase struct {
 	log  *log.Helper
 }
 
+var repoUsecase *HttpUsecase //暂时没有想到好的办法,解决consumer 依赖 datarepo实例
+
 func NewHttpUsecase(repo Repo, lg log.Logger) *HttpUsecase {
-	return &HttpUsecase{
+	repoUsecase = &HttpUsecase{
 		repo: repo,
 		log:  log.NewHelper(lg),
 	}
+	return repoUsecase
 }
 
 func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
@@ -37,8 +40,13 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 	}
 }
 
-// data层共享  入参 返参只接收表model和其他条件
 type Repo interface {
+	RedisInterface
+	ESInterface
+	MysqlInterface
+}
+
+type MysqlInterface interface {
 	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
 	UpdateUserInfo(context.Context, *model.User) error
@@ -57,4 +65,17 @@ type Repo interface {
 	AddRoleCasbin(context.Context, *model.CasbinRule) error
 	UpdateRoleCasbin(context.Context, *model.CasbinRule) error
 	DeleteRoleCasbin(context.Context, *model.CasbinRule) error
+
+	FirstDebugPerf(context.Context, *model.DebugPerf) (*model.DebugPerf, error)
+	AddDebugPerf(context.Context, *model.DebugPerf) error
+	UpdateDebugPerf(context.Context, *model.DebugPerf) error
+	DeleteDebugPerf(context.Context, *model.DebugPerf) error
+}
+
+type RedisInterface interface {
+	RedisGet(context.Context, *model.CasbinRule) error
+}
+
+type ESInterface interface {
+	ESInsertDoc(context.Context, string, interface{}) error
 }

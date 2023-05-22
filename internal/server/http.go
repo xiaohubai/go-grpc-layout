@@ -51,6 +51,7 @@ func routers(s *service.HttpService) *gin.Engine {
 	}
 	r2 := router.Group("").Use(m.Jwt(), m.Casbin(), m.Limiter(), m.Operation())
 	{
+		r2.POST("/v1/debug/perf", s.DebugPerf)         //性能测试
 		r2.GET("/v1/get/setting", s.GetSetting)        //获取模板设置
 		r2.POST("/v1/update/setting", s.UpdateSetting) //设置模板配置
 		r2.GET("/v1/get/dictList", s.GetDictList)      //获取字典序

@@ -19,6 +19,7 @@ func Use(db *gorm.DB, opts ...gen.DOOption) *Query {
 	return &Query{
 		db:         db,
 		CasbinRule: newCasbinRule(db, opts...),
+		DebugPerf:  newDebugPerf(db, opts...),
 		Menu:       newMenu(db, opts...),
 		Setting:    newSetting(db, opts...),
 		User:       newUser(db, opts...),
@@ -29,6 +30,7 @@ type Query struct {
 	db *gorm.DB
 
 	CasbinRule casbinRule
+	DebugPerf  debugPerf
 	Menu       menu
 	Setting    setting
 	User       user
@@ -40,6 +42,7 @@ func (q *Query) clone(db *gorm.DB) *Query {
 	return &Query{
 		db:         db,
 		CasbinRule: q.CasbinRule.clone(db),
+		DebugPerf:  q.DebugPerf.clone(db),
 		Menu:       q.Menu.clone(db),
 		Setting:    q.Setting.clone(db),
 		User:       q.User.clone(db),
@@ -58,6 +61,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 	return &Query{
 		db:         db,
 		CasbinRule: q.CasbinRule.replaceDB(db),
+		DebugPerf:  q.DebugPerf.replaceDB(db),
 		Menu:       q.Menu.replaceDB(db),
 		Setting:    q.Setting.replaceDB(db),
 		User:       q.User.replaceDB(db),
@@ -66,6 +70,7 @@ func (q *Query) ReplaceDB(db *gorm.DB) *Query {
 
 type queryCtx struct {
 	CasbinRule *casbinRuleDo
+	DebugPerf  *debugPerfDo
 	Menu       *menuDo
 	Setting    *settingDo
 	User       *userDo
@@ -74,6 +79,7 @@ type queryCtx struct {
 func (q *Query) WithContext(ctx context.Context) *queryCtx {
 	return &queryCtx{
 		CasbinRule: q.CasbinRule.WithContext(ctx),
+		DebugPerf:  q.DebugPerf.WithContext(ctx),
 		Menu:       q.Menu.WithContext(ctx),
 		Setting:    q.Setting.WithContext(ctx),
 		User:       q.User.WithContext(ctx),
