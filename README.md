@@ -141,7 +141,7 @@ API 元信息管理
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
 - [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
-- [ ] 压测分析(写一个post请求,参数校验,跨域,trace链路,连表查询数据库,查询es,更新es,更新mysql,for将mysql和es参数合并,写入kafka,埋点,日志写入;同时消费kafka,查询mysql 查es 更新es 和mysql)
+- [ ] 压测分析(写一个post请求,参数校验,跨域,trace链路,连表查询数据库,查询es,更新es,更新mysql,for将mysql和es参数合并,写入kafka,埋点,日志写入;同时消费kafka,查询mysql 查es 更新es和mysql)
 
 
 ## 业务
