@@ -21,7 +21,6 @@ func (h *OperationRecordReportES) Do(ctx context.Context, msg *sarama.ConsumerMe
 	_ = json.Unmarshal(msg.Value, &data)
 	err = repoUsecase.repo.ESInsertDoc(ctx, consts.ESIndexOperationRecord, data)
 	if err != nil {
-		fmt.Println(err.Error())
 		metric.Count.With(fmt.Sprintf("consumer_%s_to_es_error", msg.Topic)).Inc()
 		return err
 	}

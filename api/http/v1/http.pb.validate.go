@@ -160,7 +160,16 @@ func (m *DebugPerfRequest) validate(all bool) error {
 
 	var errors []error
 
-	// no validation rules for Text
+	if utf8.RuneCountInString(m.GetText()) < 6 {
+		err := DebugPerfRequestValidationError{
+			field:  "Text",
+			reason: "value length must be at least 6 runes",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return DebugPerfRequestMultiError(errors)

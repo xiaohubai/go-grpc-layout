@@ -43,17 +43,17 @@ func Operation() gin.HandlerFunc {
 			_ = json.Unmarshal(writer.body.Bytes(), &respbody)
 			_ = json.Unmarshal(reqBody, &reqsBody)
 			record := map[string]interface{}{
-				"uid":      uid,
-				"dateTime": time.Now().Local().Format(time.DateTime),
-				"ip":       c.ClientIP(),
-				"method":   c.Request.Method,
-				"path":     c.Request.RequestURI,
-				"agent":    c.Request.UserAgent(),
-				"status":   int32(c.Writer.Status()),
-				"latency":  time.Since(start).String(),
-				"reqBody":  reqsBody,
-				"respBody": respbody,
-				"traceID":  tracing.TraceID(c.Request.Context()),
+				"uid":       uid,
+				"date_time": time.Now().Local().Format(time.DateTime),
+				"ip":        c.ClientIP(),
+				"method":    c.Request.Method,
+				"path":      c.Request.RequestURI,
+				"agent":     c.Request.UserAgent(),
+				"status":    int32(c.Writer.Status()),
+				"latency":   time.Since(start).String(),
+				"req_body":  reqsBody,
+				"resp_body": respbody,
+				"trace_id":  tracing.TraceID(c.Request.Context()),
 			}
 			producer, err := kafka.NewProducer(consts.KafkaTopicOperationRecord)
 			if err != nil {

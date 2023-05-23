@@ -70,6 +70,7 @@ type MysqlInterface interface {
 	AddDebugPerf(context.Context, *model.DebugPerf) error
 	UpdateDebugPerf(context.Context, *model.DebugPerf) error
 	DeleteDebugPerf(context.Context, *model.DebugPerf) error
+	TransactionDebugPerf(context.Context, *model.DebugPerf) error
 }
 
 type RedisInterface interface {

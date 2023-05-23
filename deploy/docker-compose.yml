@@ -119,6 +119,7 @@ services:
       - ALLOW_ANONYMOUS_LOGIN=yes
 
   #### kafka ####
+  # kafaka 不停重启,要考虑权限问题和挂载的kafka/data要删除
   kafka:
     image: bitnami/kafka:3.0.2
     container_name: kafka
@@ -152,13 +153,14 @@ services:
       - TZ=Asia/Shanghai
 
   #### elasticsearch ####
-  # 不停重启，数据卷的data目录权限应root，777权限
+  # 不停重启，数据卷的data和ik目录权限应root，777权限
   # 增加安全认证：在配置文件挂在或者容器内的elasticsearch.yml添加：
   # xpack.security.enabled: true
   # xpack.license.self_generated.type: basic
   # xpack.security.transport.ssl.enabled: true
   # 设置密码:docker exec -it elasticsearch bash
   # 在bin/elasticsearch-setup-passwords interactive 回车输入y，填写密码，重启容器
+  # 用户名elastic;密码是你设置的
   elasticsearch:
     image: elasticsearch:7.17.0
     container_name: elasticsearch
@@ -169,6 +171,7 @@ services:
     volumes:
       - /usr/local/volumes/elasticsearch/data:/usr/share/elasticsearch/data
       - /usr/local/volumes/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - /usr/local/volumes/elasticsearch/plugins/:/usr/share/elasticsearch/plugins
     environment:
       - TZ=Asia/Shanghai
       - discovery.type=single-node
