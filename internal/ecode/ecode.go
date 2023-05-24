@@ -31,6 +31,7 @@ const (
 	TokenValidateFailed     = 4026 // token解析失败
 	UpdatePasswordFailed    = 4027 // 更新用户密码失败
 	RateLimitAllowErrFailed = 4028 // 请求频率限制接口报错
+	DebugPerfFailed         = 4029 // 性能测试失败
 )
 
 var Msg = map[int]string{
@@ -64,4 +65,5 @@ var Msg = map[int]string{
 	TokenValidateFailed:     "token解析失败",
 	UpdatePasswordFailed:    "更新用户密码失败",
 	RateLimitAllowErrFailed: "请求频率限制接口报错",
+	DebugPerfFailed:         "性能测试失败",
 }

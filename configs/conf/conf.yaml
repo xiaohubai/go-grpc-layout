@@ -37,7 +37,7 @@ trace:
 consul:
   host: 172.21.0.2:8500
   scheme: http
-  healthCheck: false
+  healthCheck: true
   token: "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402"
   kv:
     dictPath: dev/dict.json

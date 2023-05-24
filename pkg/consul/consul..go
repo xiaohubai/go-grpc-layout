@@ -53,10 +53,10 @@ func NewRegistry(cul *conf.Consul) registry.Registrar {
 	return r
 }
 
-func NewDiscovery(cul *conf.Consul) (*grpc.ClientConn, error) {
+func NewDiscovery(cul *conf.Consul, endpoint string) (*grpc.ClientConn, error) {
 	cli := NewConsulClient(cul.Host, cul.Token)
 	r := consul.New(cli, consul.WithHealthCheck(cul.HealthCheck))
-	return ggrpc.DialInsecure(context.Background(), ggrpc.WithEndpoint(cul.Discovery.GoGrpcLayout), ggrpc.WithDiscovery(r))
+	return ggrpc.DialInsecure(context.Background(), ggrpc.WithEndpoint(endpoint), ggrpc.WithDiscovery(r))
 }
 
 // GetConsulKV

@@ -15,7 +15,6 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/kafka"
 	"github.com/xiaohubai/go-grpc-layout/pkg/metric"
-	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
 	"github.com/xiaohubai/go-grpc-layout/pkg/utils"
 )
 
@@ -53,7 +52,6 @@ func Operation() gin.HandlerFunc {
 				"latency":   time.Since(start).String(),
 				"req_body":  reqsBody,
 				"resp_body": respbody,
-				"trace_id":  tracing.TraceID(c.Request.Context()),
 			}
 			producer, err := kafka.NewProducer(consts.KafkaTopicOperationRecord)
 			if err != nil {

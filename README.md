@@ -54,20 +54,29 @@
 ```
 
 # 主要功能
-- gin框架（github.com/gin-gonic/gin）
-- kratos微服务框架 (github.com/go-kratos/kratos)
-- jwt认证（github.com/golang-jwt/jwt）
-- casbin鉴权（github.com/casbin/casbin/v2）
-- gorm数据库组件及gentool代码生成（gorm.io/gorm,gorm.io/gen）
-- viper实时解析检测配置文件（github.com/spf13/viper）
-- swagger 接口文档生成 （github.com/swaggo/swag）
-- redis组件 （github.com/go-redis/redis）
-- zap日志定制化 （go.uber.org/zap）
-- validate参数校验（github.com/envoyproxy/protoc-gen-validate/validate）
-- jaeger全链路监控 opentelemetry+jaeger（go.opentelemetry.io/otel）
-- prometheus埋点 （github.com/prometheus/client_golang）
-- 分布式接口限流 （github.com/go-redis/redis_rate/v9）
-- consul服务注册/发现，远程配置文件 (github.com/hashicorp/consul)
+- http（github.com/gin-gonic/gin）
+- grpc (github.com/go-kratos/kratos)
+- mysql (gorm.io/gorm,gorm.io/gen)
+- redis (github.com/redis/go-redis/v9)
+- kafka (github.com/Shopify/sarama)
+- elasticsearch (github.com/elastic/go-elasticsearch/v8)
+- OpenAPI Swagger (github.com/swaggo/swag)
+- 跨域 (github.com/xiaohubai/go-grpc-layout/pkg/middleware/cors.go)
+- 统一错误码 (github.com/xiaohubai/go-grpc-layout/internal/ecode)
+- 统一返回格式 (github.com/xiaohubai/go-grpc-layout/pkg/utils/response)
+- 业务异常处理 (panic,组件产生错误->上传jaeger/日志记录->邮件告警)
+- 认证 (github.com/golang-jwt/jwt)
+- 鉴权 (github.com/casbin/casbin/v2)
+- 埋点  (github.com/prometheus/client_golang)
+- 限流 （github.com/go-redis/redis_rate/v10）
+- 日志 （go.uber.org/zap,gopkg.in/natefinch/lumberjack.v2）
+- 参数校验（github.com/envoyproxy/protoc-gen-validate/validate）
+- 全链路监控 (go.opentelemetry.io/otel)
+- 服务注册/发现 (github.com/hashicorp/consul)
+- 远程配置文件 (github.com/spf13/viper,github.com/hashicorp/consul)
+- 邮件发送 (github.com/jordan-wright/email)
+- 系统崩溃捕获 (mosn.io/holmes)
+- 实时性能分析火焰图 (github.com/grafana/pyroscope)
 
 # 组件访问接口
 ``` go
@@ -124,24 +133,25 @@ API 元信息管理
 - [x] 跨域
 - [x] 部署(快速脚本构建,运行)
 - [x] 读取本地或远程配置文件及监听
-- [x] 捕获panic和运行pkg包中error发送邮件告警,日志记录,jaeger上报
 - [x] gorm的gen自动化生成
 - [x] 服务注册和发现
 - [x] jenkins流水线
-- [x] 埋点metric(使用prometheus和上报每一接口的请求用于记录QPS,P99等指标)
-- [x] trace使用jaeger(基于opentelemetry标准)
-- [x] 日志使用zap
+- [x] 埋点Metric
+- [x] trace(使用jaeger基于opentelemetry标准)
+- [x] 日志(zap)
 - [x] grafana看板
+- [x] 业务异常捕获(panic和运行pkg包中error发送邮件告警,日志记录,jaeger上报)
 - [x] pyroscope实时性能分析火焰图(pull的方式)
 - [x] holmes现场异常自动采样到文件,并发送邮件告警(文件附件)
-- [x] 捕获用户请求和结果到kafka,
-- [x] kafka->es
+- [x] redis分布式锁
+- [x] kafka生产者
+- [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
+- [x] es数据存取
 - [ ] openAPI和swagger
 - [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
-- [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
-- [ ] 压测分析(写一个post请求,参数校验,跨域,trace链路,连表查询数据库,查询es,更新es,更新mysql,for将mysql和es参数合并,写入kafka,埋点,日志写入;同时消费kafka,查询mysql 查es 更新es和mysql)
+
 
 
 ## 业务

@@ -14,7 +14,7 @@ func main() {
 	if err != nil {
 		panic("load config failed")
 	}
-	conn, err := consul.NewDiscovery(cc.Consul)
+	conn, err := consul.NewDiscovery(cc.Consul, cc.Consul.Discovery.GoGrpcLayout)
 	if err != nil {
 		panic(err)
 	}

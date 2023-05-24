@@ -1,0 +1,43 @@
+//operation_record
+{
+	"settings": {
+		"number_of_shards": "1",
+		"number_of_replicas": "0"
+	},
+	"mappings": {
+		"properties": {
+			"uid": {
+				"type": "keyword"
+			},
+			"date_time": {
+				"type": "date",
+				"format": "yyyy-MM-dd HH:mm:ss"
+			},
+			"ip": {
+				"type": "keyword"
+			},
+			"method": {
+				"type": "keyword"
+			},
+			"path": {
+				"type": "keyword"
+			},
+			"agent": {
+				"type": "text",
+				"analyzer": "ik_max_word"
+			},
+			"status": {
+				"type": "keyword"
+			},
+			"latency": {
+				"type": "keyword"
+			},
+			"req_body": {
+				"type": "object"
+			},
+			"resp_body": {
+				"type": "object"
+			}
+		}
+	}
+}

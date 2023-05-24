@@ -11,23 +11,30 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 )
 
-// DebugPerf 性能测试(查询 user表->debug_perf插入数据->debug_perf更新数据->查询debug_perf->删除debu_perf数据)
+// DebugPerf 性能测试
 func (uc *HttpUsecase) DebugPerf(c *gin.Context, req *v1.DebugPerfRequest) (*v1.DebugPerfResponse, error) {
 	claims, ok := c.Get("claims")
 	if !ok {
 		return nil, errors.New("token解析失败")
-	} 
-	userInfo := claims.(*jwt.Claims)
-
-	err := uc.repo.TransactionDebugPerf(c.Request.Context(), &model.DebugPerf{
-		UID:        userInfo.UID,
-		Text:       req.Text,
-		CreateUser: userInfo.UserName,
-		UpdateUser: userInfo.UserName,
-	})
-	if err != nil {
-		return nil, err
 	}
+	userInfo := claims.(*jwt.Claims)
+	/* 	lockKey := fmt.Sprintf("%s:lock:%s", consts.Conf.Global.Env, "debugPerf")
+	   	l := redis.NewRedisLock(consts.RDB, lockKey, "debugPerf", 3*time.Second)
+	   	if ok := l.Lock(c.Request.Context()); !ok {
+	   		return nil, errors.New("资源已被持有,稍后再试")
+	   	}
+	   	defer func() {
+	   		l.UnLock(c.Request.Context(), lockKey, "debugPerf")
+	   	}()
+	   	err := uc.repo.TransactionDebugPerf(c.Request.Context(), &model.DebugPerf{
+	   		UID:        userInfo.UID,
+	   		Text:       req.Text,
+	   		CreateUser: userInfo.UserName,
+	   		UpdateUser: userInfo.UserName,
+	   	})
+	   	if err != nil {
+	   		return nil, err
+	   	} */
 	res, err := uc.repo.FirstDebugPerf(c.Request.Context(), &model.DebugPerf{
 		UID: userInfo.UID,
 	})

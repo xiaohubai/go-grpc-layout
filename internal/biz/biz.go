@@ -41,9 +41,8 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 }
 
 type Repo interface {
-	RedisInterface
-	ESInterface
 	MysqlInterface
+	ESInterface
 }
 
 type MysqlInterface interface {
@@ -71,10 +70,6 @@ type MysqlInterface interface {
 	UpdateDebugPerf(context.Context, *model.DebugPerf) error
 	DeleteDebugPerf(context.Context, *model.DebugPerf) error
 	TransactionDebugPerf(context.Context, *model.DebugPerf) error
-}
-
-type RedisInterface interface {
-	RedisGet(context.Context, *model.CasbinRule) error
 }
 
 type ESInterface interface {

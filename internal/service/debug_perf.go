@@ -17,10 +17,10 @@ func (s *HttpService) DebugPerf(c *gin.Context) {
 		response.Fail(c, ecode.ParamsFailed, err)
 		return
 	}
-	data, err := s.uc.DebugPerf(c, req)
+	res, err := s.uc.DebugPerf(c, req)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, data)
+		c.JSON(http.StatusInternalServerError, err)
 		return
 	}
-	c.JSON(http.StatusOK, data)
+	response.Success(c, res)
 }

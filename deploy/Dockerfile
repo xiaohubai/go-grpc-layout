@@ -1,7 +1,7 @@
 FROM golang:1.20.3 AS builder
 
-WORKDIR /src
-COPY . /src
+WORKDIR /app
+COPY . /app
 
 RUN export GOPROXY=https://goproxy.io && make build
 
@@ -16,8 +16,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-COPY --from=builder /src/server /app
-COPY --from=builder /src/rbac_model.conf /app
+COPY --from=builder /app/server /app
+COPY --from=builder /app/rbac_model.conf /app
 
 EXPOSE 8000
 EXPOSE 9000
