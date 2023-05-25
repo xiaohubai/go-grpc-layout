@@ -10,7 +10,7 @@
 │   ├── grpc                        // grpc
 │   └── http                        // http
 ├── cmd
-│   ├── wire.go                                                         // 定义wire
+│   ├── wire.go                     // 定义wire
 │   ├── cmd.go                      // app实例
 │   └── wire_gen.go                 // 依赖注入
 ├── internal                        // 内部逻辑
