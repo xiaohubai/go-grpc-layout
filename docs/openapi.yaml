@@ -1,0 +1,29 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: go-grpc-layout
+    description: Description from annotation
+    contact:
+        name: Contact Name
+        url: https://github.com/xiaohubai/go-grpc-layout
+    license:
+        name: MIT License
+        url: https://github.com/xiaohubai/go-grpc-layout/LICENSE
+    version: v1.0.0
+servers:
+    - url: http://172.21.0.2:8000
+      description: 测试环境
+    - url: http://172.21.0.2:8000
+      description: 线上环境
+paths: {}
+components:
+    schemas: {}
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+security:
+    - bearerAuth: []

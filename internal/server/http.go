@@ -1,16 +1,19 @@
 package server
 
 import (
+	hhttp "net/http"
+
 	"github.com/gin-contrib/pprof"
 	"github.com/gin-gonic/gin"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/go-kratos/kratos/v2/transport/http"
+
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/spf13/viper"
-	swaggerfiles "github.com/swaggo/files"
+	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
-
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
+
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 	m "github.com/xiaohubai/go-grpc-layout/pkg/middleware"
@@ -39,9 +42,10 @@ func routers(s *service.HttpService) *gin.Engine {
 	router := gin.New()
 	router.Use(m.Recovery(), m.Cors(consts.Conf.Cors), m.Tracing(consts.Conf.Global), m.Metrics(consts.Conf.Global))
 	pprof.Register(router)
+	router.StaticFS("/docs", hhttp.Dir("./docs"))
 	r := router.Group("")
 	{
-		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 		r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 	}
 	r1 := router.Group("")

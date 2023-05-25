@@ -9,28 +9,79 @@ option java_package = "api.grpc.v1";
 import "openapi/v3/annotations.proto";
 import "validate/validate.proto";
 
+// 定义参考：https://github.com/google/gnostic/blob/main/openapiv3/OpenAPIv3.proto
+// demo参考：https://github.com/google/gnostic/blob/main/cmd/protoc-gen-openapi/examples/tests/openapiv3annotations/message.proto
+// spec: https://swagger.io/docs/specification/basic-structure/
 option (openapi.v3.document) = {
-	info: {
-	  title: "Grpc";
-	  description: "所有grpc服务";
-	  version: "1.0";
-	}
-  };
+  info: {
+    title: "go-grpc-layout";
+    version: "v1.0.0";
+    description: "Description from annotation";
+    contact: {
+      name: "Contact Name";
+      url: "https://github.com/xiaohubai/go-grpc-layout";
+      email: "xiaohubai@outlook.com";
+    }
+    license: {
+      name: "MIT License";
+      url: "https://github.com/xiaohubai/go-grpc-layout/LICENSE";
+    }
+  }
+  servers: [
+    {
+      url: "http://172.21.0.2:8000";
+      description: "测试环境";
+    },
+    {
+      url: "http://172.21.0.2:8000";
+      description: "线上环境";
+    }
+  ]
+  components: {
+    security_schemes: {
+      additional_properties: [
+        {
+          name: "bearerAuth";
+          value: {
+            security_scheme: {
+              type: "http";
+              scheme: "bearer";
+              bearer_format: "JWT";
+            }
+          }
+        }
+      ]
+    }
+  }
+  security: [
+    {
+      additional_properties: [
+        {
+          name: "bearerAuth";
+          value: {
+            value: []
+          }
+        }
+      ]
+    }
+  ]
+};
+
 
 // Grpc服务
 service Grpc {
-	//获取用户信息
-	rpc GetUserInfo (UserInfoRequest) returns (UserInfoResponse);
+  //获取用户信息
+  rpc GetUserInfo(UserInfoRequest) returns (UserInfoResponse);
 }
 
 //获取用户信息请求结构体
 message UserInfoRequest {
-	//用户名
-	string userName = 1 [(validate.rules).string = {min_len: 3, max_len: 11}];
+  //用户名
+  string userName = 1 [ (validate.rules).string = {min_len : 3, max_len : 11} ];
 }
 
 //获取用户信息返回结构体
 message UserInfoResponse {
-	//返回码
-	int32 code = 1;
+  //返回码
+  int32 code = 1;
 }

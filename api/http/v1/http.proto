@@ -3,6 +3,7 @@ syntax = "proto3";
 package api.http.v1;
 
 import "validate/validate.proto";
+import "openapi/v3/annotations.proto";
 
 option go_package = "github.com/xiaohubai/go-grpc-layout/api/http/v1;v1";
 option java_multiple_files = true;
