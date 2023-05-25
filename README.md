@@ -1,71 +1,71 @@
-# 目录结构
+## 目录结构
 - gin 作为前端最直接的交互用于处理数据,图片,视频,文件请求等特殊请求处理.
 - grpc 作为服务端为别人提供服务;作为客户端请求别人的微服务使用.
 
 ## 单仓
 ``` go
 .
-├── api								// 定义proto,生成相关代码
-│   ├── any							// 通用
-│   ├── grpc						// grpc
-│   └── http						// http
+├── api                             // 定义proto,生成相关代码
+│   ├── any                         // 通用
+│   ├── grpc                        // grpc
+│   └── http                        // http
 ├── cmd
-│   ├── wire.go						// 定义wire
-│   ├── cmd.go						// app实例
-│   └── wire_gen.go					// 依赖注入
-├── internal						// 内部逻辑
-│   ├── biz							// 业务组装层和定义repo接口
-│   ├── consts						// 全局或常量定义,避免魔数
-│   ├── ecode						// 业务错误码
+│   ├── wire.go                                                         // 定义wire
+│   ├── cmd.go                      // app实例
+│   └── wire_gen.go                 // 依赖注入
+├── internal                        // 内部逻辑
+│   ├── biz                         // 业务组装层和定义repo接口
+│   ├── consts                      // 全局或常量定义,避免魔数
+│   ├── ecode                       // 业务错误码
 │   ├── server
-│   │   ├── grpc.go					// grpc服务
-│   │   ├── server.go				// 依赖注入
-│   │   └── http.go					// http服务
-│   ├── service						// 请求入口(接收/校验输入参数,返回结果)
-│   └── data						// 数据访问层
-│       ├── gen						// gorm gen工具生成代码
-│       ├── model					// gorm gen工具生成表结构
-│       ├── data.go					// mysql redis es的实例连接
-│       └── user.go					// 用户相关的数据操作
-├── pkg								// 公共组件
-│   ├── consul						// 服务注册/发现,远程配置
-│   ├── email						// 邮件组件
-│   ├── holmes						// 系统崩溃捕获
-│   ├── jwt							// 认证组件
-│   ├── kafka						// 消息队列
-│   ├── metric						// 埋点组件
-│   ├── middleware					// 中间件
-│   │   ├── casbin.go				// 鉴权
-│   │   ├── cors.go					// 跨域
-│   │   ├── jwt.go					// 认证
-│   │   ├── limiter.go				// 限流
-│   │   ├── metrics.go				// 埋点
-│   │   ├── recovery.go				// panic处理
-│   │   ├── tracing.go				// 全链路跟踪
-│   │   └── operation.go			// 操作记录
-│   ├── tracing						// 全链路组件
-│   ├── utils						// 工具集
-│   ├── viper						// 配置解析
-│   ├── zap							// 日志组件
-│   └── redis						// redis组件
-├── third_party						// 第三方proto
+│   │   ├── grpc.go                 // grpc服务
+│   │   ├── server.go               // 依赖注入
+│   │   └── http.go                 // http服务
+│   ├── service                     // 请求入口(接收/校验输入参数,返回结果)
+│   └── data                        // 数据访问层
+│       ├── gen                     // gorm gen工具生成代码
+│       ├── model                   // gorm gen工具生成表结构
+│       ├── data.go                 // mysql redis es的实例连接
+│       └── user.go                 // 用户相关的数据操作
+├── pkg                             // 公共组件
+│   ├── consul                      // 服务注册/发现,远程配置
+│   ├── email                       // 邮件组件
+│   ├── holmes                      // 系统崩溃捕获
+│   ├── jwt                         // 认证组件
+│   ├── kafka                       // 消息队列
+│   ├── metric                      // 埋点组件
+│   ├── middleware                  // 中间件
+│   │   ├── casbin.go               // 鉴权
+│   │   ├── cors.go                 // 跨域
+│   │   ├── jwt.go                  // 认证
+│   │   ├── limiter.go              // 限流
+│   │   ├── metrics.go              // 埋点
+│   │   ├── recovery.go             // panic处理
+│   │   ├── tracing.go              // 全链路跟踪
+│   │   └── operation.go            // 操作记录
+│   ├── tracing                     // 全链路组件
+│   ├── utils                       // 工具集
+│   ├── viper                       // 配置解析
+│   ├── zap                         // 日志组件
+│   └── redis                       // redis组件
+├── third_party                     // 第三方proto
 │   ├── errors
 │   ├── google
 │   ├── validate
 │   └── openapi
-├── configs							// 配置相关
-├── deploy							// 部署相关
-├── docs							// 文档
-│   ├── wiki						// 开发文档
-│   └── openapi						// OpenAPI3.0在线文档
-├── scripts							// 脚本
-├── logs							// 日志
-├── rbac_model.conf					// 鉴权配置
+├── configs                         // 配置相关
+├── deploy                          // 部署相关
+├── docs                            // 文档
+│   ├── wiki                        // 开发文档
+│   └── openapi                     // OpenAPI3.0在线文档
+├── scripts                         // 脚本
+├── logs                            // 日志
+├── rbac_model.conf                 // 鉴权配置
 ├── go.mod
 ├── go.sum
-├── main.go							// 程序入口
-├── Makefile						// make命令
-├── LICENSE							// 版权
+├── main.go                         // 程序入口
+├── Makefile                        // make命令
+├── LICENSE                         // 版权
 └── README.md
 ```
 ## 大仓(根据单仓,下移某些模块)
@@ -90,8 +90,20 @@
         ├──server
         └──service
 ```
+## 组件访问接口
+``` go
+- http          172.21.0.2:8000
+- grpc          172.21.0.2:9000
+- jaeger        172.21.0.2:16686
+- consul:       172.21.0.2:8500
+- prometheus    172.21.0.2:9090
+- node-exporter 172.21.0.2:9100
+- pyroscope     172.21.0.2:4040
+- grafana       172.21.0.2:3000 (admin admin)
+- openAPI       172.21.0.2:8000/docs
+```
 
-# 主要功能
+## 主要功能
 - http（github.com/gin-gonic/gin）
 - grpc (github.com/go-kratos/kratos)
 - mysql (gorm.io/gorm,gorm.io/gen)
@@ -116,19 +128,7 @@
 - 系统崩溃捕获 (mosn.io/holmes)
 - 实时性能分析火焰图 (github.com/grafana/pyroscope)
 
-# 组件访问接口
-``` go
-- http          172.21.0.2:8000
-- grpc          172.21.0.2:9000
-- jaeger        172.21.0.2:16686
-- consul:       172.21.0.2:8500
-- prometheus    172.21.0.2:9090
-- node-exporter 172.21.0.2:9100
-- pyroscope     172.21.0.2:4040
-- grafana       172.21.0.2:3000 (admin admin)
-- openAPI       172.21.0.2:8000/docs
-```
-### 网关
+## 网关(先记录一下,待开发)
 ``` go
 服务管理
     服务发现 服务注册 健康检查
@@ -189,8 +189,6 @@ API 元信息管理
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
 - [ ] grafana看板导入dashboard
-
-
 
 ## 业务
 - [x] 字典序
