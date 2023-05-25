@@ -6,7 +6,7 @@ import (
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 
-	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
+	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
@@ -46,7 +46,7 @@ type Repo interface {
 }
 
 type MysqlInterface interface {
-	ListAllUser(context.Context, *model.User, *v1.PageRequest) ([]*model.User, int64, error)
+	ListAllUser(context.Context, *model.User, *pbAny.PageRequest) ([]*model.User, int64, error)
 	FirstUser(context.Context, *model.User) (*model.User, error)
 	UpdateUserInfo(context.Context, *model.User) error
 	UpdatePassword(context.Context, *model.User) error
@@ -60,7 +60,7 @@ type MysqlInterface interface {
 	ListAllMenu(context.Context) ([]*model.Menu, error)
 	ListRoleMenu(context.Context, *model.Menu) ([]*model.Menu, error)
 
-	ListRoleCasbin(context.Context, *model.CasbinRule, *v1.PageRequest) ([]*model.CasbinRule, int64, error)
+	ListRoleCasbin(context.Context, *model.CasbinRule, *pbAny.PageRequest) ([]*model.CasbinRule, int64, error)
 	AddRoleCasbin(context.Context, *model.CasbinRule) error
 	UpdateRoleCasbin(context.Context, *model.CasbinRule) error
 	DeleteRoleCasbin(context.Context, *model.CasbinRule) error

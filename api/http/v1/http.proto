@@ -3,15 +3,39 @@ syntax = "proto3";
 package api.http.v1;
 
 import "validate/validate.proto";
-import "openapi/v3/annotations.proto";
+import "google/api/annotations.proto";
 
 option go_package = "github.com/xiaohubai/go-grpc-layout/api/http/v1;v1";
 option java_multiple_files = true;
 option java_package = "api.http.v1";
 
-message PageRequest {
-  int32 page = 1;
-  int32 pageSize = 2;
+service HttpService {
+  //性能测试
+  rpc DebugPerf(DebugPerfRequest) returns (DebugPerfResponse) {
+    option (google.api.http) = {
+      post : "/v1/debug/perf"
+      body : "*"
+    };
+  }
+  //登录
+  rpc Login(LoginRequest) returns (LoginResponse) {
+    option (google.api.http) = {
+      post : "/v1/login"
+      body : "*"
+    };
+  }
+  //获取验证码
+  rpc Captcha(CaptchaRequest) returns (CaptchaResponse) {
+    option (google.api.http) = {
+      get : "/v1/captcha"
+    };
+  }
+  //设置
+  rpc Setting(SettingRequest) returns (SettingResponse) {
+    option (google.api.http) = {
+      get : "/v1/get/setting"
+    };
+  }
 }
 
 message DebugPerfRequest {
@@ -29,11 +53,14 @@ message DebugPerfResponse {
 }
 
 message LoginRequest {
-  string username = 1
-      [ (validate.rules).string = {min_len : 3, max_len : 11} ]; //用户名
-  string password = 2 [ (validate.rules).string.min_len = 6 ];   //密码
-  string captcha = 3 [ (validate.rules).string.len = 6 ];        //验证码
-  string captchaID = 4;                                          //校验ID
+  //用户名
+  string username = 1 [ (validate.rules).string = {min_len : 3, max_len : 11} ];
+  //密码
+  string password = 2 [ (validate.rules).string.min_len = 6 ];
+  //验证码
+  string captcha = 3 [ (validate.rules).string.len = 6 ];
+  //校验ID
+  string captchaID = 4;
 }
 
 message LoginResponse {
@@ -54,12 +81,15 @@ message LoginResponse {
   string refreshToken = 19;
 }
 
+message CaptchaRequest {}
+
 message CaptchaResponse {
   string captchaID = 1;
   string picPath = 2;
   int32 captchaLength = 3;
 }
 
+message MenuRequest {}
 message MenuResponse {
   string path = 1;
   string name = 2;

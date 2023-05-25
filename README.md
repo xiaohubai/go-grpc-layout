@@ -1,56 +1,94 @@
 # 目录结构
-- gin 作为前端最直接的交互用于处理数据,图片,视频,文件请求.
-- grpc 作为服务端为别人提供服务;作为客户端向别人的微服务请求.
+- gin 作为前端最直接的交互用于处理数据,图片,视频,文件请求等特殊请求处理.
+- grpc 作为服务端为别人提供服务;作为客户端请求别人的微服务使用.
 
 ## 单仓
 ``` go
-├── api                 // 定义proto,入参反参,参数校验
-│   ├── grpc            // 生成grpc相关代码
-│   └── http            // 生成http相关代码
-├── cmd                 // main入口和wire注入
-├── configs             // 配置相关,proto生成
-├── deploy              // 部署相关
-├── docs                // 文档
-├── internal            // 业务逻辑
-│   ├── biz             // 业务组装层和定义repo接口
-│   ├── consts          // 常量定义,避免魔数
-│   ├── data            // 数据访问层,实现biz的repo
-│   │    ├── model      // 数据库实体对象，以及输入与输出数据结构定义
-│   │    └── gen        // gorm代码生成
-│   ├── errors          // 业务错误码
-│   ├── server          // http和grpc实例的创建和配置
-│   └── service         // 接收/解析用户输入参数的入口
-├── logs                // 日志
-├── pkg                 // 公共组件
-│   └── utils           // 工具
-├── scripts             // 脚本
-└── third               // api依赖的第三方proto
+.
+├── api								// 定义proto,生成相关代码
+│   ├── any							// 通用
+│   ├── grpc						// grpc
+│   └── http						// http
+├── cmd
+│   ├── wire.go						// 定义wire
+│   ├── cmd.go						// app实例
+│   └── wire_gen.go					// 依赖注入
+├── internal						// 内部逻辑
+│   ├── biz							// 业务组装层和定义repo接口
+│   ├── consts						// 全局或常量定义,避免魔数
+│   ├── ecode						// 业务错误码
+│   ├── server
+│   │   ├── grpc.go					// grpc服务
+│   │   ├── server.go				// 依赖注入
+│   │   └── http.go					// http服务
+│   ├── service						// 请求入口(接收/校验输入参数,返回结果)
+│   └── data						// 数据访问层
+│       ├── gen						// gorm gen工具生成代码
+│       ├── model					// gorm gen工具生成表结构
+│       ├── data.go					// mysql redis es的实例连接
+│       └── user.go					// 用户相关的数据操作
+├── pkg								// 公共组件
+│   ├── consul						// 服务注册/发现,远程配置
+│   ├── email						// 邮件组件
+│   ├── holmes						// 系统崩溃捕获
+│   ├── jwt							// 认证组件
+│   ├── kafka						// 消息队列
+│   ├── metric						// 埋点组件
+│   ├── middleware					// 中间件
+│   │   ├── casbin.go				// 鉴权
+│   │   ├── cors.go					// 跨域
+│   │   ├── jwt.go					// 认证
+│   │   ├── limiter.go				// 限流
+│   │   ├── metrics.go				// 埋点
+│   │   ├── recovery.go				// panic处理
+│   │   ├── tracing.go				// 全链路跟踪
+│   │   └── operation.go			// 操作记录
+│   ├── tracing						// 全链路组件
+│   ├── utils						// 工具集
+│   ├── viper						// 配置解析
+│   ├── zap							// 日志组件
+│   └── redis						// redis组件
+├── third_party						// 第三方proto
+│   ├── errors
+│   ├── google
+│   ├── validate
+│   └── openapi
+├── configs							// 配置相关
+├── deploy							// 部署相关
+├── docs							// 文档
+│   ├── wiki						// 开发文档
+│   └── openapi						// OpenAPI3.0在线文档
+├── scripts							// 脚本
+├── logs							// 日志
+├── rbac_model.conf					// 鉴权配置
+├── go.mod
+├── go.sum
+├── main.go							// 程序入口
+├── Makefile						// make命令
+├── LICENSE							// 版权
+└── README.md
 ```
-## 大仓
+## 大仓(根据单仓,下移某些模块)
 ``` go
-├── api                 // 定义proto
-│   └── user            // 用户服务
-│       ├── grpc        // 生成grpc相关代码
-│       └── http        // 生成http相关代码
-├── cmd                 // main入口和wire注入
-├── configs             // 配置相关,proto生成
-├── deploy              // 部署相关
-├── docs                // 文档
-├── internal            // 业务逻辑
-│   └── user            // 用户服务
-│       ├── biz         // 业务组装层和定义repo接口
-│       ├── consts      // 常量定义,避免魔数
-│       ├── data        // 数据访问层,实现biz的repo
-│       │    ├── model  // 数据库实体对象，以及输入与输出数据结构定义
-│       │    └── gen    // gorm代码生成
-│       ├── errors      // 业务错误码
-│       ├── server      // http和grpc实例的创建和配置
-│       └── service     // 接收/解析用户输入参数的入口
-├── logs                // 日志
-├── pkg                 // 公共组件
-│   └── utils           // 工具
-├── scripts             // 脚本
-└── third               // api依赖的第三方proto
+.
+├── api
+│   └── user
+│       ├──any
+│       ├──grpc
+│       └──http
+├── cmd
+│   └── user
+├── configs
+│   └── user
+│       └──conf
+└── internal
+   └── user
+        ├──biz
+        ├──consts
+        ├──data
+        ├──ecode
+        ├──server
+        └──service
 ```
 
 # 主要功能
@@ -60,7 +98,7 @@
 - redis (github.com/redis/go-redis/v9)
 - kafka (github.com/Shopify/sarama)
 - elasticsearch (github.com/elastic/go-elasticsearch/v8)
-- OpenAPI Swagger (github.com/swaggo/swag)
+- OpenAPI3.0 Swagger (github.com/swaggo/swag,github.com/google/gnostic)
 - 跨域 (github.com/xiaohubai/go-grpc-layout/pkg/middleware/cors.go)
 - 统一错误码 (github.com/xiaohubai/go-grpc-layout/internal/ecode)
 - 统一返回格式 (github.com/xiaohubai/go-grpc-layout/pkg/utils/response)
@@ -88,9 +126,8 @@
 - node-exporter 172.21.0.2:9100
 - pyroscope     172.21.0.2:4040
 - grafana       172.21.0.2:3000 (admin admin)
+- openAPI       172.21.0.2:8000/docs
 ```
-## 设计图
-![](https://github.com/xiaohubai/go-grpc-layout/blob/master/docs/user-req-resp.png)
 ### 网关
 ``` go
 服务管理
@@ -151,7 +188,7 @@ API 元信息管理
 - [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
-- [ ] grafana看板导入dashboard 
+- [ ] grafana看板导入dashboard
 
 
 
@@ -166,6 +203,6 @@ API 元信息管理
 - [x] 下发token和验证
 
 ## 注意事项:
-- **servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
-- **gorm 更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
+- servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
+- gorm 更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
 - gorm统计 加上 delete_at  is null

@@ -18,7 +18,7 @@ func (uc *HttpUsecase) GetRoleCasbinList(c *gin.Context, req *v1.GetCasbinReques
 		V0: req.RoleIDs,
 		V1: req.Path,
 		V2: req.Method,
-	}, &v1.PageRequest{Page: req.Page, PageSize: req.PageSize})
+	}, &pbAny.PageRequest{Page: req.Page, PageSize: req.PageSize})
 	if err != nil {
 		return nil, err
 	}

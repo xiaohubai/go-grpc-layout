@@ -35,109 +35,6 @@ var (
 	_ = sort.Sort
 )
 
-// Validate checks the field values on PageRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
-// error encountered is returned, or nil if there are no violations.
-func (m *PageRequest) Validate() error {
-	return m.validate(false)
-}
-
-// ValidateAll checks the field values on PageRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in PageRequestMultiError, or
-// nil if none found.
-func (m *PageRequest) ValidateAll() error {
-	return m.validate(true)
-}
-
-func (m *PageRequest) validate(all bool) error {
-	if m == nil {
-		return nil
-	}
-
-	var errors []error
-
-	// no validation rules for Page
-
-	// no validation rules for PageSize
-
-	if len(errors) > 0 {
-		return PageRequestMultiError(errors)
-	}
-
-	return nil
-}
-
-// PageRequestMultiError is an error wrapping multiple validation errors
-// returned by PageRequest.ValidateAll() if the designated constraints aren't met.
-type PageRequestMultiError []error
-
-// Error returns a concatenation of all the error messages it wraps.
-func (m PageRequestMultiError) Error() string {
-	var msgs []string
-	for _, err := range m {
-		msgs = append(msgs, err.Error())
-	}
-	return strings.Join(msgs, "; ")
-}
-
-// AllErrors returns a list of validation violation errors.
-func (m PageRequestMultiError) AllErrors() []error { return m }
-
-// PageRequestValidationError is the validation error returned by
-// PageRequest.Validate if the designated constraints aren't met.
-type PageRequestValidationError struct {
-	field  string
-	reason string
-	cause  error
-	key    bool
-}
-
-// Field function returns field value.
-func (e PageRequestValidationError) Field() string { return e.field }
-
-// Reason function returns reason value.
-func (e PageRequestValidationError) Reason() string { return e.reason }
-
-// Cause function returns cause value.
-func (e PageRequestValidationError) Cause() error { return e.cause }
-
-// Key function returns key value.
-func (e PageRequestValidationError) Key() bool { return e.key }
-
-// ErrorName returns error name.
-func (e PageRequestValidationError) ErrorName() string { return "PageRequestValidationError" }
-
-// Error satisfies the builtin error interface
-func (e PageRequestValidationError) Error() string {
-	cause := ""
-	if e.cause != nil {
-		cause = fmt.Sprintf(" | caused by: %v", e.cause)
-	}
-
-	key := ""
-	if e.key {
-		key = "key for "
-	}
-
-	return fmt.Sprintf(
-		"invalid %sPageRequest.%s: %s%s",
-		key,
-		e.field,
-		e.reason,
-		cause)
-}
-
-var _ error = PageRequestValidationError{}
-
-var _ interface {
-	Field() string
-	Reason() string
-	Key() bool
-	Cause() error
-	ErrorName() string
-} = PageRequestValidationError{}
-
 // Validate checks the field values on DebugPerfRequest with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -630,6 +527,106 @@ var _ interface {
 	ErrorName() string
 } = LoginResponseValidationError{}
 
+// Validate checks the field values on CaptchaRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *CaptchaRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on CaptchaRequest with the rules defined
+// in the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in CaptchaRequestMultiError,
+// or nil if none found.
+func (m *CaptchaRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *CaptchaRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return CaptchaRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// CaptchaRequestMultiError is an error wrapping multiple validation errors
+// returned by CaptchaRequest.ValidateAll() if the designated constraints
+// aren't met.
+type CaptchaRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m CaptchaRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m CaptchaRequestMultiError) AllErrors() []error { return m }
+
+// CaptchaRequestValidationError is the validation error returned by
+// CaptchaRequest.Validate if the designated constraints aren't met.
+type CaptchaRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e CaptchaRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e CaptchaRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e CaptchaRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e CaptchaRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e CaptchaRequestValidationError) ErrorName() string { return "CaptchaRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e CaptchaRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sCaptchaRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = CaptchaRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = CaptchaRequestValidationError{}
+
 // Validate checks the field values on CaptchaResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
 // first error encountered is returned, or nil if there are no violations.
@@ -735,6 +732,105 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = CaptchaResponseValidationError{}
+
+// Validate checks the field values on MenuRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *MenuRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on MenuRequest with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in MenuRequestMultiError, or
+// nil if none found.
+func (m *MenuRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *MenuRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	if len(errors) > 0 {
+		return MenuRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+// MenuRequestMultiError is an error wrapping multiple validation errors
+// returned by MenuRequest.ValidateAll() if the designated constraints aren't met.
+type MenuRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m MenuRequestMultiError) Error() string {
+	var msgs []string
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m MenuRequestMultiError) AllErrors() []error { return m }
+
+// MenuRequestValidationError is the validation error returned by
+// MenuRequest.Validate if the designated constraints aren't met.
+type MenuRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e MenuRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e MenuRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e MenuRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e MenuRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e MenuRequestValidationError) ErrorName() string { return "MenuRequestValidationError" }
+
+// Error satisfies the builtin error interface
+func (e MenuRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sMenuRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = MenuRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = MenuRequestValidationError{}
 
 // Validate checks the field values on MenuResponse with the rules defined in
 // the proto definition for this message. If any rules are violated, the first

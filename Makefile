@@ -35,7 +35,7 @@ api:
  	       --go-http_out=paths=source_relative:./api \
  	       --go-grpc_out=paths=source_relative:./api \
 		   --validate_out=paths=source_relative,lang=go:./api \
-		   --openapi_out=fq_schema_naming=true,default_response=false:./docs\
+		   --openapi_out=fq_schema_naming=true,default_response=false:./docs/openapi \
 	       $(API_PROTO_FILES)
 
 	sh scripts/remove-omitempty.sh

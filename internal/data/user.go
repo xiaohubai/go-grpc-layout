@@ -3,11 +3,11 @@ package data
 import (
 	"context"
 
-	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
+	pbAny "github.com/xiaohubai/go-grpc-layout/api/any/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 )
 
-func (d *dataRepo) ListAllUser(ctx context.Context, u *model.User, p *v1.PageRequest) (users []*model.User, total int64, err error) {
+func (d *dataRepo) ListAllUser(ctx context.Context, u *model.User, p *pbAny.PageRequest) (users []*model.User, total int64, err error) {
 
 	return
 }

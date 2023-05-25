@@ -1,0 +1,234 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: go-grpc-layout
+    description: Description from annotation
+    contact:
+        name: Contact Name
+        url: https://github.com/xiaohubai/go-grpc-layout
+        email: xiaohubai@outlook.com
+    license:
+        name: MIT License
+        url: https://github.com/xiaohubai/go-grpc-layout/LICENSE
+    version: v1.0.0
+servers:
+    - url: http://172.21.0.2:8000
+      description: 测试环境
+    - url: http://172.21.0.2:8000
+      description: 线上环境
+paths:
+    /v1/captcha:
+        get:
+            tags:
+                - HttpService
+            description: 获取验证码
+            operationId: HttpService_Captcha
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.http.v1.CaptchaResponse'
+    /v1/debug/perf:
+        post:
+            tags:
+                - HttpService
+            description: 性能测试
+            operationId: HttpService_DebugPerf
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.http.v1.DebugPerfRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.http.v1.DebugPerfResponse'
+    /v1/get/setting:
+        get:
+            tags:
+                - HttpService
+            description: 设置
+            operationId: HttpService_Setting
+            parameters:
+                - name: lang
+                  in: query
+                  schema:
+                    type: string
+                - name: sideModeColor
+                  in: query
+                  schema:
+                    type: string
+                - name: collapse
+                  in: query
+                  schema:
+                    type: boolean
+                - name: breadcrumb
+                  in: query
+                  schema:
+                    type: boolean
+                - name: defaultRouter
+                  in: query
+                  schema:
+                    type: string
+                - name: activeTextColor
+                  in: query
+                  schema:
+                    type: string
+                - name: activeBackgroundColor
+                  in: query
+                  schema:
+                    type: string
+                - name: UID
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.http.v1.SettingResponse'
+    /v1/login:
+        post:
+            tags:
+                - HttpService
+            description: 登录
+            operationId: HttpService_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/api.http.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/api.http.v1.LoginResponse'
+components:
+    schemas:
+        api.http.v1.CaptchaResponse:
+            type: object
+            properties:
+                captchaID:
+                    type: string
+                picPath:
+                    type: string
+                captchaLength:
+                    type: integer
+                    format: int32
+        api.http.v1.DebugPerfRequest:
+            type: object
+            properties:
+                text:
+                    type: string
+        api.http.v1.DebugPerfResponse:
+            type: object
+            properties:
+                ID:
+                    type: integer
+                    format: int64
+                UID:
+                    type: string
+                userName:
+                    type: string
+                Motto:
+                    type: string
+                text:
+                    type: string
+                createTime:
+                    type: string
+                createUser:
+                    type: string
+        api.http.v1.LoginRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                    description: 用户名
+                password:
+                    type: string
+                    description: 密码
+                captcha:
+                    type: string
+                    description: 验证码
+                captchaID:
+                    type: string
+                    description: 校验ID
+        api.http.v1.LoginResponse:
+            type: object
+            properties:
+                ID:
+                    type: integer
+                    format: int64
+                UID:
+                    type: string
+                userName:
+                    type: string
+                nickName:
+                    type: string
+                birth:
+                    type: string
+                avatar:
+                    type: string
+                roleID:
+                    type: string
+                roleName:
+                    type: string
+                phone:
+                    type: string
+                wechat:
+                    type: string
+                email:
+                    type: string
+                state:
+                    type: integer
+                    format: int32
+                motto:
+                    type: string
+                token:
+                    type: string
+                refreshToken:
+                    type: string
+        api.http.v1.SettingResponse:
+            type: object
+            properties:
+                ID:
+                    type: integer
+                    format: int64
+                lang:
+                    type: string
+                sideModeColor:
+                    type: string
+                collapse:
+                    type: boolean
+                breadcrumb:
+                    type: boolean
+                defaultRouter:
+                    type: string
+                activeTextColor:
+                    type: string
+                activeBackgroundColor:
+                    type: string
+                UID:
+                    type: string
+    securitySchemes:
+        bearerAuth:
+            type: http
+            scheme: bearer
+            bearerFormat: JWT
+security:
+    - bearerAuth: []
+tags:
+    - name: HttpService

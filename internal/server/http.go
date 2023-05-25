@@ -42,7 +42,7 @@ func routers(s *service.HttpService) *gin.Engine {
 	router := gin.New()
 	router.Use(m.Recovery(), m.Cors(consts.Conf.Cors), m.Tracing(consts.Conf.Global), m.Metrics(consts.Conf.Global))
 	pprof.Register(router)
-	router.StaticFS("/docs", hhttp.Dir("./docs"))
+	router.StaticFS("/docs", hhttp.Dir("./docs/openapi"))
 	r := router.Group("")
 	{
 		r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))

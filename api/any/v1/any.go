@@ -1,5 +1,10 @@
 package v1
 
+type PageRequest struct {
+	Page     int32 `json:"page"`
+	PageSize int32 `json:"pageSize"`
+}
+
 type PageResponse struct {
 	Page     int32 `json:"page"`
 	PageSize int32 `json:"pageSize"`
