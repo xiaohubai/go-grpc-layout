@@ -5,33 +5,48 @@ import (
 	"time"
 
 	"github.com/redis/go-redis/v9"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
-type RedisLock struct {
-	rdb        *redis.Client
-	key        string
-	value      string
-	expiration time.Duration
+type Redis struct {
+	Client *redis.Client
 }
 
-func NewRedisLock(rdb *redis.Client, key, value string, expiration time.Duration) *RedisLock {
-	return &RedisLock{
-		rdb:        rdb,
-		key:        key,
-		value:      value,
-		expiration: expiration,
-	}
+func NewClient(c *conf.Data_Redis) (*Redis, error) {
+	client := redis.NewClient(&redis.Options{
+		Addr:     c.Addr,
+		Password: c.Password,
+		DB:       int(c.Db),
+	})
+	_, err := client.Ping(context.Background()).Result()
+	return &Redis{Client: client}, err
 }
 
-func (l *RedisLock) Lock(ctx context.Context) bool {
-	ok, err := l.rdb.SetNX(ctx, l.key, l.value, l.expiration).Result()
+func New(client *redis.Client) *Redis {
+	return &Redis{Client: client}
+}
+
+func (r *Redis) Get(ctx context.Context, key string) (string, error) {
+	return r.Client.Get(ctx, key).Result()
+}
+
+func (r *Redis) Set(ctx context.Context, key string, value string) error {
+	return r.Client.Set(ctx, key, value, 0).Err()
+}
+
+func (r *Redis) SetEx(ctx context.Context, key, value string, expiration time.Duration) error {
+	return r.Client.SetEx(ctx, key, value, expiration).Err()
+}
+
+func (r *Redis) Lock(ctx context.Context, key, value string, expiration time.Duration) bool {
+	ok, err := r.Client.SetNX(ctx, key, value, expiration).Result()
 	if err != nil || !ok {
 		return false
 	}
 	return true
 }
 
-func (l *RedisLock) UnLock(ctx context.Context, key, value string) bool {
+func (r *Redis) UnLock(ctx context.Context, key, value string) bool {
 	luaScript := `
         if redis.call("GET",KEYS[1]) == ARGV[1] then
             return redis.call("DEL",KEYS[1])
@@ -39,7 +54,7 @@ func (l *RedisLock) UnLock(ctx context.Context, key, value string) bool {
             return 0
         end
 	`
-	ret, err := l.rdb.Eval(ctx, luaScript, []string{l.key}, l.value).Result()
+	ret, err := r.Client.Eval(ctx, luaScript, []string{key}, value).Result()
 	if err != nil {
 		return false
 	}

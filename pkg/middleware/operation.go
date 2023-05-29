@@ -61,7 +61,7 @@ func Operation() gin.HandlerFunc {
 			return producer.Send(data)
 		})
 		if err := g.Wait(); err != nil {
-			email.SendWarn(c.Request.Context(), consts.EmailTitleKafkaProducer, err.Error())
+			email.SendWarn(c.Request.Context(), consts.Conf.Email, consts.EmailTitleKafkaProducer, err.Error())
 			metric.Count.With(fmt.Sprintf("producer_%s_error", consts.KafkaTopicOperationRecord)).Inc()
 		}
 	}

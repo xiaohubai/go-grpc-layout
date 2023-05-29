@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"flag"
+	"strings"
 
 	"github.com/fsnotify/fsnotify"
 	"github.com/spf13/viper"
@@ -52,8 +53,9 @@ func Load() (*conf.Conf, error) {
 
 func newFileConfig(filePath string, conf any) error {
 	v := viper.New()
+	confType := strings.TrimSpace(filePath[strings.LastIndex(filePath, ".")+1:])
 	v.SetConfigFile(filePath)
-	v.SetConfigType("yaml")
+	v.SetConfigType(confType)
 	if err := v.ReadInConfig(); err != nil {
 		return err
 	}
@@ -63,7 +65,7 @@ func newFileConfig(filePath string, conf any) error {
 	}
 	v.OnConfigChange(func(e fsnotify.Event) {
 		if err := v.Unmarshal(conf); err != nil {
-			email.SendWarn(context.Background(), consts.EmailTitleViperLocalWatch, err.Error())
+			email.SendWarn(context.Background(), consts.Conf.Email, consts.EmailTitleViperLocalWatch, err.Error())
 		}
 	})
 

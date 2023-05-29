@@ -16,12 +16,12 @@ func (s *HttpService) Login(c *gin.Context) {
 		response.Fail(c, ecode.ParamsFailed, err)
 		return
 	}
-
-	if !store.Verify(req.CaptchaID, req.Captcha, true) {
-		response.Fail(c, ecode.CaptchaVerifyFailed, nil)
-		return
-	}
-
+	/*
+		if !store.Verify(req.CaptchaID, req.Captcha, true) {
+			response.Fail(c, ecode.CaptchaVerifyFailed, nil)
+			return
+		}
+	*/
 	data, err := s.uc.Login(c, req)
 	if err != nil {
 		response.Fail(c, ecode.LoginFailed, err)

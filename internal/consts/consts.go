@@ -6,7 +6,6 @@ import (
 
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/redis/go-redis/v9"
-	"github.com/spf13/viper"
 	"gorm.io/gorm"
 
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
@@ -48,11 +47,10 @@ const (
 )
 
 var (
-	DB    *gorm.DB
-	RDB   *redis.Client
-	ES    *elasticsearch.Client
-	Conf  *conf.Conf
-	Viper *viper.Viper
+	DB   *gorm.DB
+	RDB  *redis.Client
+	ES   *elasticsearch.Client
+	Conf *conf.Conf
 )
 
 var (

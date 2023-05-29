@@ -69,7 +69,7 @@ limiter:
 cors:
   mode: allow-whitelist # allow-all: 放行全部; allow-whitelist
   whitelist:
-    - allowOrigin: http://www.hao123.com
+    - allowOrigin: http://172.21.0.2:8080
       allowHeaders: Content-Type,Authorization
       allowMethods: POST, GET
       exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
@@ -94,6 +94,7 @@ email:
   port: 25
   from: "1124938791@qq.com"
   nickname: "基础云架构部-研发一组"
+  appName: "go-grpc-layout"
   isSsl: false
   secret: "bvewllmttezxjehi"
   topics:

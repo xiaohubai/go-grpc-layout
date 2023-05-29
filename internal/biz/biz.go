@@ -2,6 +2,7 @@ package biz
 
 import (
 	"context"
+	"time"
 
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
@@ -42,6 +43,7 @@ func NewGrpcUsecase(repo Repo, lg log.Logger) *GrpcUsecase {
 
 type Repo interface {
 	MysqlInterface
+	RedisInterface
 	ESInterface
 }
 
@@ -72,6 +74,12 @@ type MysqlInterface interface {
 	TransactionDebugPerf(context.Context, *model.DebugPerf) error
 }
 
+type RedisInterface interface {
+	Get(context.Context, string) (string, error)
+	Set(context.Context, string, string) error
+	SetEx(context.Context, string, string, time.Duration) error
+}
+
 type ESInterface interface {
-	ESInsertDoc(context.Context, string, interface{}) error
+	InsertDoc(context.Context, string, []byte) error
 }

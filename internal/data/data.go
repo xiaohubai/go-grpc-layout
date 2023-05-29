@@ -1,22 +1,22 @@
 package data
 
 import (
-	"context"
 	"fmt"
 
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/google/wire"
 	"github.com/redis/go-redis/v9"
-	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"gorm.io/gorm/schema"
 
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/biz"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/gen"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
+	pelasticsearch "github.com/xiaohubai/go-grpc-layout/pkg/elasticsearch"
+	pgorm "github.com/xiaohubai/go-grpc-layout/pkg/gorm"
+	predis "github.com/xiaohubai/go-grpc-layout/pkg/redis"
 )
 
 // ProviderSet is data providers.
@@ -43,22 +43,7 @@ type Data struct {
 
 // NewData .
 func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
-	mysqlConfig := mysql.Config{
-		DSN:                       c.Mysql.Source, // DSN data source name
-		DefaultStringSize:         191,            // string 类型字段的默认长度
-		DisableDatetimePrecision:  true,           // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
-		DontSupportRenameIndex:    true,           // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
-		DontSupportRenameColumn:   true,           // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
-		SkipInitializeWithVersion: false,          // 根据版本自动配置
-	}
-	db, err := gorm.Open(mysql.New(mysqlConfig), &gorm.Config{
-		//Logger:                                   logger.Default.LogMode(logger.Info),
-		DisableForeignKeyConstraintWhenMigrating: true, //禁用外键约束
-		NamingStrategy: schema.NamingStrategy{
-			SingularTable: true, //禁用表复数形式
-			TablePrefix:   "",   //表前缀
-		},
-	})
+	db, err := pgorm.NewClient(c.Mysql)
 	if err != nil {
 		panic(fmt.Errorf("MySQL启动异常: %s", err))
 	}
@@ -69,30 +54,19 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 	if err := AutoMigrate(db); err != nil {
 		panic(fmt.Errorf("autoMigrate failed: %s", err))
 	}
-
-	rdb := redis.NewClient(&redis.Options{
-		Addr:     c.Redis.Addr,
-		Password: c.Redis.Password,
-		DB:       int(c.Redis.Db),
-	})
-	_, err = rdb.Ping(context.Background()).Result()
+	rdb, err := predis.NewClient(c.Redis)
 	if err != nil {
 		panic(fmt.Errorf("redis connect ping failed: %s", err))
 	}
-
-	es, err := elasticsearch.NewClient(elasticsearch.Config{
-		Addresses: c.Es.Address,
-		Username:  c.Es.Username,
-		Password:  c.Es.Password,
-	})
+	es, err := pelasticsearch.NewClient(c.Es)
 	if err != nil {
 		panic(fmt.Errorf("elasticsearch connect failed: %s", err))
 	}
 
 	consts.DB = db
-	consts.RDB = rdb
+	consts.RDB = rdb.Client
 	consts.ES = es
-	return &Data{db: gen.Use(db), rdb: rdb, es: es}, nil
+	return &Data{db: gen.Use(db), rdb: rdb.Client, es: es}, nil
 }
 
 func AutoMigrate(db *gorm.DB) error {

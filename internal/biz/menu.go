@@ -2,22 +2,49 @@ package biz
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"golang.org/x/sync/singleflight"
 
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	"github.com/xiaohubai/go-grpc-layout/pkg/jwt"
+	"github.com/xiaohubai/go-grpc-layout/pkg/utils"
+)
+
+var (
+	sg singleflight.Group
 )
 
 // GetAllMenuList 获取全部路由列表
 func (uc *HttpUsecase) GetAllMenuList(c *gin.Context) ([]*v1.MenuResponse, error) {
-	menuList, err := uc.repo.ListAllMenu(c.Request.Context())
+	key := "menuList"
+	value, err := uc.repo.Get(c.Request.Context(), key)
+	if err != nil {
+		v, err, _ := sg.Do(key, func() (interface{}, error) {
+			menuList, err := uc.repo.ListAllMenu(c.Request.Context())
+			if err != nil {
+				return nil, err
+			}
+			data := menuTreeHandler(menuList)
+			value := utils.JsonToMarshal(data)
+			uc.repo.SetEx(c.Request.Context(), key, value, 1*time.Hour)
+			return value, nil
+		})
+		if err != nil {
+			return nil, err
+		}
+		value = v.(string)
+	}
+	var res []*v1.MenuResponse
+	err = json.Unmarshal([]byte(value), &res)
 	if err != nil {
 		return nil, err
 	}
-	return menuTreeHandler(menuList), nil
+	return res, nil
 }
 
 // GetRoleMenuList 获取角色路由列表

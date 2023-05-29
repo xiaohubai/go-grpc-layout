@@ -1,21 +1,14 @@
 package data
 
 import (
-	"bytes"
 	"context"
-	"encoding/json"
+
+	"github.com/xiaohubai/go-grpc-layout/internal/consts"
+	pelasticsearch "github.com/xiaohubai/go-grpc-layout/pkg/elasticsearch"
 )
 
-// ESInsertDoc: Index creates or updates a document in an index.
-func (d *dataRepo) ESInsertDoc(ctx context.Context, indexName string, data interface{}) (err error) {
-	var buf bytes.Buffer
-	if err := json.NewEncoder(&buf).Encode(data); err != nil {
-		return err
-	}
-	res, err := d.data.es.Index(indexName, &buf)
-	if err != nil {
-		return err
-	}
-	defer res.Body.Close()
-	return err
+// InsertDoc: Index creates or updates a document in an index.
+func (d *dataRepo) InsertDoc(ctx context.Context, indexName string, data []byte) (err error) {
+	es := pelasticsearch.New(d.data.es)
+	return es.InsertDoc(ctx, consts.ESIndexOperationRecord, data)
 }

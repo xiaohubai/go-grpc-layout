@@ -185,7 +185,7 @@ API 元信息管理
 - [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
 - [x] es数据存取
 - [ ] openAPI和swagger
-- [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
+- [x] singleflight:写一个热点缓存插件,多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
 - [ ] grafana看板导入dashboard
@@ -204,3 +204,4 @@ API 元信息管理
 - servive层只处理 解析入参,组装 biz层需要的入参,调取biz层获取结果, 返回结果.一般用数据库model+分页信息
 - gorm 更新操作 要特别注意 默认值, 再不确定更新那个struct字段时,要求请求参数全部有值,gorm进行map[string]interface{}指定全部请求参数更新.
 - gorm统计 加上 delete_at  is null
+- pkg包的配置参数从入参传入.不写死使用 configs/conf/conf.yaml统一定义.

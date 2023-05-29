@@ -2,7 +2,6 @@ package biz
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 
 	"github.com/Shopify/sarama"
@@ -17,9 +16,7 @@ type OperationRecordReportES struct {
 }
 
 func (h *OperationRecordReportES) Do(ctx context.Context, msg *sarama.ConsumerMessage) (err error) {
-	var data map[string]interface{}
-	_ = json.Unmarshal(msg.Value, &data)
-	err = repoUsecase.repo.ESInsertDoc(ctx, consts.ESIndexOperationRecord, data)
+	err = repoUsecase.repo.InsertDoc(ctx, consts.ESIndexOperationRecord, msg.Value)
 	if err != nil {
 		metric.Count.With(fmt.Sprintf("consumer_%s_to_es_error", msg.Topic)).Inc()
 		return err

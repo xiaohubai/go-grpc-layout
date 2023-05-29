@@ -48,6 +48,6 @@ func (r *ReporterImpl) Report(pType string, filename string, reason holmes.Reaso
 
 	msg := fmt.Sprintf("pType:%s filename:%s", pType, filename)
 	filePath := fmt.Sprintf("%s/%s", consts.PwdPath, filename)
-	email.SendWarnWithFile(context.Background(), consts.EmailTitlePprof, filePath, msg)
+	email.SendWarnWithFile(context.Background(), consts.Conf.Email, consts.EmailTitlePprof, filePath, msg)
 	return nil
 }

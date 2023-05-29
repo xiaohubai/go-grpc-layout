@@ -14,7 +14,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 )
 
-func watcher(vp *viper.Viper, path string, conf any) {
+func (col *Consul) watcher(vp *viper.Viper, path string, conf any) {
 	time.Sleep(time.Second * 10)
 	var g errgroup.Group
 	g.Go(func() error {
@@ -22,7 +22,6 @@ func watcher(vp *viper.Viper, path string, conf any) {
 		if err != nil {
 			return err
 		}
-
 		w.Handler = func(u uint64, i interface{}) {
 			kv := i.(api.KVPairs)
 			for _, v := range kv {
@@ -37,13 +36,13 @@ func watcher(vp *viper.Viper, path string, conf any) {
 				}
 			}
 		}
-		err = w.RunWithClientAndHclog(consulClient, nil)
+		err = w.RunWithClientAndHclog(col.client, nil)
 		if err != nil {
 			return err
 		}
 		return nil
 	})
 	if err := g.Wait(); err != nil {
-		email.SendWarn(context.Background(), consts.EmailTitleViperRemoteWatch, err.Error())
+		email.SendWarn(context.Background(), consts.Conf.Email, "viper remote watch", err.Error())
 	}
 }
