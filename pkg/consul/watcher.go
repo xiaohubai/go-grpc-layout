@@ -10,11 +10,10 @@ import (
 	"github.com/spf13/viper"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 )
 
-func (col *Consul) watcher(vp *viper.Viper, path string, conf any) {
+func (col *Consul) watcher(vp *viper.Viper, path string, cf any) {
 	time.Sleep(time.Second * 10)
 	var g errgroup.Group
 	g.Go(func() error {
@@ -30,7 +29,7 @@ func (col *Consul) watcher(vp *viper.Viper, path string, conf any) {
 					if err != nil {
 						return
 					}
-					if err = vp.Unmarshal(conf); err != nil {
+					if err = vp.Unmarshal(cf); err != nil {
 						return
 					}
 				}
@@ -43,6 +42,6 @@ func (col *Consul) watcher(vp *viper.Viper, path string, conf any) {
 		return nil
 	})
 	if err := g.Wait(); err != nil {
-		email.SendWarn(context.Background(), consts.Conf.Email, "viper remote watch", err.Error())
+		email.SendWarn(context.Background(), "viper remote watch", err.Error())
 	}
 }

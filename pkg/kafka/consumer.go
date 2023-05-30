@@ -49,7 +49,7 @@ func (Consumer) Cleanup(_ sarama.ConsumerGroupSession) error { return nil }
 func (c Consumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 	for msg := range claim.Messages() {
 		if err := newWorkerByTopic(msg.Topic).Run(context.Background(), msg); err != nil {
-			email.SendWarn(context.Background(), consts.Conf.Email, consts.EmailTitleKafkaConsumer, err.Error())
+			email.SendWarn(context.Background(), consts.EmailTitleKafkaConsumer, err.Error())
 		}
 		session.MarkMessage(msg, "")
 	}

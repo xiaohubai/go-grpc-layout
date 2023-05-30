@@ -37,17 +37,17 @@ func New(client *api.Client) *Consul {
 }
 
 // NewConsulConfigSource 创建一个远程配置源 - Consul
-func NewConsulConfigSource(remoteHost, remotePath, remoteToken string, conf any) error {
+func NewConsulConfigSource(remoteHost, remotePath, remoteToken string, cf any) error {
 	cli, err := NewClient(remoteHost, remoteToken)
 	if err != nil {
 		return err
 	}
 	cul := New(cli)
-	v, err := cul.GetConsulKV(remotePath, conf)
+	v, err := cul.GetConsulKV(remotePath, cf)
 	if err != nil {
 		return err
 	}
-	cul.watcher(v, remotePath, conf)
+	cul.watcher(v, remotePath, cf)
 	return nil
 }
 

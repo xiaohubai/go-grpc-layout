@@ -19,23 +19,22 @@ import (
 )
 
 type Email struct {
-	Conf     *conf.Email `json:"Conf"`
-	Topic    string      `json:"topic"`
-	Title    string      `json:"title"`
-	FilePath string      `json:"filePath"`
-	HtmlText string      `json:"htmlText"`
+	Topic    string `json:"topic"`
+	Title    string `json:"title"`
+	FilePath string `json:"filePath"`
+	HtmlText string `json:"htmlText"`
 }
 
 func (e *Email) Send() (err error) {
-	auth := smtp.PlainAuth("", e.Conf.From, e.Conf.Secret, e.Conf.Host)
-	t := checkTopics(e.Topic, e.Conf.Topics)
+	auth := smtp.PlainAuth("", conf.C.Email.From, conf.C.Email.Secret, conf.C.Email.Host)
+	t := checkTopics(e.Topic, conf.C.Email.Topics)
 	if t == nil {
 		return errors.New("email topic not found")
 	}
 	cli := &email.Email{
 		To:      t.To,
-		From:    fmt.Sprintf("%s <%s>", e.Conf.Nickname, e.Conf.From),
-		Subject: fmt.Sprintf("%s-%s(%s)", t.Subject, e.Title, e.Conf.AppName),
+		From:    fmt.Sprintf("%s <%s>", conf.C.Email.Nickname, conf.C.Email.From),
+		Subject: fmt.Sprintf("%s-%s(%s)", t.Subject, e.Title, conf.C.Global.AppName),
 		HTML:    []byte(e.HtmlText),
 	}
 
@@ -43,9 +42,9 @@ func (e *Email) Send() (err error) {
 		cli.AttachFile(e.FilePath)
 	}
 
-	address := fmt.Sprintf("%s:%d", e.Conf.Host, e.Conf.Port)
-	if e.Conf.IsSsl {
-		err = cli.SendWithTLS(address, auth, &tls.Config{ServerName: e.Conf.Host})
+	address := fmt.Sprintf("%s:%d", conf.C.Email.Host, conf.C.Email.Port)
+	if conf.C.Email.IsSsl {
+		err = cli.SendWithTLS(address, auth, &tls.Config{ServerName: conf.C.Email.Host})
 	} else {
 		err = cli.Send(address, auth)
 	}
@@ -61,7 +60,7 @@ func checkTopics(topic string, topics []*conf.Email_Topics) *conf.Email_Topics {
 	return nil
 }
 
-func SendWarn(ctx context.Context, Conf *conf.Email, title, msg string) {
+func SendWarn(ctx context.Context, title, msg string) {
 	var g errgroup.Group
 	g.Go(func() error {
 		value := pbAny.Warn{
@@ -75,7 +74,6 @@ func SendWarn(ctx context.Context, Conf *conf.Email, title, msg string) {
 			return err
 		}
 		e := Email{
-			Conf:     Conf,
 			Topic:    "warn",
 			Title:    title,
 			HtmlText: htmlText,
@@ -94,7 +92,7 @@ func SendWarn(ctx context.Context, Conf *conf.Email, title, msg string) {
 
 }
 
-func SendWarnWithFile(ctx context.Context, Conf *conf.Email, title, filePath, msg string) {
+func SendWarnWithFile(ctx context.Context, title, filePath, msg string) {
 	var g errgroup.Group
 	g.Go(func() error {
 		value := pbAny.Warn{
@@ -108,7 +106,6 @@ func SendWarnWithFile(ctx context.Context, Conf *conf.Email, title, filePath, ms
 			return err
 		}
 		e := Email{
-			Conf:     Conf,
 			Topic:    "warn",
 			Title:    title,
 			FilePath: filePath,

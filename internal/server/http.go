@@ -14,7 +14,6 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 
-	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/service"
 	m "github.com/xiaohubai/go-grpc-layout/pkg/middleware"
 )
@@ -40,7 +39,7 @@ func NewHTTPServer(c *conf.Server, s *service.HttpService, lg log.Logger) *http.
 func routers(s *service.HttpService) *gin.Engine {
 	gin.SetMode(gin.ReleaseMode)
 	router := gin.New()
-	router.Use(m.Recovery(), m.Cors(consts.Conf.Cors), m.Tracing(consts.Conf.Global), m.Metrics(consts.Conf.Global))
+	router.Use(m.Recovery(), m.Cors(conf.C.Cors), m.Tracing(conf.C.Global), m.Metrics(conf.C.Global))
 	pprof.Register(router)
 	router.StaticFS("/docs", hhttp.Dir("./docs/openapi"))
 	r := router.Group("")

@@ -139,7 +139,6 @@ message Email {
   int32 port = 2;
   string from = 3;
   string nickname = 4;
-  string appName = 5;
   bool isSsl = 6;
   string secret = 7;
   message Topics {

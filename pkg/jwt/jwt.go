@@ -5,7 +5,7 @@ import (
 
 	"github.com/golang-jwt/jwt"
 
-	"github.com/xiaohubai/go-grpc-layout/internal/consts"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 type Claims struct {
@@ -22,13 +22,13 @@ type Claims struct {
 // Create 生成token
 func Create(claims Claims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte(consts.Conf.Jwt.SigningKey))
+	return token.SignedString([]byte(conf.C.Jwt.SigningKey))
 }
 
 // Parse 解析token
 func Parse(tokenString string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (any, error) {
-		return []byte(consts.Conf.Jwt.SigningKey), nil
+		return []byte(conf.C.Jwt.SigningKey), nil
 	})
 
 	if err != nil {

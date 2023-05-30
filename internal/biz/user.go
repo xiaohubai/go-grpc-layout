@@ -10,7 +10,7 @@ import (
 	"go.opentelemetry.io/otel/attribute"
 
 	v1 "github.com/xiaohubai/go-grpc-layout/api/http/v1"
-	"github.com/xiaohubai/go-grpc-layout/internal/consts"
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	pJwt "github.com/xiaohubai/go-grpc-layout/pkg/jwt"
 	"github.com/xiaohubai/go-grpc-layout/pkg/tracing"
@@ -38,11 +38,11 @@ func (uc *HttpUsecase) Login(c *gin.Context, req *v1.LoginRequest) (*v1.LoginRes
 		RoleID:     userInfo.RoleID,
 		RoleName:   userInfo.RoleName,
 		State:      userInfo.State,
-		BufferTime: consts.Conf.Jwt.BufferTime,
+		BufferTime: conf.C.Jwt.BufferTime,
 		StandardClaims: jwt.StandardClaims{
-			NotBefore: time.Now().Unix() - 1000,                               // 签名生效时间
-			ExpiresAt: time.Now().Unix() + int64(consts.Conf.Jwt.ExpiresTime), // 过期时间
-			Issuer:    consts.Conf.Jwt.Issuer,                                 // 签名的发行者
+			NotBefore: time.Now().Unix() - 1000,                          // 签名生效时间
+			ExpiresAt: time.Now().Unix() + int64(conf.C.Jwt.ExpiresTime), // 过期时间
+			Issuer:    conf.C.Jwt.Issuer,                                 // 签名的发行者
 		},
 	})
 	if err != nil {

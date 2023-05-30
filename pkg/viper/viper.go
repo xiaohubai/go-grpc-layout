@@ -39,7 +39,7 @@ func Load() (*conf.Conf, error) {
 
 	var cc conf.Conf
 	if f.env == "local" {
-		if err := newFileConfig(f.filePath, &cc); err != nil {
+		if err := newFileConfig(f.filePath, conf.C); err != nil {
 			return nil, err
 		}
 	} else {
@@ -47,11 +47,10 @@ func Load() (*conf.Conf, error) {
 			return nil, err
 		}
 	}
-	consts.Conf = &cc
-	return &cc, nil
+	return conf.C, nil
 }
 
-func newFileConfig(filePath string, conf any) error {
+func newFileConfig(filePath string, cf any) error {
 	v := viper.New()
 	confType := strings.TrimSpace(filePath[strings.LastIndex(filePath, ".")+1:])
 	v.SetConfigFile(filePath)
@@ -60,12 +59,12 @@ func newFileConfig(filePath string, conf any) error {
 		return err
 	}
 	v.WatchConfig()
-	if err := v.Unmarshal(conf); err != nil {
+	if err := v.Unmarshal(cf); err != nil {
 		return err
 	}
 	v.OnConfigChange(func(e fsnotify.Event) {
-		if err := v.Unmarshal(conf); err != nil {
-			email.SendWarn(context.Background(), consts.Conf.Email, consts.EmailTitleViperLocalWatch, err.Error())
+		if err := v.Unmarshal(cf); err != nil {
+			email.SendWarn(context.Background(), consts.EmailTitleViperLocalWatch, err.Error())
 		}
 	})
 

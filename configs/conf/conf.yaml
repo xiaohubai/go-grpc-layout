@@ -94,7 +94,6 @@ email:
   port: 25
   from: "1124938791@qq.com"
   nickname: "基础云架构部-研发一组"
-  appName: "go-grpc-layout"
   isSsl: false
   secret: "bvewllmttezxjehi"
   topics:

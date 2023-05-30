@@ -69,6 +69,7 @@ sql:
 # generate configs
 configs:
 	kratos proto client configs/conf/conf.proto
+	rm -rf openapi.yaml
 
 # show help
 help:

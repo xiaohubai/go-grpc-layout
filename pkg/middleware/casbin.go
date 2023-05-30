@@ -7,6 +7,7 @@ import (
 	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"github.com/gin-gonic/gin"
 
+	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 	"github.com/xiaohubai/go-grpc-layout/internal/consts"
 	"github.com/xiaohubai/go-grpc-layout/internal/data/model"
 	"github.com/xiaohubai/go-grpc-layout/internal/ecode"
@@ -39,7 +40,7 @@ var (
 func SyncedEnforcer() *casbin.SyncedEnforcer {
 	once.Do(func() {
 		a, _ := gormadapter.NewAdapterByDBUseTableName(consts.DB, "", model.TableNameCasbinRule)
-		syncedEnforcer, _ = casbin.NewSyncedEnforcer(consts.Conf.Casbin.Path, a)
+		syncedEnforcer, _ = casbin.NewSyncedEnforcer(conf.C.Casbin.Path, a)
 	})
 	_ = syncedEnforcer.LoadPolicy()
 	return syncedEnforcer

@@ -7,8 +7,6 @@ import (
 	"github.com/elastic/go-elasticsearch/v8"
 	"github.com/redis/go-redis/v9"
 	"gorm.io/gorm"
-
-	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
 const (
@@ -47,10 +45,9 @@ const (
 )
 
 var (
-	DB   *gorm.DB
-	RDB  *redis.Client
-	ES   *elasticsearch.Client
-	Conf *conf.Conf
+	DB  *gorm.DB
+	RDB *redis.Client
+	ES  *elasticsearch.Client
 )
 
 var (
