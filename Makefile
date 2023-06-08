@@ -25,6 +25,7 @@ init:
 	go install github.com/google/wire/cmd/wire@latest
 	go install github.com/envoyproxy/protoc-gen-validate@latest
 	go install github.com/google/gnostic/cmd/protoc-gen-openapi@latest
+	sh ./scripts/protoc.sh
 
 .PHONY: api
 # generate api proto
@@ -64,6 +65,7 @@ sql:
 # generate configs
 configs:
 	kratos proto client configs/conf/conf.proto
+	rm -rf openapi.yaml
 
 # show help
 help:
