@@ -40,11 +40,6 @@ api:
 
 	sh scripts/remove-omitempty.sh
 
-.PHONY: compose
-compose:
-	docker compose -f ./deploy/docker-compose.yml down
-	docker compose -f ./deploy/docker-compose.yml up -d --force-recreate
-
 .PHONY: dockerBuild
 # generate dockerBuild
 dockerBuild:

@@ -1,4 +1,4 @@
-cluster.name: "docker-cluster"
+cluster.name: "es-cluster-01"
 discovery.type: "single-node"
 bootstrap.memory_lock: true
 network.host: 0.0.0.0
@@ -6,7 +6,6 @@ http.port: 9200
 transport.tcp.port: 9300
 http.cors.enabled: true
 http.cors.allow-origin: "*"
-index.analysis.analyzer.default.type: ik_max_word
 xpack.security.audit.enabled: true
 xpack.security.enabled: true
 xpack.license.self_generated.type: basic

@@ -140,7 +140,7 @@ services:
       - zookeeper
   #### pyroscope ####
   pyroscope:
-    image: 'pyroscope/pyroscope:latest'
+    image: pyroscope/pyroscope:latest
     container_name: pyroscope
     restart: always
     ports:
@@ -153,7 +153,7 @@ services:
       - TZ=Asia/Shanghai
 
   #### elasticsearch ####
-  # 不停重启，数据卷的data和ik目录权限应root，777权限
+  # 不停重启，数据卷的data和ik目录权限应root 777权限
   # 增加安全认证：在配置文件挂在或者容器内的elasticsearch.yml添加：
   # xpack.security.enabled: true
   # xpack.license.self_generated.type: basic
@@ -171,7 +171,7 @@ services:
     volumes:
       - /usr/local/volumes/elasticsearch/data:/usr/share/elasticsearch/data
       - /usr/local/volumes/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-      - /usr/local/volumes/elasticsearch/plugins/:/usr/share/elasticsearch/plugins
+      - /usr/local/volumes/elasticsearch/plugins:/usr/share/elasticsearch/plugins
     environment:
       - TZ=Asia/Shanghai
       - discovery.type=single-node
