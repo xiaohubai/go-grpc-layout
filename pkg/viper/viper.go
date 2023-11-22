@@ -30,10 +30,10 @@ func Load() (*conf.Conf, error) {
 	flag.StringVar(&f.env, "env", "local", "runtime environment, eg: -env remote")
 	flag.StringVar(&f.filePath, "conf", "configs/conf/conf.yaml", "config path, eg: -conf configs.yaml")
 
-	flag.StringVar(&f.remoteHost, "chost", "172.21.0.2:8500", "config server host, eg: -chost 172.21.0.2:8500")
+	flag.StringVar(&f.remoteHost, "chost", "127.0.0.1:8500", "config server host, eg: -chost 127.0.0.1:8500")
 	flag.StringVar(&f.remoteType, "ctype", "consul", "remote config server host, eg: -ctype consul")
 	flag.StringVar(&f.remotePath, "cpath", "dev/conf.yaml", "remote config server path, eg: -cpath dev/conf.yaml")
-	flag.StringVar(&f.remoteToken, "ctoken", "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402", "remote config server token")
+	flag.StringVar(&f.remoteToken, "ctoken", "5d53435a-9261-9214-8dc2-feaf699406f3", "remote config server token")
 	flag.Parse()
 
 	var cc conf.Conf

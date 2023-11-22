@@ -29,11 +29,11 @@ option (openapi.v3.document) = {
   }
   servers: [
     {
-      url: "http://172.21.0.2:8000";
+      url: "http://127.0.0.1:8000";
       description: "测试环境";
     },
     {
-      url: "http://172.21.0.2:8000";
+      url: "http://127.0.0.1:8000";
       description: "线上环境";
     }
   ]

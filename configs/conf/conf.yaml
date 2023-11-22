@@ -2,7 +2,7 @@ global:
   appName: go-grpc-layout
   env: dev
   version: 0.0.1
-  id: 172.21.0.2
+  id: 127.0.0.1
 server:
   http:
     addr: 0.0.0.0:8000
@@ -13,16 +13,16 @@ server:
 data:
   mysql:
     driver: mysql
-    source: root:123456@tcp(172.21.0.2:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local
+    source: root:123456@tcp(127.0.0.1:3306)/go-layout?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     db: 0
-    addr: 172.21.0.2:6379
+    addr: 127.0.0.1:6379
     password: "123456"
     dialTimeout: 1s
     readTimeout: 0.4s
     writeTimeout: 0.6s
   es:
-    address: [http://172.21.0.2:9200]
+    address: [http://127.0.0.1:9200]
     username: elastic
     password: 1qaz!QAZ
 
@@ -32,13 +32,13 @@ jwt:
   bufferTime: 86400
   issuer: xiaohubai@outlook.com
 trace:
-  endpoint: http://172.21.0.2:14268/api/traces
+  endpoint: http://127.0.0.1:14268/api/traces
 
 consul:
-  host: 172.21.0.2:8500
+  host: 127.0.0.1:8500
   scheme: http
   healthCheck: true
-  token: "ac9b7b85-8819-cffb-c3f6-1bbd43ca1402"
+  token: "5d53435a-9261-9214-8dc2-feaf699406f3"
   kv:
     dictPath: dev/dict.json
   discovery:
@@ -67,14 +67,9 @@ limiter:
   rate: 0 # 0:不限流
 
 cors:
-  mode: allow-whitelist # allow-all: 放行全部; allow-whitelist
+  mode: allow-all # allow-all: 放行全部; allow-whitelist
   whitelist:
-    - allowOrigin: http://www.hao123.com
-      allowHeaders: Content-Type,Authorization
-      allowMethods: POST, GET
-      exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
-      allowCredentials: true
-    - allowOrigin: chrome-extension://aejoelaoggembcahagimdiliamlcdmfm
+    - allowOrigin: http://127.0.0.1:8080
       allowHeaders: Content-Type,Authorization
       allowMethods: POST, GET
       exposeHeaders: Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Content-Type
@@ -83,10 +78,10 @@ cors:
 kafka:
   producer:
     - topic: operationRecord
-      address: [172.21.0.2:9092]
+      address: [127.0.0.1:9092]
   consumer:
     - topic: operationRecord
-      address: [172.21.0.2:9092]
+      address: [127.0.0.1:9092]
       func: [OperationRecordReportES] # 支持链式调用 eg:[funcA,funcB,funcX]
 
 email:

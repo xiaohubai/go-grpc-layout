@@ -22,4 +22,4 @@ COPY --from=builder /app/rbac_model.conf /app
 EXPOSE 8000
 EXPOSE 9000
 
-CMD ["./server","-env", "remote", "-chost", "172.21.0.2:8500", "-ctype", "consul" ,"-cpath", "prod/config.yaml"]
+CMD ["./server","-env", "remote", "-chost", "127.0.0.1:8500", "-ctype", "consul" ,"-cpath", "prod/config.yaml"]

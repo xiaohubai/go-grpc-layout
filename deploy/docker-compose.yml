@@ -1,11 +1,18 @@
-version: '3'
+version: '3.8'
+# 声明一个名为network的networks,subnet为network的子网地址,默认网关是172.21.0.1
+networks:
+  network:
+    ipam:
+      driver: default
+      config:
+        - subnet: '172.21.0.0/16'
 ## 遇到容器不停重启，首先怀疑是挂载目录读写执行权限问题
 services:
   #### mysql ####
   mysql:
     image: bitnami/mysql:8.0
     container_name: mysql
-    restart: always
+    #restart: always
     ports:
       - "3306:3306"
     volumes:
@@ -17,12 +24,16 @@ services:
       - MYSQL_DATABASE=go-layout
       - MYSQL_CHARACTER_SET=utf8mb4
       - MYSQL_COLLATE=utf8mb4_general_ci
+      - MYSQL_AUTHENTICATION_PLUGIN=mysql_native_password
+    networks:
+      network:
+        ipv4_address: 172.21.0.11
 
   #### redis ####
   redis:
     image: redis:7.0.0
     container_name: redis
-    restart: always
+    #restart: always
     ports:
       - "6379:6379"
     command: redis-server --appendonly yes --requirepass "123456"
@@ -31,12 +42,15 @@ services:
       - /usr/local/volumes/redis/data:/data
     environment:
       - TZ=Asia/Shanghai
+    networks:
+      network:
+        ipv4_address: 172.21.0.12
 
   #### consul ####
   consul:
     image: bitnami/consul:1.13.0
     container_name: consul
-    restart: always
+    #restart: always
     ports:
       - "8300:8300"
       - "8500:8500"
@@ -49,12 +63,15 @@ services:
       - CONSUL_ENABLE_UI=true
       - CONSUL_BOOTSTRAP_EXPECT=1
       - CONSUL_CLIENT_LAN_ADDRESS=0.0.0.0
+    networks:
+      network:
+        ipv4_address: 172.21.0.13
 
   #### jaeger ####
   jaeger:
     image: jaegertracing/all-in-one:1.37
     container_name: jaeger
-    restart: always
+    #restart: always
     ports:
       - "5775:5775/udp"
       - "6831:6831/udp"
@@ -66,13 +83,16 @@ services:
     environment:
       - TZ=Asia/Shanghai
       - COLLECTOR_ZIPKIN_HTTP_PORT=9411
+    networks:
+      network:
+        ipv4_address: 172.21.0.14
 
   #### prometheus ####
   ## 注意数据集data要保证其他用户可读写，直接设置777,默认存储15天,可以远程读取es持久化存储
   prometheus:
     image: bitnami/prometheus:2.37.0
     container_name: prometheus
-    restart: always
+    #restart: always
     ports:
       - "9090:9090"
     volumes:
@@ -80,6 +100,9 @@ services:
       - /usr/local/volumes/prometheus/data:/opt/bitnami/prometheus/data
     environment:
       - TZ=Asia/Shanghai
+    networks:
+      network:
+        ipv4_address: 172.21.0.15
 
   #### grafana ####
   ##注意数据集data要保证其他用户可读写，直接设置777
@@ -90,7 +113,7 @@ services:
   grafana:
     image: bitnami/grafana:9.2.1
     container_name: grafana
-    restart: always
+    #restart: always
     ports:
       - "3000:3000"
     volumes:
@@ -100,30 +123,39 @@ services:
       - TZ=Asia/Shanghai
     depends_on:
       - prometheus
+    networks:
+      network:
+        ipv4_address: 172.21.0.16
 
   node-exporter:
     image: bitnami/node-exporter:1.5.0
     container_name: node-exporter
-    restart: always
+    #restart: always
     ports:
       - "9100:9100"
+    networks:
+      network:
+        ipv4_address: 172.21.0.17
   #### zookeeper ####
   zookeeper:
     image: bitnami/zookeeper:3.7.1
     container_name: zookeeper
-    restart: always
+    #restart: always
     ports:
       - "2181:2181"
     environment:
       - TZ=Asia/Shanghai
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      network:
+        ipv4_address: 172.21.0.18
 
   #### kafka ####
   # kafaka 不停重启,要考虑权限问题和挂载的kafka/data要删除
   kafka:
     image: bitnami/kafka:3.0.2
     container_name: kafka
-    restart: always
+    #restart: always
     user: root
     ports:
       - '9092:9092'
@@ -133,16 +165,19 @@ services:
       - TZ=Asia/Shanghai
       - KAFKA_BROKER_ID=1
       - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.21.0.2:9092
+      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.21.0.19:9092
       - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper
+    networks:
+      network:
+        ipv4_address: 172.21.0.19
   #### pyroscope ####
   pyroscope:
     image: pyroscope/pyroscope:latest
     container_name: pyroscope
-    restart: always
+    #restart: always
     ports:
       - 4040:4040
     command:
@@ -151,6 +186,9 @@ services:
       - /usr/local/volumes/pyroscope/server.yml:/etc/pyroscope/server.yml
     environment:
       - TZ=Asia/Shanghai
+    networks:
+      network:
+        ipv4_address: 172.21.0.20
 
   #### elasticsearch ####
   # 不停重启，数据卷的data和ik目录权限应root 777权限
@@ -164,7 +202,7 @@ services:
   elasticsearch:
     image: elasticsearch:7.17.0
     container_name: elasticsearch
-    restart: always
+    #restart: always
     ports:
       - "9200:9200"
       - "9300:9300"
@@ -176,17 +214,23 @@ services:
       - TZ=Asia/Shanghai
       - discovery.type=single-node
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
+    networks:
+      network:
+        ipv4_address: 172.21.0.21
 
   #### kibana ####
   kibana:
     image: kibana:7.17.0
     container_name: kibana
-    restart: always
+    #restart: always
     ports:
       - "5601:5601"
     volumes:
       - /usr/local/volumes/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
-      - elasticsearch.hosts=http://172.21.0.2:9200
+      - elasticsearch.hosts=http://172.21.0.21:9200
     depends_on:
       - elasticsearch
+    networks:
+      network:
+        ipv4_address: 172.21.0.22

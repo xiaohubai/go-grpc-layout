@@ -2,7 +2,7 @@
 - gin 作为前端最直接的交互用于处理数据,图片,视频,文件请求等特殊请求处理.
 - grpc 作为服务端为别人提供服务;作为客户端请求别人的微服务使用.
 
-## 单仓
+### 单仓
 ``` go
 .
 ├── api                             // 定义proto,生成相关代码
@@ -68,7 +68,7 @@
 ├── LICENSE                         // 版权
 └── README.md
 ```
-## 大仓(根据单仓,下移某些模块)
+### 大仓(根据单仓,下移某些模块)
 ``` go
 .
 ├── api
@@ -92,15 +92,21 @@
 ```
 ## 组件访问接口
 ``` go
-- http          172.21.0.2:8000
-- grpc          172.21.0.2:9000
-- jaeger        172.21.0.2:16686
-- consul:       172.21.0.2:8500
-- prometheus    172.21.0.2:9090
-- node-exporter 172.21.0.2:9100
-- pyroscope     172.21.0.2:4040
-- grafana       172.21.0.2:3000 (admin admin)
-- openAPI       172.21.0.2:8000/docs
+- http          127.0.0.1:8000
+- grpc          127.0.0.1:9000
+- openAPI       127.0.0.1:8000/docs
+- mysql         172.21.0.11:3306
+- redis         172.21.0.12:6379
+- consul        172.21.0.13:8500
+- jaeger        172.21.0.14:16686
+- prometheus    172.21.0.15:9090
+- grafana       172.21.0.16:3000 (admin admin)
+- node-exporter 172.21.0.17:9100
+- zookeeper     172.21.0.18:2181
+- kafka         172.21.0.19:9092
+- pyroscope     172.21.0.20:4040
+- elasticsearch 172.21.0.21:9200
+- kibana        172.21.0.22:5601 (elastic 1qaz!QAZ)
 ```
 
 ## 主要功能
@@ -185,7 +191,7 @@ API 元信息管理
 - [x] kafka通用消费处理器(根据配置文件的topic对应的func,自动匹配处理器,链式执行)
 - [x] es数据存取
 - [ ] openAPI和swagger
-- [ ] 写一个热点缓存中间件(使用到redis分布式锁):多个用户请求相同,只一个用户获取热点缓存,返回多个用户请求.singleflight
+- [x] 热点缓存中间件(singleflight)
 - [x] 业务产生的painc和pkg包组件使用的error,painc发送邮件告警
 - [ ] grpc的中间件和gin补齐
 - [ ] grafana看板导入dashboard

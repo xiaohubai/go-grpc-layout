@@ -14,23 +14,23 @@ const TableNameMenu = "menu"
 
 // Menu mapped from table <menu>
 type Menu struct {
-	ID         int64          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	Path       string         `gorm:"column:path;not null" json:"path"`                                     // 路由
-	Name       string         `gorm:"column:name;not null" json:"name"`                                     // 名称
-	Redirect   string         `gorm:"column:redirect;not null" json:"redirect"`                             // 重定向
-	Component  string         `gorm:"column:component;not null" json:"component"`                           // 文件地址
-	ParentID   int32          `gorm:"column:parentId;not null" json:"parentId"`                             // 父id
-	RoleIDs    string         `gorm:"column:roleIDs;not null" json:"roleIDs"`                               // 角色组
-	Title      string         `gorm:"column:title;not null" json:"title"`                                   // 标题
-	Icon       string         `gorm:"column:icon;not null" json:"icon"`                                     // 图标
-	Hidden     bool           `gorm:"column:hidden;not null" json:"hidden"`                                 // 是否隐藏
-	KeepAlive  bool           `gorm:"column:keepAlive;not null;default:1" json:"keepAlive"`                 // keepAlive
-	Sort       int32          `gorm:"column:sort;not null" json:"sort"`                                     // 排序
-	CreateAt   time.Time      `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP" json:"create_at"` // 记录创建时间
-	UpdateAt   time.Time      `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP" json:"update_at"` // 记录修改时间
-	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`                                  // 删除时间
-	CreateUser string         `gorm:"column:create_user;not null" json:"create_user"`                       // 创建人
-	UpdateUser string         `gorm:"column:update_user;not null" json:"update_user"`                       // 修改人
+	ID          int64          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
+	Path        string         `gorm:"column:path;not null;comment:路由" json:"path"`
+	Name        string         `gorm:"column:name;not null;comment:名称" json:"name"`
+	Redirect    string         `gorm:"column:redirect;not null;comment:重定向" json:"redirect"`
+	Component   string         `gorm:"column:component;not null;comment:文件地址" json:"component"`
+	ParentID    int32          `gorm:"column:parent_id;not null;comment:父id" json:"parent_id"`
+	RoleIDGroup string         `gorm:"column:role_id_group;not null;comment:角色组" json:"role_id_group"`
+	Title       string         `gorm:"column:title;not null;comment:标题" json:"title"`
+	Icon        string         `gorm:"column:icon;not null;comment:图标" json:"icon"`
+	Hidden      bool           `gorm:"column:hidden;not null;comment:是否隐藏" json:"hidden"`
+	KeepAlive   bool           `gorm:"column:keep_alive;not null;default:1;comment:keepAlive" json:"keep_alive"`
+	Sort        int32          `gorm:"column:sort;not null;comment:排序" json:"sort"`
+	CreateAt    time.Time      `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP;comment:记录创建时间" json:"create_at"`
+	UpdateAt    time.Time      `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP;comment:记录修改时间" json:"update_at"`
+	DeletedAt   gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	CreateUser  string         `gorm:"column:create_user;not null;comment:创建人" json:"create_user"`
+	UpdateUser  string         `gorm:"column:update_user;not null;comment:修改人" json:"update_user"`
 }
 
 // TableName Menu's table name

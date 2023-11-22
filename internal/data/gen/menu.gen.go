@@ -32,12 +32,12 @@ func newMenu(db *gorm.DB, opts ...gen.DOOption) menu {
 	_menu.Name = field.NewString(tableName, "name")
 	_menu.Redirect = field.NewString(tableName, "redirect")
 	_menu.Component = field.NewString(tableName, "component")
-	_menu.ParentID = field.NewInt32(tableName, "parentId")
-	_menu.RoleIDs = field.NewString(tableName, "roleIDs")
+	_menu.ParentID = field.NewInt32(tableName, "parent_id")
+	_menu.RoleIDGroup = field.NewString(tableName, "role_id_group")
 	_menu.Title = field.NewString(tableName, "title")
 	_menu.Icon = field.NewString(tableName, "icon")
 	_menu.Hidden = field.NewBool(tableName, "hidden")
-	_menu.KeepAlive = field.NewBool(tableName, "keepAlive")
+	_menu.KeepAlive = field.NewBool(tableName, "keep_alive")
 	_menu.Sort = field.NewInt32(tableName, "sort")
 	_menu.CreateAt = field.NewTime(tableName, "create_at")
 	_menu.UpdateAt = field.NewTime(tableName, "update_at")
@@ -53,24 +53,24 @@ func newMenu(db *gorm.DB, opts ...gen.DOOption) menu {
 type menu struct {
 	menuDo menuDo
 
-	ALL        field.Asterisk
-	ID         field.Int64
-	Path       field.String // 路由
-	Name       field.String // 名称
-	Redirect   field.String // 重定向
-	Component  field.String // 文件地址
-	ParentID   field.Int32  // 父id
-	RoleIDs    field.String // 角色组
-	Title      field.String // 标题
-	Icon       field.String // 图标
-	Hidden     field.Bool   // 是否隐藏
-	KeepAlive  field.Bool   // keepAlive
-	Sort       field.Int32  // 排序
-	CreateAt   field.Time   // 记录创建时间
-	UpdateAt   field.Time   // 记录修改时间
-	DeletedAt  field.Field  // 删除时间
-	CreateUser field.String // 创建人
-	UpdateUser field.String // 修改人
+	ALL         field.Asterisk
+	ID          field.Int64
+	Path        field.String // 路由
+	Name        field.String // 名称
+	Redirect    field.String // 重定向
+	Component   field.String // 文件地址
+	ParentID    field.Int32  // 父id
+	RoleIDGroup field.String // 角色组
+	Title       field.String // 标题
+	Icon        field.String // 图标
+	Hidden      field.Bool   // 是否隐藏
+	KeepAlive   field.Bool   // keepAlive
+	Sort        field.Int32  // 排序
+	CreateAt    field.Time   // 记录创建时间
+	UpdateAt    field.Time   // 记录修改时间
+	DeletedAt   field.Field
+	CreateUser  field.String // 创建人
+	UpdateUser  field.String // 修改人
 
 	fieldMap map[string]field.Expr
 }
@@ -92,12 +92,12 @@ func (m *menu) updateTableName(table string) *menu {
 	m.Name = field.NewString(table, "name")
 	m.Redirect = field.NewString(table, "redirect")
 	m.Component = field.NewString(table, "component")
-	m.ParentID = field.NewInt32(table, "parentId")
-	m.RoleIDs = field.NewString(table, "roleIDs")
+	m.ParentID = field.NewInt32(table, "parent_id")
+	m.RoleIDGroup = field.NewString(table, "role_id_group")
 	m.Title = field.NewString(table, "title")
 	m.Icon = field.NewString(table, "icon")
 	m.Hidden = field.NewBool(table, "hidden")
-	m.KeepAlive = field.NewBool(table, "keepAlive")
+	m.KeepAlive = field.NewBool(table, "keep_alive")
 	m.Sort = field.NewInt32(table, "sort")
 	m.CreateAt = field.NewTime(table, "create_at")
 	m.UpdateAt = field.NewTime(table, "update_at")
@@ -132,12 +132,12 @@ func (m *menu) fillFieldMap() {
 	m.fieldMap["name"] = m.Name
 	m.fieldMap["redirect"] = m.Redirect
 	m.fieldMap["component"] = m.Component
-	m.fieldMap["parentId"] = m.ParentID
-	m.fieldMap["roleIDs"] = m.RoleIDs
+	m.fieldMap["parent_id"] = m.ParentID
+	m.fieldMap["role_id_group"] = m.RoleIDGroup
 	m.fieldMap["title"] = m.Title
 	m.fieldMap["icon"] = m.Icon
 	m.fieldMap["hidden"] = m.Hidden
-	m.fieldMap["keepAlive"] = m.KeepAlive
+	m.fieldMap["keep_alive"] = m.KeepAlive
 	m.fieldMap["sort"] = m.Sort
 	m.fieldMap["create_at"] = m.CreateAt
 	m.fieldMap["update_at"] = m.UpdateAt

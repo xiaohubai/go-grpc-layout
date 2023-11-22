@@ -32,8 +32,8 @@ func newDebugPerf(db *gorm.DB, opts ...gen.DOOption) debugPerf {
 	_debugPerf.Username = field.NewString(tableName, "username")
 	_debugPerf.Motto = field.NewString(tableName, "motto")
 	_debugPerf.Text = field.NewString(tableName, "text")
-	_debugPerf.CreateTime = field.NewTime(tableName, "create_time")
-	_debugPerf.UpdateTime = field.NewTime(tableName, "update_time")
+	_debugPerf.CreateAt = field.NewTime(tableName, "create_at")
+	_debugPerf.UpdateAt = field.NewTime(tableName, "update_at")
 	_debugPerf.DeletedAt = field.NewField(tableName, "deleted_at")
 	_debugPerf.CreateUser = field.NewString(tableName, "create_user")
 	_debugPerf.UpdateUser = field.NewString(tableName, "update_user")
@@ -52,8 +52,8 @@ type debugPerf struct {
 	Username   field.String // 用户名
 	Motto      field.String // 座右铭
 	Text       field.String // 内容
-	CreateTime field.Time   // 记录创建时间
-	UpdateTime field.Time   // 记录修改时间
+	CreateAt   field.Time   // 记录创建时间
+	UpdateAt   field.Time   // 记录修改时间
 	DeletedAt  field.Field
 	CreateUser field.String // 创建人
 	UpdateUser field.String // 修改人
@@ -78,8 +78,8 @@ func (d *debugPerf) updateTableName(table string) *debugPerf {
 	d.Username = field.NewString(table, "username")
 	d.Motto = field.NewString(table, "motto")
 	d.Text = field.NewString(table, "text")
-	d.CreateTime = field.NewTime(table, "create_time")
-	d.UpdateTime = field.NewTime(table, "update_time")
+	d.CreateAt = field.NewTime(table, "create_at")
+	d.UpdateAt = field.NewTime(table, "update_at")
 	d.DeletedAt = field.NewField(table, "deleted_at")
 	d.CreateUser = field.NewString(table, "create_user")
 	d.UpdateUser = field.NewString(table, "update_user")
@@ -113,8 +113,8 @@ func (d *debugPerf) fillFieldMap() {
 	d.fieldMap["username"] = d.Username
 	d.fieldMap["motto"] = d.Motto
 	d.fieldMap["text"] = d.Text
-	d.fieldMap["create_time"] = d.CreateTime
-	d.fieldMap["update_time"] = d.UpdateTime
+	d.fieldMap["create_at"] = d.CreateAt
+	d.fieldMap["update_at"] = d.UpdateAt
 	d.fieldMap["deleted_at"] = d.DeletedAt
 	d.fieldMap["create_user"] = d.CreateUser
 	d.fieldMap["update_user"] = d.UpdateUser

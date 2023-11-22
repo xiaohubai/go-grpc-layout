@@ -58,25 +58,25 @@ type user struct {
 
 	ALL        field.Asterisk
 	ID         field.Int64
-	UID        field.String
-	Username   field.String
-	Nickname   field.String
-	Motto      field.String
-	Password   field.String
-	Salt       field.String
-	Birth      field.Time
-	Avatar     field.String
-	RoleID     field.String
-	RoleName   field.String
-	Phone      field.String
-	Wechat     field.String
-	Email      field.String
-	State      field.Int32
-	CreateAt   field.Time
-	UpdateAt   field.Time
+	UID        field.String // uid
+	Username   field.String // 用户名
+	Nickname   field.String // 昵称
+	Motto      field.String // 座右铭
+	Password   field.String // 密码
+	Salt       field.String // 加盐
+	Birth      field.Time   // 出生日期
+	Avatar     field.String // 头像
+	RoleID     field.String // 角色Id
+	RoleName   field.String // 角色名称
+	Phone      field.String // 手机号
+	Wechat     field.String // 微信号
+	Email      field.String // 邮箱
+	State      field.Int32  // 用户状态:(0:初始,1:使用,2:停用,3:删除)
+	CreateAt   field.Time   // 记录创建时间
+	UpdateAt   field.Time   // 记录修改时间
 	DeletedAt  field.Field
-	CreateUser field.String
-	UpdateUser field.String
+	CreateUser field.String // 创建人
+	UpdateUser field.String // 修改人
 
 	fieldMap map[string]field.Expr
 }

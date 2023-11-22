@@ -15,19 +15,19 @@ const TableNameSetting = "setting"
 // Setting mapped from table <setting>
 type Setting struct {
 	ID                    int64          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	UID                   string         `gorm:"column:uid;not null" json:"uid"`                                         // uid
-	Lang                  string         `gorm:"column:lang;not null" json:"lang"`                                       // 语言
-	SideModeColor         string         `gorm:"column:side_mode_color;not null" json:"side_mode_color"`                 // 侧边栏颜色
-	Collapse              bool           `gorm:"column:collapse;not null" json:"collapse"`                               // 侧边栏折叠
-	Breadcrumb            bool           `gorm:"column:breadcrumb;not null;default:1" json:"breadcrumb"`                 // 面包屑
-	DefaultRouter         string         `gorm:"column:default_router;not null" json:"default_router"`                   // 默认路由
-	ActiveTextColor       string         `gorm:"column:active_text_color;not null" json:"active_text_color"`             // 活跃文本颜色
-	ActiveBackgroundColor string         `gorm:"column:active_background_color;not null" json:"active_background_color"` // 活跃文本背景色
-	CreateAt              time.Time      `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP" json:"create_at"`   // 记录创建时间
-	UpdateAt              time.Time      `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP" json:"update_at"`   // 记录修改时间
-	DeletedAt             gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`                                    // 删除时间
-	CreateUser            string         `gorm:"column:create_user;not null" json:"create_user"`                         // 创建人
-	UpdateUser            string         `gorm:"column:update_user;not null" json:"update_user"`                         // 修改人
+	UID                   string         `gorm:"column:uid;not null;comment:uid" json:"uid"`
+	Lang                  string         `gorm:"column:lang;not null;comment:语言" json:"lang"`
+	SideModeColor         string         `gorm:"column:side_mode_color;not null;comment:侧边栏颜色" json:"side_mode_color"`
+	Collapse              bool           `gorm:"column:collapse;not null;comment:侧边栏折叠" json:"collapse"`
+	Breadcrumb            bool           `gorm:"column:breadcrumb;not null;default:1;comment:面包屑" json:"breadcrumb"`
+	DefaultRouter         string         `gorm:"column:default_router;not null;comment:默认路由" json:"default_router"`
+	ActiveTextColor       string         `gorm:"column:active_text_color;not null;comment:活跃文本颜色" json:"active_text_color"`
+	ActiveBackgroundColor string         `gorm:"column:active_background_color;not null;comment:活跃文本背景色" json:"active_background_color"`
+	CreateAt              time.Time      `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP;comment:记录创建时间" json:"create_at"`
+	UpdateAt              time.Time      `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP;comment:记录修改时间" json:"update_at"`
+	DeletedAt             gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
+	CreateUser            string         `gorm:"column:create_user;not null;comment:创建人" json:"create_user"`
+	UpdateUser            string         `gorm:"column:update_user;not null;comment:修改人" json:"update_user"`
 }
 
 // TableName Setting's table name

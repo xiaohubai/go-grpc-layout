@@ -27,7 +27,7 @@ func (uc *HttpUsecase) GetRoleMenuList(c *gin.Context) ([]*v1.MenuResponse, erro
 		return nil, errors.New("token解析失败")
 	}
 	userInfo := claims.(*jwt.Claims)
-	menuList, err := uc.repo.ListRoleMenu(c.Request.Context(), &model.Menu{RoleIDs: userInfo.RoleID})
+	menuList, err := uc.repo.ListRoleMenu(c.Request.Context(), &model.Menu{RoleIDGroup: userInfo.RoleID})
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func menuTreeHandler(menuList []*model.Menu) []*v1.MenuResponse {
 			Meta: &v1.MenuResponse_Meta{
 				ID:        v.ID,
 				ParentID:  v.ParentID,
-				RoleIDs:   v.RoleIDs,
+				RoleIDs:   v.RoleIDGroup,
 				Title:     v.Title,
 				Icon:      v.Icon,
 				Hidden:    v.Hidden,
@@ -73,19 +73,19 @@ func (uc *HttpUsecase) AddRoleMenu(c *gin.Context, req *v1.AddRoleMenuRequest) e
 	userInfo := claims.(*jwt.Claims)
 
 	return uc.repo.AddRoleMenu(c.Request.Context(), &model.Menu{
-		Path:       req.Path,
-		Name:       req.Name,
-		Component:  req.Component,
-		ParentID:   req.ParentID,
-		RoleIDs:    req.RoleIDs,
-		Title:      req.Title,
-		Icon:       req.Icon,
-		Hidden:     req.Hidden,
-		KeepAlive:  req.KeepAlive,
-		Redirect:   req.Redirect,
-		Sort:       req.Sort,
-		CreateUser: userInfo.UserName,
-		UpdateUser: userInfo.UserName,
+		Path:        req.Path,
+		Name:        req.Name,
+		Component:   req.Component,
+		ParentID:    req.ParentID,
+		RoleIDGroup: req.RoleIDs,
+		Title:       req.Title,
+		Icon:        req.Icon,
+		Hidden:      req.Hidden,
+		KeepAlive:   req.KeepAlive,
+		Redirect:    req.Redirect,
+		Sort:        req.Sort,
+		CreateUser:  userInfo.UserName,
+		UpdateUser:  userInfo.UserName,
 	})
 }
 
@@ -101,18 +101,18 @@ func (uc *HttpUsecase) UpdateRoleMenu(c *gin.Context, req *v1.UpdateRoleMenuRequ
 	userInfo := claims.(*jwt.Claims)
 
 	return uc.repo.UpdateRoleMenu(c.Request.Context(), &model.Menu{
-		ID:         req.ID,
-		Path:       req.Path,
-		Name:       req.Name,
-		Component:  req.Component,
-		ParentID:   req.ParentID,
-		RoleIDs:    req.RoleIDs,
-		Title:      req.Title,
-		Icon:       req.Icon,
-		Hidden:     req.Hidden,
-		KeepAlive:  req.KeepAlive,
-		Redirect:   req.Redirect,
-		Sort:       req.Sort,
-		UpdateUser: userInfo.UserName,
+		ID:          req.ID,
+		Path:        req.Path,
+		Name:        req.Name,
+		Component:   req.Component,
+		ParentID:    req.ParentID,
+		RoleIDGroup: req.RoleIDs,
+		Title:       req.Title,
+		Icon:        req.Icon,
+		Hidden:      req.Hidden,
+		KeepAlive:   req.KeepAlive,
+		Redirect:    req.Redirect,
+		Sort:        req.Sort,
+		UpdateUser:  userInfo.UserName,
 	})
 }

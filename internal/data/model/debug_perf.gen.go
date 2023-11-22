@@ -15,15 +15,15 @@ const TableNameDebugPerf = "debug_perf"
 // DebugPerf mapped from table <debug_perf>
 type DebugPerf struct {
 	ID         int64          `gorm:"column:id;primaryKey;autoIncrement:true" json:"id"`
-	UID        string         `gorm:"column:uid;not null" json:"uid"`                                           // uid
-	Username   string         `gorm:"column:username;not null" json:"username"`                                 // 用户名
-	Motto      string         `gorm:"column:motto;not null" json:"motto"`                                       // 座右铭
-	Text       string         `gorm:"column:text;not null" json:"text"`                                         // 内容
-	CreateTime time.Time      `gorm:"column:create_time;not null;default:CURRENT_TIMESTAMP" json:"create_time"` // 记录创建时间
-	UpdateTime time.Time      `gorm:"column:update_time;not null;default:CURRENT_TIMESTAMP" json:"update_time"` // 记录修改时间
+	UID        string         `gorm:"column:uid;not null;comment:uid" json:"uid"`
+	Username   string         `gorm:"column:username;not null;comment:用户名" json:"username"`
+	Motto      string         `gorm:"column:motto;not null;comment:座右铭" json:"motto"`
+	Text       string         `gorm:"column:text;not null;comment:内容" json:"text"`
+	CreateAt   time.Time      `gorm:"column:create_at;not null;default:CURRENT_TIMESTAMP;comment:记录创建时间" json:"create_at"`
+	UpdateAt   time.Time      `gorm:"column:update_at;not null;default:CURRENT_TIMESTAMP;comment:记录修改时间" json:"update_at"`
 	DeletedAt  gorm.DeletedAt `gorm:"column:deleted_at" json:"deleted_at"`
-	CreateUser string         `gorm:"column:create_user;not null" json:"create_user"` // 创建人
-	UpdateUser string         `gorm:"column:update_user;not null" json:"update_user"` // 修改人
+	CreateUser string         `gorm:"column:create_user;not null;comment:创建人" json:"create_user"`
+	UpdateUser string         `gorm:"column:update_user;not null;comment:修改人" json:"update_user"`
 }
 
 // TableName DebugPerf's table name

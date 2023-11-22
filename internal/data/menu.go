@@ -13,8 +13,8 @@ func (d *dataRepo) ListAllMenu(ctx context.Context) (menuList []*model.Menu, err
 
 func (d *dataRepo) ListRoleMenu(ctx context.Context, m *model.Menu) (menuList []*model.Menu, err error) {
 	db := d.data.db.Menu.WithContext(ctx)
-	if m.RoleIDs != "" {
-		db = db.Where(d.data.db.Menu.RoleIDs.FindInSetWith(m.RoleIDs))
+	if m.RoleIDGroup != "" {
+		db = db.Where(d.data.db.Menu.RoleIDGroup.FindInSetWith(m.RoleIDGroup))
 	}
 	menuList, err = db.Find()
 	return
@@ -34,18 +34,18 @@ func (d *dataRepo) DeleteRoleMenuByID(ctx context.Context, m *model.Menu) (err e
 func (d *dataRepo) UpdateRoleMenu(ctx context.Context, m *model.Menu) (err error) {
 	db := d.data.db.Menu.WithContext(ctx)
 	_, err = db.Where(d.data.db.Menu.ID.Eq(m.ID)).Updates(map[string]any{
-		"path":        m.Path,
-		"name":        m.Name,
-		"redirect":    m.Redirect,
-		"component":   m.Component,
-		"parentId":    m.ParentID,
-		"roleIDs":     m.RoleIDs,
-		"title":       m.Title,
-		"icon":        m.Icon,
-		"hidden":      m.Hidden,
-		"keepAlive":   m.KeepAlive,
-		"sort":        m.Sort,
-		"update_user": m.UpdateUser,
+		"path":          m.Path,
+		"name":          m.Name,
+		"redirect":      m.Redirect,
+		"component":     m.Component,
+		"parent_id":      m.ParentID,
+		"role_id_group": m.RoleIDGroup,
+		"title":         m.Title,
+		"icon":          m.Icon,
+		"hidden":        m.Hidden,
+		"keep_alive":     m.KeepAlive,
+		"sort":          m.Sort,
+		"update_user":    m.UpdateUser,
 	})
 	return
 }

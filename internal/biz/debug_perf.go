@@ -48,7 +48,7 @@ func (uc *HttpUsecase) DebugPerf(c *gin.Context, req *v1.DebugPerfRequest) (*v1.
 		UserName:   res.Username,
 		Motto:      res.Motto,
 		Text:       res.Text,
-		CreateTime: res.CreateTime.Format(time.DateTime),
+		CreateTime: res.CreateAt.Format(time.DateTime),
 		CreateUser: res.CreateUser,
 	}, nil
 }

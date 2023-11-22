@@ -62,7 +62,7 @@ type setting struct {
 	ActiveBackgroundColor field.String // 活跃文本背景色
 	CreateAt              field.Time   // 记录创建时间
 	UpdateAt              field.Time   // 记录修改时间
-	DeletedAt             field.Field  // 删除时间
+	DeletedAt             field.Field
 	CreateUser            field.String // 创建人
 	UpdateUser            field.String // 修改人
 
