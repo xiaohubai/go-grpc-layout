@@ -137,43 +137,7 @@ services:
     networks:
       network:
         ipv4_address: 172.21.0.17
-  #### zookeeper ####
-  zookeeper:
-    image: bitnami/zookeeper:3.7.1
-    container_name: zookeeper
-    #restart: always
-    ports:
-      - "2181:2181"
-    environment:
-      - TZ=Asia/Shanghai
-      - ALLOW_ANONYMOUS_LOGIN=yes
-    networks:
-      network:
-        ipv4_address: 172.21.0.18
 
-  #### kafka ####
-  # kafaka 不停重启,要考虑权限问题和挂载的kafka/data要删除
-  kafka:
-    image: bitnami/kafka:3.0.2
-    container_name: kafka
-    #restart: always
-    user: root
-    ports:
-      - '9092:9092'
-    volumes:
-      - /usr/local/volumes/kafka:/bitnami/kafka
-    environment:
-      - TZ=Asia/Shanghai
-      - KAFKA_BROKER_ID=1
-      - KAFKA_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.21.0.19:9092
-      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
-      - ALLOW_PLAINTEXT_LISTENER=yes
-    depends_on:
-      - zookeeper
-    networks:
-      network:
-        ipv4_address: 172.21.0.19
   #### pyroscope ####
   pyroscope:
     image: pyroscope/pyroscope:latest
@@ -189,7 +153,7 @@ services:
       - TZ=Asia/Shanghai
     networks:
       network:
-        ipv4_address: 172.21.0.20
+        ipv4_address: 172.21.0.18
 
   #### elasticsearch ####
   # 不停重启，数据卷的data和ik目录权限应root 777权限
@@ -217,7 +181,7 @@ services:
       - ES_JAVA_OPTS=-Xms512m -Xmx512m
     networks:
       network:
-        ipv4_address: 172.21.0.21
+        ipv4_address: 172.21.0.19
 
   #### kibana ####
   kibana:
@@ -229,9 +193,90 @@ services:
     volumes:
       - /usr/local/volumes/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
     environment:
-      - elasticsearch.hosts=http://172.21.0.21:9200
+      - elasticsearch.hosts=http://172.21.0.20:9200
     depends_on:
       - elasticsearch
     networks:
       network:
+        ipv4_address: 172.21.0.20
+
+  #### kafka ####
+  # kafka 不停重启,要考虑权限问题和挂载的kafka/data要删除
+  kafka-1:
+    image: bitnami/kafka:3.5.0
+    container_name: kafka-1
+    #restart: always
+    user: root
+    ports:
+      - '9092:9092'
+      - '9093:9093'
+    volumes:
+      - /usr/local/volumes/kafka-1:/bitnami/kafka
+    environment:
+      - TZ=Asia/Shanghai
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_BROKER_ID=1
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_KRAFT_CLUSTER_ID=LelM2dIFQkiUFvXCEcqRWA
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_HEAP_OPTS=-Xmx512M -Xms256M
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      # 消息保留时长（毫秒），保留7天
+      - KAFKA_LOG_RETENTION_MS=604800000
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.94.170:9092
+    networks:
+      network:
+        ipv4_address: 172.21.0.21
+  #### kafka ####
+  kafka-2:
+    image: bitnami/kafka:3.5.0
+    container_name: kafka-2
+    #restart: always
+    user: root
+    ports:
+      - '9192:9092'
+      - '9193:9093'
+    volumes:
+      - /usr/local/volumes/kafka-2:/bitnami/kafka
+    environment:
+      - TZ=Asia/Shanghai
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_BROKER_ID=2
+      - KAFKA_CFG_NODE_ID=2
+      - KAFKA_CFG_PROCESS_ROLES=broker,controller
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093
+      - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      - KAFKA_KRAFT_CLUSTER_ID=LelM2dIFQkiUFvXCEcqRWA
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka-1:9093,2@kafka-2:9093
+      - ALLOW_PLAINTEXT_LISTENER=yes
+      - KAFKA_HEAP_OPTS=-Xmx512M -Xms256M
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      # 消息保留时长（毫秒），保留7天
+      - KAFKA_LOG_RETENTION_MS=604800000
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://192.168.94.170:9192
+    networks:
+      network:
         ipv4_address: 172.21.0.22
+  ###kafka-ui###
+  kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: kafka-ui
+    #restart: always
+    ports:
+      - '8080:8080'
+    depends_on:
+      - kafka-1
+      - kafka-2
+    environment:
+      - TZ=Asia/Shanghai
+      - KAFKA_CLUSTERS_0_NAME=kafkaCluster
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka-1:9092,kafka-2:9092
+    networks:
+      network:
+        ipv4_address: 172.21.0.23
