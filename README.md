@@ -107,6 +107,10 @@
 - pyroscope     172.21.0.20:4040
 - elasticsearch 172.21.0.21:9200
 - kibana        172.21.0.22:5601 (elastic 1qaz!QAZ)
+win可以127.0.0.1/localhost访问wsl/docker的应用。
+wsl内可以使用回环和docker的定制ip 172.21.0.13:8500访问容器
+容器之间可以使用docker的定制ip 172.21.0.13:8500访问容器
+容器内访问wsl的应用，需要使用wsl的ip.192.168.94.170
 ```
 
 ## 主要功能

@@ -5,6 +5,6 @@ scrape-configs:
     static-configs:
       - application: my-pyroscope
         targets:
-          - 127.0.0.1:8000
+          - 192.168.94.170:8000
         labels:
           env: dev

@@ -1,0 +1,8 @@
+
+        kafka-topics.sh --create --bootstrap-server kafka-1:9092,kafka-2:9092 --replication-factor 2 --partitions 2 --topic test
+
+
+        kafka-topics.sh --list --bootstrap-server kafka-1:9092,kafka-2:9092
+        kafka-topics.sh --describe --bootstrap-server kafka-1:9092,kafka-2:9092 --topic test
+        kafka-console-producer.sh --broker-list kafka-1:9092,kafka-2:9092 --topic test
+        kafka-console-consumer.sh --bootstrap-server kafka-1:9092,kafka-2:9092 --topic test --from-beginning

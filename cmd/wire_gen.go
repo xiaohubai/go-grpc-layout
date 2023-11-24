@@ -37,7 +37,10 @@ func wireApp(confServer *conf.Server, confData *conf.Data, confConsul *conf.Cons
 	grpcUsecase := biz.NewGrpcUsecase(repo, logger)
 	grpcService := service.NewGrpcService(grpcUsecase, logger)
 	grpcServer := server.NewGRPCServer(confServer, grpcService, logger)
-	registrar := consul.NewRegistry(confConsul)
+	registrar, err := consul.NewRegistry(confConsul)
+	if err != nil {
+		return nil, err
+	}
 	app := newApp(logger, httpServer, grpcServer, registrar, global)
 	return app, nil
 }

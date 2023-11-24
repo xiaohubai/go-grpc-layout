@@ -14,7 +14,7 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/pkg/email"
 )
 
-func watcher(vp *viper.Viper, path string, conf any) {
+func watcher(cli *api.Client, vp *viper.Viper, path string, conf any) {
 	time.Sleep(time.Second * 10)
 	var g errgroup.Group
 	g.Go(func() error {
@@ -37,7 +37,7 @@ func watcher(vp *viper.Viper, path string, conf any) {
 				}
 			}
 		}
-		err = w.RunWithClientAndHclog(consulClient, nil)
+		err = w.RunWithClientAndHclog(cli, nil)
 		if err != nil {
 			return err
 		}

@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"strings"
-	"sync"
 
 	"github.com/go-kratos/kratos/contrib/registry/consul/v2"
 	"github.com/go-kratos/kratos/v2/registry"
@@ -18,50 +17,51 @@ import (
 	"github.com/xiaohubai/go-grpc-layout/configs/conf"
 )
 
-var (
-	consulClient *api.Client
-	once         sync.Once
-)
-
-func NewConsulClient(remoteHost, remoteToken string) *api.Client {
-	once.Do(func() {
-		cli, err := api.NewClient(&api.Config{
-			Address: remoteHost,
-			Token:   remoteToken,
-		})
-		if err != nil {
-			panic(err)
-		}
-		consulClient = cli
+func NewConsulClient(remoteHost, remoteToken string) (*api.Client, error) {
+	cli, err := api.NewClient(&api.Config{
+		Address: remoteHost,
+		Token:   remoteToken,
 	})
-	return consulClient
+	if err != nil {
+		return nil, err
+	}
+	return cli, err
 }
 
 // NewConsulConfigSource 创建一个远程配置源 - Consul
 func NewConsulConfigSource(remoteHost, remotePath, remoteToken string, conf any) error {
-	NewConsulClient(remoteHost, remoteToken)
-	v, err := GetConsulKV(remotePath, conf)
+	cli, err := NewConsulClient(remoteHost, remoteToken)
+	if err != nil {
+		return err
+	}
+	v, err := GetConsulKV(cli, remotePath, conf)
 	if err == nil {
-		watcher(v, remotePath, conf)
+		watcher(cli, v, remotePath, conf)
 	}
 	return err
 }
 
-func NewRegistry(cul *conf.Consul) registry.Registrar {
-	cli := NewConsulClient(cul.Host, cul.Token)
+func NewRegistry(cul *conf.Consul) (registry.Registrar, error) {
+	cli, err := NewConsulClient(cul.Host, cul.Token)
+	if err != nil {
+		return nil, err
+	}
 	r := consul.New(cli, consul.WithHealthCheck(cul.HealthCheck))
-	return r
+	return r, nil
 }
 
 func NewDiscovery(cul *conf.Consul, endpoint string) (*grpc.ClientConn, error) {
-	cli := NewConsulClient(cul.Host, cul.Token)
+	cli, err := NewConsulClient(cul.Host, cul.Token)
+	if err != nil {
+		return nil, err
+	}
 	r := consul.New(cli, consul.WithHealthCheck(cul.HealthCheck))
 	return ggrpc.DialInsecure(context.Background(), ggrpc.WithEndpoint(endpoint), ggrpc.WithDiscovery(r))
 }
 
 // GetConsulKV
-func GetConsulKV(remotePath string, conf any) (*viper.Viper, error) {
-	kv, _, err := consulClient.KV().Get(remotePath, nil)
+func GetConsulKV(cli *api.Client, remotePath string, conf any) (*viper.Viper, error) {
+	kv, _, err := cli.KV().Get(remotePath, nil)
 	if err != nil {
 		return nil, errors.New("consul获取配置失败")
 	}

@@ -10,8 +10,14 @@ import (
 )
 
 func (s *HttpService) GetDictList(c *gin.Context) {
+	cli, err := consul.NewConsulClient(consts.Conf.Consul.Host, consts.Conf.Consul.Token)
+	if err != nil {
+		response.Fail(c, ecode.GetDictListFailed, err)
+		return
+	}
+
 	dict := make(map[string]interface{}, 0)
-	_, err := consul.GetConsulKV(consts.Conf.Consul.Kv.DictPath, &dict)
+	_, err = consul.GetConsulKV(cli, consts.Conf.Consul.Kv.DictPath, &dict)
 	if err != nil {
 		response.Fail(c, ecode.GetDictListFailed, err)
 		return

@@ -60,14 +60,14 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 		},
 	})
 	if err != nil {
-		panic(fmt.Errorf("MySQL启动异常: %s", err))
+		return nil, fmt.Errorf("MySQL启动异常: %s", err)
 	}
 	sqlDB, _ := db.DB()
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 
 	if err := AutoMigrate(db); err != nil {
-		panic(fmt.Errorf("autoMigrate failed: %s", err))
+		return nil, fmt.Errorf("autoMigrate failed: %s", err)
 	}
 
 	rdb := redis.NewClient(&redis.Options{
@@ -77,7 +77,7 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 	})
 	_, err = rdb.Ping(context.Background()).Result()
 	if err != nil {
-		panic(fmt.Errorf("redis connect ping failed: %s", err))
+		return nil, fmt.Errorf("redis connect ping failed: %s", err)
 	}
 
 	es, err := elasticsearch.NewClient(elasticsearch.Config{
@@ -86,7 +86,7 @@ func NewData(c *conf.Data, logg log.Logger) (*Data, error) {
 		Password:  c.Es.Password,
 	})
 	if err != nil {
-		panic(fmt.Errorf("elasticsearch connect failed: %s", err))
+		return nil, fmt.Errorf("elasticsearch connect failed: %s", err)
 	}
 
 	consts.DB = db
