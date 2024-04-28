@@ -102,15 +102,17 @@
 - prometheus    172.21.0.15:9090
 - grafana       172.21.0.16:3000 (admin admin)
 - node-exporter 172.21.0.17:9100
-- zookeeper     172.21.0.18:2181
-- kafka         172.21.0.19:9092
-- pyroscope     172.21.0.20:4040
-- elasticsearch 172.21.0.21:9200
-- kibana        172.21.0.22:5601 (elastic 1qaz!QAZ)
+- pyroscope     172.21.0.18:4040
+- elasticsearch 172.21.0.19:9200
+- kibana        172.21.0.20:5601 (elastic 1qaz!QAZ)
+- kafka         172.21.0.21:9092
+- kafka-ui      172.21.0.22:8080
 win可以127.0.0.1/localhost访问wsl/docker的应用。
 wsl内可以使用回环和docker的定制ip 172.21.0.13:8500访问容器
 容器之间可以使用docker的定制ip 172.21.0.13:8500访问容器
 容器内访问wsl的应用，需要使用wsl的ip.192.168.94.170
+github.com/hyperjumptech/grule-rule-engine
+
 ```
 
 ## 主要功能

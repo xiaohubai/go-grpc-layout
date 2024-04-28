@@ -38,8 +38,8 @@ func NewHTTPServer(c *conf.Server, s *service.HttpService, lg log.Logger) *http.
 }
 
 func routers(s *service.HttpService) *gin.Engine {
-	//gin.SetMode(gin.ReleaseMode)
-	router := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
+	router := gin.New()
 	router.Use(m.Recovery(), m.Cors(consts.Conf.Cors), m.Tracing(consts.Conf.Global), m.Metrics(consts.Conf.Global))
 	pprof.Register(router)
 	router.StaticFS("/docs", hhttp.Dir("./docs/openapi"))

@@ -1,0 +1,38 @@
+{
+	"lang": [
+		{
+			"key": "zh-cn",
+			"value": "简体中文"
+		},
+		{
+			"key": "en",
+			"value": "English"
+		}
+	],
+	"method": [
+		{
+			"key": "POST",
+			"value": "POST"
+		},
+		{
+			"key": "GET",
+			"value": "GET"
+		}
+	],
+	"role": [
+		{
+			"key": "0",
+			"value": "管理员"
+		},
+		{
+			"key": "1",
+			"value": "用户"
+		}
+	],
+	"state": {
+		"0": "初始状态",
+		"1": "使用中",
+		"2": "已停用",
+		"3": "已删除"
+	}
+}

@@ -38,7 +38,7 @@ consul:
   host: 127.0.0.1:8500
   scheme: http
   healthCheck: true
-  token: "8eefe7ac-1fdf-84b5-e220-343c504a9c86"
+  token: "e7766de2-3bcd-35a4-6371-066456b9a5f8"
   kv:
     dictPath: dev/dict.json
   discovery:
