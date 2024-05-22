@@ -49,7 +49,7 @@ services:
   #### consul ####
   ### 认证访问设置（https://xiaohubai.github.io/docs/docker-compose）
   consul:
-    image: bitnami/consul:1.13.0
+    image: bitnami/consul:1.18.0
     container_name: consul
     #restart: always
     ports:
@@ -70,7 +70,7 @@ services:
 
   #### jaeger ####
   jaeger:
-    image: jaegertracing/all-in-one:1.37
+    image: jaegertracing/all-in-one:1.55.0
     container_name: jaeger
     #restart: always
     ports:
@@ -91,7 +91,7 @@ services:
   #### prometheus ####
   ## 注意数据集data要保证其他用户可读写，直接设置777,默认存储15天,可以远程读取es持久化存储
   prometheus:
-    image: bitnami/prometheus:2.37.0
+    image: bitnami/prometheus:2.51.0
     container_name: prometheus
     #restart: always
     ports:
@@ -112,7 +112,7 @@ services:
   ## cd /usr/share/grafana/bin
   ## ./grafana-cli admin reset-admin-password admin
   grafana:
-    image: bitnami/grafana:9.2.1
+    image: bitnami/grafana:10.4.0
     container_name: grafana
     #restart: always
     ports:
@@ -129,7 +129,7 @@ services:
         ipv4_address: 172.21.0.16
 
   node-exporter:
-    image: bitnami/node-exporter:1.5.0
+    image: bitnami/node-exporter:1.8.0
     container_name: node-exporter
     #restart: always
     ports:
@@ -157,6 +157,7 @@ services:
 
   #### elasticsearch ####
   # 不停重启，数据卷的data和ik目录权限应root 777权限
+  # ！！更改版本要es kibana和分词器ik保持一致
   # 增加安全认证：在配置文件挂在或者容器内的elasticsearch.yml添加：
   # xpack.security.enabled: true
   # xpack.license.self_generated.type: basic
@@ -203,7 +204,7 @@ services:
   #### kafka ####
   # kafka 不停重启,要考虑权限问题和挂载的kafka/data要删除
   kafka:
-    image: bitnami/kafka:3.5.0
+    image: bitnami/kafka:3.7.0
     container_name: kafka
     #restart: always
     user: root
